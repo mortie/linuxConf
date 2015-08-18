@@ -1,7 +1,7 @@
 # audio
 XF86Audio{Raise,Lower}Volume
 	amixer -D pulse sset Master {5%+,5%-} && killall -USR1 i3status
-alt + XF86Audio{Raise,Lower}Volume
+shift + XF86Audio{Raise,Lower}Volume
 	amixer -D pulse sset Master {1%+,1%-} && killall -USR1 i3status
 
 # brightness
