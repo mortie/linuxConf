@@ -33,3 +33,7 @@ mod4 + shift + v
 # norwegian
 mod4 + shift + {x, b}
 	setxkbmap {no, dvorak} && xmodmap ~/.Xmodmaprc
+
+# lock screen
+mod4 + l
+	mlock

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+TMP="/tmp/$(mktemp scrot.XXXXXXXX).png"
+scrot "$TMP"
+convert "$TMP" -gaussian-blur 5x5 "$TMP"
+i3lock -i "$TMP" -p default -n -d
+rm "$TMP"
