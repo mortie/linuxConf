@@ -6,3 +6,27 @@ function irc
 {
 	attach irc$1 | tee >(mbell "irc $1")
 }
+
+function mmark
+{
+	cat - | marked | w3m -T text/html
+}
+
+function mnor
+{
+	C=$(cat -)
+	echo $C | sed "s/ae/æ/g" | sed "s/oe/ø/g" | sed "s/aa/å/g" \
+		| sed "s/Ae/Æ/g" | sed "s/Oe/Ø/g" | sed "s/Aa/Å/g"
+}
+
+function maur
+{
+	DIR=$(pwd)
+	TMP=$(mktemp -d /tmp/aur.XXXXXXXX)
+	cd "$TMP"
+	git clone "https://aur.archlinux.org/${1}.git"
+	cd *
+	makepkg -sri
+	cd "$DIR"
+	rm -rf "$TMP"
+}
