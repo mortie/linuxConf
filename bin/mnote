@@ -21,7 +21,7 @@ if [ "$1" = "read" ]; then
 		C=$(echo "$C" | mnor | marked)
 
 	else
-		C=$(cat "$P/$3")
+		C=$(cat "$P/${3}.md" | mnor | marked)
 	fi
 
 
