@@ -6,13 +6,26 @@ if [ "$1" = "read" ]; then
 		exit 1
 	fi
 
-	D="$3"
-	if [ "$D" = "" ]; then
-		D=$(date +"%Y-%m-%d")
+	P="$HOME/notes/$2"
+	C=""
+
+	if [ "$3" = "" ]; then
+		C=$(cat "$P/$(date +"%Y-%m-%d").md" | mnor | marked)
+
+	elif [ "$3" = "all" ]; then
+		for F in "$P"/*; do
+			NAME="$(echo $F | rev | cut -d "/" -f 1 | rev | cut -d "." -f 1)"
+			C=$(printf "$C\n\n# $NAME\n\n$(cat $F)\n")
+		done
+
+		C=$(echo "$C" | mnor | marked)
+
+	else
+		C=$(cat "$P/$3")
 	fi
 
 
-	cat "$HOME/notes/$2/${D}.md" | mnor | marked | w3m -T text/html
+	echo "$C" | w3m -T text/html
 	exit 0
 fi
 
@@ -28,4 +41,11 @@ if [[ ! -d "$P" ]]; then
 	mkdir -p "$P"
 fi
 
-vim "$P/$(date +"%Y-%m-%d").md"
+D=""
+if [ "$2" = "" ]; then
+	D=$(date +"%Y-%m-%d")
+else
+	D="$2"
+fi
+
+vim "$P/${D}.md"
