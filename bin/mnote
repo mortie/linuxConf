@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ "$1" = "read" ]; then
+	if [ "$3" = "" ]; then
+		echo "Usage: mnote read <subject> <yyyy-mm-dd>"
+		exit 1
+	fi
+
+	cat "$HOME/notes/$2/${3}.md" | mnor | marked | w3m -T text/html
+	exit 0
+fi
+
+P=~/notes/$1
+if [[ ! -d "$P" ]]; then
+	echo "$P doesn't exist. Create it? [y/n]"
+	read response
+	if [ "$response" != "y" ]; then
+		echo "Aborting."
+		exit 1
+	fi
+
+	mkdir -p "$PATH"
+fi
+
+vim "$P/$(date +"%Y-%m-%d").md"
