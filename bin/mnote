@@ -19,7 +19,7 @@ if [[ ! -d "$P" ]]; then
 		exit 1
 	fi
 
-	mkdir -p "$PATH"
+	mkdir -p "$P"
 fi
 
 vim "$P/$(date +"%Y-%m-%d").md"
