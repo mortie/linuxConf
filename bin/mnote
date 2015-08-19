@@ -1,12 +1,18 @@
 #!/bin/bash
 
 if [ "$1" = "read" ]; then
-	if [ "$3" = "" ]; then
+	if [ "$2" = "" ]; then
 		echo "Usage: mnote read <subject> <yyyy-mm-dd>"
 		exit 1
 	fi
 
-	cat "$HOME/notes/$2/${3}.md" | mnor | marked | w3m -T text/html
+	D="$3"
+	if [ "$D" = "" ]; then
+		D=$(date +"%Y-%m-%d")
+	fi
+
+
+	cat "$HOME/notes/$2/${D}.md" | mnor | marked | w3m -T text/html
 	exit 0
 fi
 
