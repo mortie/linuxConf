@@ -31,8 +31,8 @@ mod4 + shift + v
 	xdotool click 2
 
 # norwegian
-mod4 + shift + {x, b}
-	setxkbmap {no, dvorak} && xmodmap ~/.Xmodmaprc
+mod4 + Tab
+	setxkbmap {no, dvorak}
 
 # lock screen
 mod4 + l

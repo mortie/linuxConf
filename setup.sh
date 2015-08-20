@@ -92,18 +92,6 @@ rm -fr "$HOME/assets"
 cp -r assets "$HOME/assets"
 echo "Done."
 
-while getopts :m option; do
-	case "$option" in
-	m)
-		echo "Not switching mod and alt keys."
-		echo "" > ~/.Xmodmaprc
-		;;
-	*)
-		echo "Unknown option: $option"
-		;;
-	esac
-done
-
 if [ "$SHELL" != "/bin/zsh" ]; then
 	sudo chsh "$USER" -s /bin/zsh
 fi
