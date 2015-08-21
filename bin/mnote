@@ -10,22 +10,23 @@ if [ "$1" = "read" ]; then
 	C=""
 
 	if [ "$3" = "" ]; then
-		C=$(cat "$P/$(date +"%Y-%m-%d").md" | mnor | marked)
+		C=$(cat "$P/$(date +"%Y-%m-%d").md")
 
 	elif [ "$3" = "all" ]; then
 		for F in "$P"/*; do
 			NAME="$(echo $F | rev | cut -d "/" -f 1 | rev | cut -d "." -f 1)"
-			C=$(printf "$C\n\n# $NAME\n\n$(cat $F)\n")
+			C=$(printf "$C\n\n# $NAME\n\n$(cat $F)\n\n---")
 		done
-
-		C=$(echo "$C" | mnor | marked)
+		C=$(echo "$C" | sed '$d')
 
 	else
-		C=$(cat "$P/${3}.md" | mnor | marked)
+		C=$(cat "$P/${3}.md")
 	fi
 
 
-	echo "$C" | w3m -T text/html
+	TMP=$(mktemp /tmp/mnote.XXXXXXXX.pdf)
+	echo "$C" | mformat "$TMP"
+	zathura "$TMP"
 	exit 0
 fi
 

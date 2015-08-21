@@ -48,6 +48,8 @@ check_command "mutt"
 check_command "w3m"
 check_command "i3lock"
 check_command "convert"
+check_command "pandoc"
+check_command "zathura"
 
 if [ $issues -ne 0 ]; then
 	echo "Some things are missing. Continue? (y/n)"
