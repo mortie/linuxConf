@@ -1,6 +1,5 @@
 #!/bin/bash
 
 cat - | sed 's/ae/æ/g' | sed 's/oe/ø/g' | sed 's/aa/å/g' \
-	| sed 's/Ae/Æ/g' | sed 's/Oe/Ø/g' | sed 's/Aa/Å/g'   \
-	| sed --posix 's/\(\\[a-zA-Z][a-zA-Z]*\)/$\1$/g'     \
-	| pandoc -o "$1" --latex-engine=xelatex
+	| sed 's/Ae/Æ/g' | sed 's/Oe/Ø/g' | sed 's/Aa/Å/g' \
+	| perl -pe 's/(\\\w+(?:\{[\w\{\}]*\})?)/\$$1\$/g'

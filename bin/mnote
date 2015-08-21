@@ -9,9 +9,12 @@ if [ "$1" = "read" ]; then
 	P="$HOME/notes/$2"
 	C=""
 
+	# If the user doesn't supply a date, use the current date
 	if [ "$3" = "" ]; then
 		C=$(cat "$P/$(date +"%Y-%m-%d").md")
 
+	# If the user inputs the date "all", put together
+	# all the notes from a subject
 	elif [ "$3" = "all" ]; then
 		for F in "$P"/*; do
 			NAME="$(echo $F | rev | cut -d "/" -f 1 | rev | cut -d "." -f 1)"
@@ -19,13 +22,18 @@ if [ "$1" = "read" ]; then
 		done
 		C=$(echo "$C" | sed '$d')
 
+	# If the user inputs a regular date,
+	# simply fetch the corresponding file
 	else
 		C=$(cat "$P/${3}.md")
 	fi
 
+	# Format things correctly, and include a .tex file of latex definitions
+	C=$(echo "$C" | mformat)
 
+	# Render the file or collection of files
 	TMP=$(mktemp /tmp/mnote.XXXXXXXX.pdf)
-	echo "$C" | mformat "$TMP"
+	echo "$C" | pandoc -B "$HOME/bin/mnote.tex" -o "$TMP"
 	zathura "$TMP"
 	rm "$TMP"
 	exit 0
