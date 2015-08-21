@@ -27,6 +27,7 @@ if [ "$1" = "read" ]; then
 	TMP=$(mktemp /tmp/mnote.XXXXXXXX.pdf)
 	echo "$C" | mformat "$TMP"
 	zathura "$TMP"
+	rm "$TMP"
 	exit 0
 fi
 
