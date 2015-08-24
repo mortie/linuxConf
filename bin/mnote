@@ -32,10 +32,7 @@ if [ "$1" = "read" ]; then
 	C=$(echo "$C" | mformat)
 
 	# Render the file or collection of files
-	TMP=$(mktemp /tmp/mnote.XXXXXXXX.pdf)
-	echo "$C" | pandoc -B "$HOME/bin/mnote.tex" -o "$TMP"
-	zathura "$TMP"
-	rm "$TMP"
+	echo "$C" | mrender
 	exit 0
 fi
 

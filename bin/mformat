@@ -2,4 +2,7 @@
 
 cat - | sed 's/ae/æ/g' | sed 's/oe/ø/g' | sed 's/aa/å/g' \
 	| sed 's/Ae/Æ/g' | sed 's/Oe/Ø/g' | sed 's/Aa/Å/g' \
+	| sed 's/a\\e/ae/g' | sed 's/o\\e/oe/g' | sed 's/a\\a/aa/g' \
+	| sed 's/A\\e/Ae/g' | sed 's/O\\e/Oe/g' | sed 's/A\\a/Aa/g' \
+	| perl -pe 's/\^([a-zA-Z0-9]+)/\$^{$1}\$/g' \
 	| perl -pe 's/(\\\w+(?:\{[\w\{\}]*\})?)/\$$1\$/g'

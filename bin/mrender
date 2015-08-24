@@ -1,0 +1,11 @@
+#!/bin/bash
+
+TMP=$(mktemp /tmp/mrender.XXXXXXXX.pdf)
+cat - | mformat | pandoc -B "$HOME/bin/mnote.tex" -o "$TMP"
+
+if [ "$1" = "" ]; then
+	zathura "$TMP"
+	rm "$TMP"
+else
+	mv "$TMP" "$1"
+fi
