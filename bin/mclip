@@ -8,6 +8,14 @@ if [ "$1" = "paste" ]; then
 	else
 		xsel -ob
 	fi
+
+elif [ "$1" = "get" ]; then
+	if [ "$OS" = "Darwin" ]; then
+		pbpaste
+	else
+		xsel -b
+	fi
+
 else
 	content=$(cat -)
 

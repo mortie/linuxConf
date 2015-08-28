@@ -39,6 +39,7 @@ else #start recording
 	sleep 0.2
 	echo "$1" > ~/.mrec/name
 
-	recordmydesktop -x $X -y $Y --width $W --height $H -o ~/.mrec/rec.ogv > ~/.mrec/log 2>&1 &
+	recordmydesktop --no-sound --width $W --height $H -o ~/.mrec/rec.ogv > ~/.mrec/log 2>&1 &
+
 	echo $! > ~/.mrec/pid
 fi

@@ -1,4 +1,0 @@
-#!/bin/bash
-
-cat - | sed "s/ae/æ/g" | sed "s/oe/ø/g" | sed "s/aa/å/g" \
-	| sed "s/Ae/Æ/g" | sed "s/Oe/Ø/g" | sed "s/Aa/Å/g"

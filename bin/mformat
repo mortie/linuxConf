@@ -1,8 +1,90 @@
-#!/bin/bash
+#!/usr/bin/env node
 
-cat - | sed 's/ae/æ/g' | sed 's/oe/ø/g' | sed 's/aa/å/g' \
-	| sed 's/Ae/Æ/g' | sed 's/Oe/Ø/g' | sed 's/Aa/Å/g' \
-	| sed 's/a\\e/ae/g' | sed 's/o\\e/oe/g' | sed 's/a\\a/aa/g' \
-	| sed 's/A\\e/Ae/g' | sed 's/O\\e/Oe/g' | sed 's/A\\a/Aa/g' \
-	| perl -pe 's/\^([a-zA-Z0-9]+)/\$^{$1}\$/g' \
-	| perl -pe 's/(\\\w+(?:\{[\w\{\}]*\})?)/\$$1\$/g'
+var str = "";
+
+var reps = [
+	["ae", "æ"],
+	["oe", "ø"],
+	["aa", "å"],
+	["Ae", "Æ"],
+	["Oe", "Ø"],
+	["Aa", "Å"],
+	["a\\e", "ae"],
+	["o\\e", "oe"],
+	["a\\a", "aa"],
+	["A\\e", "Ae"],
+	["O\\e", "Oe"],
+	["A\\a", "Aa"],
+	["(\\^\\w+)", "$^{$1}$"]
+];
+reps = reps.map(function(arr) {
+	return [new RegExp(arr[0], "g"), arr[1]];
+});
+
+process.stdin.on("data", function(data) {
+	str += data;
+});
+
+function doStr(str, start, end) {
+	var tmp = str.substring(0, start);
+	tmp += "$";
+	tmp += str.substring(start, end);
+	tmp += "$";
+	tmp += str.substring(end, str.length);
+	return tmp;
+}
+
+process.stdin.on("end", function() {
+
+	//Do all simple regex replacements
+	reps.forEach(function(arr) {
+		str = str.replace(arr[0], arr[1]);
+	});
+
+	var start = 0;
+	var end = 0;
+	var depth = 0;
+	var inExpr = false;
+	for (var i = 0; i < str.length; ++i) {
+		var prev = str[i - 1];
+		var c = str[i];
+
+		if (!inExpr && c === "\\" && prev !== "\\") {
+			start = i;
+			inExpr = true;
+		} else if (inExpr && c === "{") {
+			depth += 1;
+		} else if (inExpr && c === "}") {
+			depth -= 1;
+
+			if (depth < 0) {
+				str = doStr(str, start, i);
+
+				start = 0;
+				end = 0;
+				depth = 0;
+				inExpr = false;
+			}
+		} else if (inExpr && (
+			(depth <= 0 && isSpace(c)) |
+			(depth <= 0 && weirdChar(c))
+		)) {
+			str = doStr(str, start, i);
+
+			start = 0;
+			end = 0;
+			depth = 0;
+			inExpr = false;
+		}
+	}
+
+	console.log(str);
+});
+
+function isSpace(c) {
+	return (c === " " || c === "\n" || c === "\r" || c === "\t");
+}
+
+function weirdChar(c) {
+	return !/\w/.test(c);
+}

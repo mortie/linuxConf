@@ -28,9 +28,6 @@ if [ "$1" = "read" ]; then
 		C=$(cat "$P/${3}.md")
 	fi
 
-	# Format things correctly, and include a .tex file of latex definitions
-	C=$(echo "$C" | mformat)
-
 	# Render the file or collection of files
 	echo "$C" | mrender
 	exit 0
