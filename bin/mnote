@@ -17,11 +17,11 @@ if [ "$1" = "read" ]; then
 	# If the user inputs the date "all", put together
 	# all the notes from a subject
 	elif [ "$3" = "all" ]; then
-		for F in "$P"/*; do
+		NL=$'\n'
+		for F in "$P"/*.md; do
 			NAME="$(echo $F | rev | cut -d "/" -f 1 | rev | cut -d "." -f 1)"
-			C=$(printf "$C\n\n# $NAME\n\n$(cat $F)\n\n---")
+			C="${C}$NL$NL# $NAME$NL$NL$(cat $F)\\pagebreak${NL}${NL}---"
 		done
-		C=$(echo "$C" | sed '$d')
 
 	# If the user inputs a regular date,
 	# simply fetch the corresponding file
