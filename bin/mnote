@@ -11,7 +11,8 @@ if [ "$1" = "read" ]; then
 
 	# If the user doesn't supply a date, use the current date
 	if [ "$3" = "" ]; then
-		C=$(cat "$P/$(date +"%Y-%m-%d").md")
+		mrender "$P/$(date +"%Y-%m-%d").md"
+		exit 0
 
 	# If the user inputs the date "all", put together
 	# all the notes from a subject
@@ -25,7 +26,8 @@ if [ "$1" = "read" ]; then
 	# If the user inputs a regular date,
 	# simply fetch the corresponding file
 	else
-		C=$(cat "$P/${3}.md")
+		mrender "$P/${3}.md"
+		exit 0
 	fi
 
 	# Render the file or collection of files

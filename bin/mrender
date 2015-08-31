@@ -1,11 +1,57 @@
 #!/bin/bash
 
 TMP=$(mktemp /tmp/mrender.XXXXXXXX.pdf)
-cat - | mformat | pandoc -B "$HOME/bin/mrender.tex" -o "$TMP"
+
+function render()
+{
+	cat $1 | mformat | pandoc -B "$HOME/bin/mrender.tex" -o "$2"
+}
+
+function fileinfo()
+{
+	ls -l --time-style=full-iso "$1"
+}
+
+trap "rm \"$TMP\"; exit 0" 2
+
+FILE="$1"
+
+if [ "FILE" = "" ]; then
+	"FILE"="-"
+fi
+
+render "$FILE" "$TMP"
 
 if [ "$1" = "" ]; then
 	zathura "$TMP"
 	rm "$TMP"
+
+elif [ "$2" = "" ]; then
+	zathura "$TMP" &
+	PID="$!"
+
+	sleep 1;
+	F=$(fileinfo "$FILE")
+	while :; do
+
+		# Rerender if file changes
+		if [ "$F" != "$(fileinfo "$FILE")" ]; then
+			F=$(fileinfo "$FILE")
+			echo "File changed, rerendering."
+			render "$FILE" "$TMP"
+		fi
+
+		# Die if zathura dies
+		if ! kill -0 "$PID" > /dev/null 2>&1; then
+			rm "$TMP"
+			exit 0
+		fi
+
+		sleep 0.1
+	done
+
+	rm "$TMP"
+
 else
-	mv "$TMP" "$1"
+	mv "$TMP" "$2"
 fi
