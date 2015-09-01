@@ -64,7 +64,7 @@ echo "Copying dotfiles..."
 cd dotfiles
 for f in *; do
 	rm -rf "$HOME/.$f"
-	cp -r "$f" "$HOME/.$f"
+	ln -s "$(pwd)/$f" "$HOME/.$f"
 done
 cd ..
 echo "Done."
@@ -74,7 +74,7 @@ mkdir -p "$HOME/.config"
 cd config
 for f in *; do
 	rm -rf "$HOME/.config/$f"
-	cp -r "$f" "$HOME/.config/$f"
+	ln -s "$(pwd)/$f" "$HOME/.config/$f"
 done
 cd ..
 echo "Done."
@@ -84,14 +84,14 @@ mkdir -p "$HOME/bin"
 cd bin
 for f in *; do
 	rm -rf "$HOME/bin/$f"
-	cp -r "$f" "$HOME/bin/$f"
+	ln -s "$(pwd)/$f" "$HOME/bin/$f"
 done
 cd ..
 echo "Done."
 
 echo "Copying assets..."
 rm -fr "$HOME/assets"
-cp -r assets "$HOME/assets"
+ln -s "$(pwd)/assets" "$HOME/assets"
 echo "Done."
 
 if [ "$SHELL" != "/bin/zsh" ]; then
