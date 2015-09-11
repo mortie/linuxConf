@@ -15,7 +15,7 @@ var reps = [
 	["A\\\\e", "Ae"],
 	["O\\\\e", "Oe"],
 	["A\\\\a", "Aa"],
-	["(\\^\\w+)", "$^{$1}$"]
+	["(\\^[^ (){}\\[\\]]+)", "$^{$1}$"]
 ];
 reps = reps.map(function(arr) {
 	return [new RegExp(arr[0], "g"), arr[1]];
@@ -45,13 +45,21 @@ process.stdin.on("end", function() {
 	var end = 0;
 	var depth = 0;
 	var inExpr = false;
+	var inMath = false;
 	for (var i = 0; i < str.length; ++i) {
 		var prev = str[i - 1];
 		var c = str[i];
+		var next = str[i + 1];
 
-		if (!inExpr && c === "\\" && prev !== "\\") {
+		if (!inMath && !inExpr && c === "\\" && prev !== "\\" && !weirdChar(next)) {
 			start = i;
 			inExpr = true;
+		} else if (!inExpr && !inMath && c === "$" && prev !== "\\") {
+			inMath = true;
+		} else if (!inExpr && inMath && c === "$" && prev !== "\\") {
+			inMath = false;
+		} else if (!inExpr && inMath && c === "\n" && prev === "\n") {
+			inMath = false;
 		} else if (inExpr && c === "{") {
 			depth += 1;
 		} else if (inExpr && c === "}") {
@@ -71,6 +79,7 @@ process.stdin.on("end", function() {
 		)) {
 			str = doStr(str, start, i);
 
+			i += 1;
 			start = 0;
 			end = 0;
 			depth = 0;

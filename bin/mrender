@@ -4,7 +4,9 @@ TMP=$(mktemp /tmp/mrender.XXXXXXXX.pdf)
 
 function render()
 {
-	cat $1 | mformat | pandoc -B "$HOME/bin/mrender.tex" -o "$2"
+	C=$(cat "$1")
+	echo -n "$C" | mformat
+	echo -n "$C" | mformat | pandoc --latex-engine=xelatex -B "$HOME/bin/mrender.tex" -o "$2"
 }
 
 function fileinfo()
@@ -16,8 +18,8 @@ trap "rm \"$TMP\"; exit 0" 2
 
 FILE="$1"
 
-if [ "FILE" = "" ]; then
-	"FILE"="-"
+if [ "$FILE" = "" ]; then
+	FILE="-"
 fi
 
 render "$FILE" "$TMP"

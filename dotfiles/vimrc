@@ -65,7 +65,11 @@ noremap e p
  " Make nxc look like C
 au BufNewFile,BufRead *.nxc set filetype=c
 
+set colorcolumn=80
+
 au BufNewFile,BufRead *.java imap sopl System.out.println("
 au BufNewFile,BufRead *.java imap nclass class  {<Enter>public static void main(String[] args) {<Enter><Tab><Backspace><Enter>}<Enter>}<Up><Up><Up><Up><Right><Right><Right><Right><Right>
 
-set colorcolumn=80
+au BufNewFile,BufRead *.md set colorcolumn=0
+set updatetime=500
+au BufNewFile,BufRead *.md autocmd CursorHold,CursorHoldI <buffer> write

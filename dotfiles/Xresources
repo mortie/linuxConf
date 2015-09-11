@@ -1,14 +1,21 @@
-URxvt.font:                 xft:Monospace:size=9:antialias=true:hinting=true
+URxvt.font:                 xft:Inconsolata:size=10
 URxvt.letterSpace:          -1
  
 ! XFT and Font settings
-Xft.dpi:                    96
-Xft.antialias:              true
-Xft.hinting:                true
-Xft.autohint:               true
-Xft.hintstyle:              hintslight
-Xft.lcdfilter:              lcdlegacy
-Xft.rgba:                   rgb
+!Xft.dpi:                    96
+!Xft.antialias:              true
+!Xft.hinting:                true
+!Xft.autohint:               true
+!Xft.hintstyle:              hintslight
+!Xft.lcdfilter:              lcdlegacy
+!Xft.rgba:                   rgb
+xft.antialias: 0
+xft.autohint: 0
+xft.dpi: 96
+xft.hinting: 1
+xft.hintstyle: hintful
+xft.lcdfilter: lcddefault
+xft.rgba: rgb
 
 URxvt.scrollBar: off
 
