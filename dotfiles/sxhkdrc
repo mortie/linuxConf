@@ -22,6 +22,10 @@ mod4 + {q, j}
 mod4 + comma
 	xdotool click 1
 
+# screenshot
+Print
+	mshot scr
+
 # touchpad toggle
 mod4 + d
 	touchpad-toggle

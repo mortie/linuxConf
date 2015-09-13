@@ -83,10 +83,17 @@ elif [ "$1" = "get" ]; then
 	tryerr
 
 	chars=$(cat "$TMP_OUT")
-
-	echo -n "$chars" | mclip
-
 	mnotify "Password received" "$2"
+
+	# Type the password if the user wants that
+	if [ "$3" = "type" ]; then
+		sleep 1
+		xdotool type "$chars"
+
+	# Just put it in the clipboard if the user doesn't want it typed
+	else
+		echo -n "$chars" | mclip
+	fi
 fi
 
 cleanup

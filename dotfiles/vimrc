@@ -41,6 +41,11 @@ set listchars=tab:>.
 nmap <C-o> :
 nmap \p :set paste!<CR>
 nmap <C-c> <ESC>
+command BadTab call SetBadTab()
+function SetBadTab()
+	:set expandtab
+	:set smarttab
+endfunction
 
  " Search options
 set incsearch
