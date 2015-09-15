@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RP=$(echo $1 | perl -pe 's/\/home\/[^\/]+/~/')
+RP=$(echo $1 | perl -pe 's/\/home\/[^\/]+\///')
 
 cd "$HOME"
 mkdir -p "$RP/imgs"
