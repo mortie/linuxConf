@@ -46,7 +46,7 @@ function SetBadTab()
 	:set expandtab
 	:set smarttab
 endfunction
-command -nargs=* Draw :exec '!mnote-draw' expand('%:p:h') <f-args>
+command -nargs=* Draw :exec '!mdraw' expand('%:p:h') <f-args>
 
  " Search options
 set incsearch

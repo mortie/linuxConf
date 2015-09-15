@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ "$1" = "" ]; then
+	echo "Usage: $0 <path> [name]"
+	exit 1
+fi
+
+RP=$(echo $1 | perl -pe 's/\/home\/[^\/]+//')
+echo "$RP"
+echo "$1"
+exit 0
+
+cd "$HOME"
+mkdir -p "$RP/imgs"
+P="$RP/imgs/$(date +%s).png"
+
+convert -size 500x300 'xc:rgba(255,255,255,0)' "$P"
+pinta "$P" 2>/dev/null
+echo "![$2](~/$P)" | mclip
