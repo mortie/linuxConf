@@ -1,0 +1,11 @@
+#!/bin/bash
+
+RP=$(echo $1 | perl -pe 's/\/home\/[^\/]+/~/')
+
+cd "$HOME"
+mkdir -p "$RP/imgs"
+P="$RP/imgs/$(date +%s).png"
+
+convert -size 500x300 'xc:rgba(255,255,255,0)' "$P"
+pinta "$P"
+echo "![$2](~/$P)" | mclip

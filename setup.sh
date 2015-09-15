@@ -50,6 +50,7 @@ check_command "i3lock"
 check_command "convert"
 check_command "pandoc"
 check_command "zathura"
+check_command "pinta"
 
 if [ $issues -ne 0 ]; then
 	echo "Some things are missing. Continue? (y/n)"
