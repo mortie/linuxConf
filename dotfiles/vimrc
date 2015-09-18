@@ -13,6 +13,7 @@ call vundle#begin()
  " Plugins
 Plugin 'gmarik/Vundle.vim'
 Plugin 'kchmck/vim-coffee-script'
+Plugin 'FredKSchott/CoVim'
 
  " Vundle end
 call vundle#end()            " required
@@ -77,5 +78,5 @@ au BufNewFile,BufRead *.java imap sopl System.out.println("
 au BufNewFile,BufRead *.java imap nclass class  {<Enter>public static void main(String[] args) {<Enter><Tab><Backspace><Enter>}<Enter>}<Up><Up><Up><Up><Right><Right><Right><Right><Right>
 
 au BufNewFile,BufRead *.md set colorcolumn=0
-set updatetime=500
+set updatetime=1500
 au BufNewFile,BufRead *.md autocmd CursorHold,CursorHoldI <buffer> write

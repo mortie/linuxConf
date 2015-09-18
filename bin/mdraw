@@ -5,15 +5,12 @@ if [ "$1" = "" ]; then
 	exit 1
 fi
 
-RP=$(echo $1 | perl -pe 's/\/home\/[^\/]+//')
-echo "$RP"
-echo "$1"
-exit 0
+RP=$(echo $1 | perl -pe 's/\/home\/[^\/]+(\/)?//')
 
 cd "$HOME"
 mkdir -p "$RP/imgs"
 P="$RP/imgs/$(date +%s).png"
 
-convert -size 500x300 'xc:rgba(255,255,255,0)' "$P"
+convert -size 500x200 'xc:rgba(255,255,255,0)' "$P"
 pinta "$P" 2>/dev/null
 echo "![$2](~/$P)" | mclip
