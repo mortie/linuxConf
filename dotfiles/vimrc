@@ -14,6 +14,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'FredKSchott/CoVim'
+Plugin 'scrooloose/syntastic'
 
  " Vundle end
 call vundle#end()            " required
@@ -80,3 +81,13 @@ au BufNewFile,BufRead *.java imap nclass class  {<Enter>public static void main(
 au BufNewFile,BufRead *.md set colorcolumn=0
 set updatetime=1500
 au BufNewFile,BufRead *.md autocmd CursorHold,CursorHoldI <buffer> write
+
+" Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
