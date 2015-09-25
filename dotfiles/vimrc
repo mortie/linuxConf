@@ -1,5 +1,6 @@
 set nocompatible               " be iMproved
 filetype off                   " required!
+silent exec '!stty -ixon'
 
  " Pachogen
 call pathogen#infect()
@@ -43,12 +44,15 @@ set listchars=tab:>.
 nmap <C-o> :
 nmap \p :set paste!<CR>
 nmap <C-c> <ESC>
+imap <C-c> <ESC>
 command BadTab call SetBadTab()
 function SetBadTab()
 	:set expandtab
 	:set smarttab
 endfunction
 command -nargs=* Draw :exec '!mdraw' expand('%:p:h') <f-args>
+set modeline
+set modelines=1
 
  " Search options
 set incsearch
@@ -59,11 +63,13 @@ set hlsearch
  " Disable swp
 set noswapfile
 
- " Dvorak: Fix hjkl navigation 
+ " Dvorak: Fix navigation 
 noremap h h
 noremap t k
 noremap n j
 noremap s l
+noremap <C-h> b
+noremap <C-s> w
 
  " Dvorak: Fix control keys
 noremap a v
@@ -77,10 +83,17 @@ set colorcolumn=80
 
 au BufNewFile,BufRead *.java imap sopl System.out.println("
 au BufNewFile,BufRead *.java imap nclass class  {<Enter>public static void main(String[] args) {<Enter><Tab><Backspace><Enter>}<Enter>}<Up><Up><Up><Up><Right><Right><Right><Right><Right>
+au BufNewFile,BufRead *.java command -nargs=1 Run :exec '!P=$(mktemp -u /tmp/vim.XXXXXXXX) && cp -r ' expand('%:p:h') ' $P && cd $P && javac *.java && java' <f-args> '; rm -r $P'
 
 au BufNewFile,BufRead *.md set colorcolumn=0
 set updatetime=1500
 au BufNewFile,BufRead *.md autocmd CursorHold,CursorHoldI <buffer> write
+au BufNewFile,BufRead *.md imap ae æ
+au BufNewFile,BufRead *.md imap aa å
+au BufNewFile,BufRead *.md imap oe ø
+au BufNewFile,BufRead *.md imap Ae Æ
+au BufNewFile,BufRead *.md imap Aa Å
+au BufNewFile,BufRead *.md imap Oe Ø
 
 " Syntastic
 set statusline+=%#warningmsg#
