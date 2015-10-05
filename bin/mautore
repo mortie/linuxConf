@@ -1,8 +1,16 @@
 #!/bin/bash
 
-DIR="."
-CMD="$1"
+if [ "$1" = "" ]; then
+	echo "Usage: $0 <command>"
+fi
 
+if [ "$2" = "" ]; then
+	DIR="."
+else
+	DIR="$2"
+fi
+
+CMD="$1"
 $CMD &
 PID=$!
 
