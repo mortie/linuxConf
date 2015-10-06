@@ -96,6 +96,8 @@ au BufNewFile,BufRead *.md imap Aa Å
 au BufNewFile,BufRead *.md imap Oe Ø
 
 " Syntastic
+let g:loaded_syntastic_java_javac_checker = 1
+
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
