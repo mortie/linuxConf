@@ -61,40 +61,6 @@ if [ $issues -ne 0 ]; then
 	fi
 fi
 
-echo "Copying dotfiles..."
-cd dotfiles
-for f in *; do
-	rm -rf "$HOME/.$f"
-	ln -s "$(pwd)/$f" "$HOME/.$f"
-done
-cd ..
-echo "Done."
-
-echo "Copying config files..."
-mkdir -p "$HOME/.config"
-cd config
-for f in *; do
-	rm -rf "$HOME/.config/$f"
-	ln -s "$(pwd)/$f" "$HOME/.config/$f"
-done
-cd ..
-echo "Done."
-
-echo "Copying executables..."
-mkdir -p "$HOME/bin"
-cd bin
-for f in *; do
-	rm -rf "$HOME/bin/$f"
-	ln -s "$(pwd)/$f" "$HOME/bin/$f"
-done
-cd ..
-echo "Done."
-
-echo "Copying assets..."
-rm -fr "$HOME/assets"
-ln -s "$(pwd)/assets" "$HOME/assets"
-echo "Done."
-
 if [ "$SHELL" != "/bin/zsh" ]; then
 	sudo chsh "$USER" -s /bin/zsh
 fi
