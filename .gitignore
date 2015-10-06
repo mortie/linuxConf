@@ -10,7 +10,7 @@
 !.config/fontconfig
 
 !.i3/*
-!.vim/*
+!.vim
 !.comptonrc
 !.i3status.conf
 !.irssi
