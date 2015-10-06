@@ -1,6 +1,17 @@
 *
+!.gitignore
+
+!assets
+!bin
+
+!.config
+.config/*
+!.config/dunst
+!.config/fontconfig
+
+!.i3/*
+!.vim/*
 !.comptonrc
-!.i3
 !.i3status.conf
 !.irssi
 !.mutt
@@ -8,7 +19,6 @@
 !.sxhkdrc
 !.tmux.conf
 !.urxvt
-!.vim
 !.vimrc
 !.wmrc
 !.Xresources

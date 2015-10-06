@@ -1,7 +1,0 @@
-nnoremap t k
-nnoremap n j
-nnoremap d f
-nnoremap D F
-set hintkeys=aoeusnthpc
-nnoremap <C-h> <C-o>
-nnoremap <C-s> <C-i>
