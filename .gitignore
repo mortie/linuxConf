@@ -9,7 +9,7 @@
 !.config/dunst
 !.config/fontconfig
 
-!.i3/*
+!.i3
 !.vim
 !.comptonrc
 !.i3status.conf
