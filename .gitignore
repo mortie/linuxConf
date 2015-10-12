@@ -2,7 +2,9 @@
 !.gitignore
 
 !assets
+!assets/*
 !bin
+!bin/*
 
 !.config
 .config/*

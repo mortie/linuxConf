@@ -6,15 +6,3 @@ function irc
 {
 	attach irc$1 | tee >(mbell "irc $1")
 }
-
-function maur
-{
-	DIR=$(pwd)
-	TMP=$(mktemp -d /tmp/aur.XXXXXXXX)
-	cd "$TMP"
-	git clone "https://aur.archlinux.org/${1}.git"
-	cd *
-	makepkg -sri
-	cd "$DIR"
-	rm -rf "$TMP"
-}
