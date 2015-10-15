@@ -4,13 +4,12 @@ TMP="$(mktemp /tmp/scrot.XXXXXXXX.png)"
 scrot "$TMP"
 
 convert "$TMP"   \
-	-scale 25%   \
-	-blur 0x4    \
-	-scale 400%  \
+	-scale 5%    \
+	-scale 2000% \
 	"$TMP"
 
 composite -gravity center ~/assets/img/lock.png "$TMP" "$TMP"
 
-i3lock -i "$TMP" -p default -n
+i3lock -e -i "$TMP" -n
 
 rm "$TMP"
