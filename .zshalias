@@ -6,3 +6,9 @@ function irc
 {
 	attach irc$1 | tee >(mbell "irc $1")
 }
+
+function mkcd
+{
+	mkdir "$1"
+	cd "$1"
+}
