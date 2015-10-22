@@ -14,7 +14,6 @@ call vundle#begin()
  " Plugins
 Plugin 'gmarik/Vundle.vim'
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'FredKSchott/CoVim'
 Plugin 'scrooloose/syntastic'
 
  " Vundle end

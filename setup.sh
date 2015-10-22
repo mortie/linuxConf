@@ -51,6 +51,8 @@ check_command "convert"
 check_command "pandoc"
 check_command "zathura"
 check_command "pinta"
+check_command "sxhkd"
+check_command "dmenu"
 
 if [ $issues -ne 0 ]; then
 	echo "Some things are missing. Continue? (y/n)"
