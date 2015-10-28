@@ -13,6 +13,7 @@
 
 !.i3
 !.vim
+.vim/.netrwhist
 !.comptonrc
 !.i3status.conf
 !.irssi
