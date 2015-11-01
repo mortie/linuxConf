@@ -15,6 +15,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'scrooloose/syntastic'
+Plugin 'terryma/vim-multiple-cursors'
 
  " Vundle end
 call vundle#end()            " required
@@ -105,3 +106,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+" Multiple Cursors
+
+let g:multi_cursor_quit_key='<C-c>'
