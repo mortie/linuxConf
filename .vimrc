@@ -21,6 +21,17 @@ Plugin 'terryma/vim-multiple-cursors'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+" Recursively source .lvimrc
+function RecSourceVimrc(path)
+	if !empty(globpath(a:path, "*"))
+		let rcpath = a:path . "/.lvimrc"
+		let parpath = a:path . "/.."
+		so rcpath
+		call RecSourceVimrc(parpath)
+	endif
+endfunction
+" call RecSourceVimrc(".")
+
 " Bind keys
 map <ScrollWheelUp> <C-Y><C-Y><C-Y>
 map <ScrollWheelDown> <C-E><C-E><C-E>
@@ -84,16 +95,17 @@ set colorcolumn=80
 au BufNewFile,BufRead *.java imap sopl System.out.println("
 au BufNewFile,BufRead *.java imap nclass class  {<Enter>public static void main(String[] args) {<Enter><Tab><Backspace><Enter>}<Enter>}<Up><Up><Up><Up><Right><Right><Right><Right><Right>
 au BufNewFile,BufRead *.java command -nargs=1 Run :exec '!P=$(mktemp -u /tmp/vim.XXXXXXXX) && cp -r ' expand('%:p:h') ' $P && cd $P && javac *.java && java' <f-args> '; rm -r $P'
+au BufNewFile,BufRead pascal2100/* BadTab
 
-au BufNewFile,BufRead *.md set colorcolumn=0
+au BufNewFile,BufRead *.mdn set colorcolumn=0
 set updatetime=1500
-au BufNewFile,BufRead *.md autocmd CursorHold,CursorHoldI <buffer> write
-au BufNewFile,BufRead *.md imap ae æ
-au BufNewFile,BufRead *.md imap aa å
-au BufNewFile,BufRead *.md imap oe ø
-au BufNewFile,BufRead *.md imap Ae Æ
-au BufNewFile,BufRead *.md imap Aa Å
-au BufNewFile,BufRead *.md imap Oe Ø
+au BufNewFile,BufRead *.mdn autocmd CursorHold,CursorHoldI <buffer> write
+au BufNewFile,BufRead *.mdn imap ae æ
+au BufNewFile,BufRead *.mdn imap aa å
+au BufNewFile,BufRead *.mdn imap oe ø
+au BufNewFile,BufRead *.mdn imap Ae Æ
+au BufNewFile,BufRead *.mdn imap Aa Å
+au BufNewFile,BufRead *.mdn imap Oe Ø
 
 " Syntastic
 let g:loaded_syntastic_java_javac_checker = 1
