@@ -107,6 +107,8 @@ au BufNewFile,BufRead *.mdn imap Ae Æ
 au BufNewFile,BufRead *.mdn imap Aa Å
 au BufNewFile,BufRead *.mdn imap Oe Ø
 
+au BufNewFile,BufRead *.md set tw=79
+
 " Syntastic
 let g:loaded_syntastic_java_javac_checker = 1
 
