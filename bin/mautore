@@ -1,13 +1,19 @@
 #!/bin/bash
 
 if [ "$1" = "" ]; then
-	echo "Usage: $0 <command>"
+	echo "Usage: $0 <command> [dir] [time]"
 fi
 
 if [ "$2" = "" ]; then
 	DIR="."
 else
 	DIR="$2"
+fi
+
+if [ "$3" = "" ]; then
+	TIME="1"
+else
+	TIME="$3"
 fi
 
 CMD="$1"
@@ -17,9 +23,9 @@ PID=$!
 OLD=$(ls -R --full-time "$DIR")
 
 while :; do
-	NEW=$(ls -R --full-time "$DIR")
+	NEW=$(ls -R --full-time "$DIR"/*)
 	if [ "$OLD" != "$NEW" ]; then
-		OLD=$(ls -R --full-time "$DIR")
+		OLD=$(ls -R --full-time "$DIR"/*)
 
 		kill -9 "$PID" > /dev/null
 		[ $? != "0" ] && echo "Process $PID doesn't exist."
@@ -31,5 +37,5 @@ while :; do
 		echo -e "\a"
 	fi
 
-	sleep 1
+	sleep "$TIME"
 done

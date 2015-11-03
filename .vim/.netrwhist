@@ -1,6 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
-let g:netrw_dirhist_1='/var/www/mort.coffee/s/public/gamejam/es'
-let g:netrw_dirhist_2='/var/www/mort.coffee/blog/input'
-let g:netrw_dirhist_3='/var/www/mort.coffee/www/plugins/piwik'
-let g:netrw_dirhist_4='/var/www/mort.coffee/www/plugins/piwik/js'
