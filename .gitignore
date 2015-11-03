@@ -10,13 +10,14 @@
 .config/*
 !.config/dunst
 !.config/fontconfig
+!.irssi
+!.irssi/*
 
 !.i3
 !.vim
 .vim/.netrwhist
 !.comptonrc
 !.i3status.conf
-!.irssi
 !.mutt
 !.profile
 !.sxhkdrc
