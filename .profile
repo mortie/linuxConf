@@ -1,1 +1,1 @@
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin:/usr/games:/usr/local/games:$HOME/bin"
+export PATH="$PATH:$HOME/bin:$HOME/.local/bin"

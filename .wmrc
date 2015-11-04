@@ -1,4 +1,4 @@
-export PATH="$PATH:$HOME/bin"
+source "$HOME/.profile"
 export XDG_CONFIG_HOME="$HOME/.config"
 
 xset r rate 200 60

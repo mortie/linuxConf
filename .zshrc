@@ -1,5 +1,6 @@
 #locale
 export LC_ALL="en_US.UTF-8"
+source "$HOME/.profile"
 
 # neat aliases
 if [ $(uname) = "Linux" ]; then
@@ -10,7 +11,6 @@ fi
 alias ll="ls -l"
 alias la="ls -a"
 source ~/.zshalias
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin:/usr/games:/usr/local/games:$HOME/bin"
 
 # completion
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
