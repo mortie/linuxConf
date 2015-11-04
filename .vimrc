@@ -98,16 +98,20 @@ au BufNewFile,BufRead *.java command -nargs=1 Run :exec '!P=$(mktemp -u /tmp/vim
 au BufNewFile,BufRead pascal2100/* BadTab
 
 au BufNewFile,BufRead *.mdn set colorcolumn=0
-set updatetime=1500
+au BufNewFile,BufRead *.mdn set updatetime=1500
 au BufNewFile,BufRead *.mdn autocmd CursorHold,CursorHoldI <buffer> write
 au BufNewFile,BufRead *.mdn imap ae æ
 au BufNewFile,BufRead *.mdn imap aa å
 au BufNewFile,BufRead *.mdn imap oe ø
 au BufNewFile,BufRead *.mdn imap Ae Æ
 au BufNewFile,BufRead *.mdn imap Aa Å
+au BufNewFile,BufRead *.mdn imap noe no e<Left><Backspace><Right>
+au BufNewFile,BufRead *.mdn imap Noe No e<Left><Backspace><Right>
 au BufNewFile,BufRead *.mdn imap Oe Ø
+au BufNewFile,BufRead *.mdn set filetype=markdown
 
 au BufNewFile,BufRead *.md set tw=79
+au BufNewFile,BufRead *.md set filetype=markdown
 
 " Syntastic
 let g:loaded_syntastic_java_javac_checker = 1
