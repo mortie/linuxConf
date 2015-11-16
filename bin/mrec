@@ -11,7 +11,7 @@ elif [ "$1" = "" ]; then #stop recording
 	name=$(cat ~/.mrec/name)
 	pid=$(cat ~/.mrec/pid)
 
-	URL="d.mort.coffee/vid/${name}.ogv"
+	URL="d.mort.coffee/vid/${name}.mp4"
 	echo $URL | mclip
 
 	kill $pid
@@ -22,24 +22,35 @@ elif [ "$1" = "" ]; then #stop recording
 		sleep 0.1;
 	done
 
-	mupload ~/.mrec/rec.ogv "vid/${name}.ogv"
+	if [ $(cat ~/.mrec/noup) = "1" ]; then
+		mv ~/.mrec/rec.mp4 ~/mrec.mp4
+		mnotify "mrec" "File is now in ~/mrec.mp4"
+	else
+		mupload ~/.mrec/rec.mp4 "vid/${name}.mp4"
+
+		if [ $? -eq 0 ]; then
+			mnotify "mrec" "File uploaded to $URL"
+		else
+			merror "mrec" "Couldn't upload recording."
+			echo "An error occurred." 1>&2
+			exit 1
+		fi
+	fi
 
 	rm -rf ~/.mrec
-
-	if [ $? -eq 0 ]; then
-		mnotify "mrec" "File uploaded to $URL"
-	else
-		merror "mrec" "Couldn't upload recording."
-		echo "An error occurred." 1>&2
-		exit 1
-	fi
 else #start recording
 	rm -rf ~/.mrec
 	mkdir ~/.mrec
 	sleep 0.2
 	echo "$1" > ~/.mrec/name
 
-	recordmydesktop --no-sound --width $W --height $H -o ~/.mrec/rec.ogv > ~/.mrec/log 2>&1 &
+	ffmpeg -f x11grab -r 30 -s "${W}x${H}" -i :0.0 -vcodec libx264 -threads 0 ~/.mrec/rec.mp4 > ~/.mrec/log 2>&1 &
 
 	echo $! > ~/.mrec/pid
+
+	if [ "$2" = "noup" ]; then
+		echo "1" > ~/.mrec/noup
+	else
+		echo "0" > ~/.mrec/noup
+	fi
 fi
