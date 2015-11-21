@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ $(which sha512sum) ]; then
+	cat - | sha512sum
+elif [ $(which shasum) ]; then
+	cat - | shasum -a 512
+else
+	echo "No shasum installed." 1>&2
+	exit 1
+fi
