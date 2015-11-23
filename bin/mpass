@@ -57,7 +57,7 @@ if [ "$1" = "create" ]; then
 
 	enc=$(cat "$TMP_OUT")
 
-	passsum=$(getpass | sha512sum | cut -d ' ' -f 1)
+	passsum=$(getpass | mshasum | cut -d ' ' -f 1)
 
 	code=$(curl -k -s -X POST -d "$enc" "https://pass.mort.coffee/put/$2/$passsum")
 	tryerr "$code"
