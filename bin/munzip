@@ -5,15 +5,15 @@ if [ "$1" = "" ]; then
 	exit 1;
 fi
 
-if [ "$1" = *.tar.gz ]; then
+if [[ "$1" == *.tar.gz ]]; then
 	tar vxzf "$1"
-elif [ "$1" = *.tar.bz2 ]; then
+elif [[ "$1" == *.tar.bz2 ]]; then
 	tar vjxf "$1"
-elif [ "$1" = *.tar.xz ]; then
+elif [[ "$1" == *.tar.xz$ ]]; then
 	tar vxJf "$1"
-elif [ "$1" = *.zip ]; then
+elif [[ "$1" == *.zip ]]; then
 	unzip "$1"
-elif [ "$1" = *.tgz ]; then
+elif [[ "$1" == *.tgz ]]; then
 	tar vxzf "$1"
 else
 	echo "Unknown format."
