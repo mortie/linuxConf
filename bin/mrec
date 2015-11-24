@@ -26,7 +26,7 @@ elif [ "$1" = "" ]; then #stop recording
 		mv ~/.mrec/rec.mp4 ~/mrec.mp4
 		mnotify "mrec" "File is now in ~/mrec.mp4"
 	else
-		mupload ~/.mrec/rec.mp4 "vid/${name}.mp4"
+		mupload-weblet ~/.mrec/rec.mp4 "vid/${name}.mp4"
 
 		if [ $? -eq 0 ]; then
 			mnotify "mrec" "File uploaded to $URL"

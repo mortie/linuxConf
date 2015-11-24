@@ -1,0 +1,22 @@
+#!/bin/bash
+
+OS=$(uname)
+
+if [ "$1" == "" ] || [ "$2" == "" ]; then
+	echo "mupload-weblet <file> <name>"
+	exit 1
+elif [ ! -f "$1" ]; then
+	echo "File $1 doesn't exist."
+	exit 1
+fi
+
+URL="http://s.mort.coffee/d/$2"
+
+echo "$URL" | mclip
+
+scp "$1" "martin@weblet.mort.coffee:/var/www/mort.coffee/s/public/d/$2"
+if [ $? -eq 0 ]; then
+	echo "$URL"
+else
+	exit 1
+fi
