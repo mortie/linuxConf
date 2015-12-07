@@ -24,3 +24,5 @@ PROMPT_HOST="%{${fg_bold[yellow]}%}%m "
 PROMPT_CWD="%{${fg_bold[cyan]}%}%~ "
 PROMPT_ARROW="%(?:%{$fg_bold[green]%}$ :%{$fg_bold[red]%}$ %s)"
 PS1="$PROMPT_HOST$PROMPT_CWD$PROMPT_ARROW%{$reset_color%}"
+
+export TERM="xterm"
