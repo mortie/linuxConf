@@ -115,7 +115,7 @@ au BufNewFile,BufRead *.md set tw=79
 au BufNewFile,BufRead *.md set filetype=markdown
 
 au BufNewFile,BufRead *.html imap htinit <!DOCTYPE html><Enter><html><Enter><head><enter><meta charset="utf-8"><enter><title></title><enter></head><enter><body><enter></body><enter></html><Up><Up><Up><Up><Right><Right><Right><Right><Right><Right><Right><Right>
-au BufNewFile,BufRead *.html imap htag <Esc>vbyi<<Esc><Right>wi<Right>></<Esc>pi<Right>><Esc>bb<Right>i
+au BufNewFile,BufRead *.html imap htag <Esc>vbyi<<Esc>A></<Esc>pi<Right>><Esc>bb<Right>i
 
 " Syntastic
 let g:loaded_syntastic_java_javac_checker = 1
