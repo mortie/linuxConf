@@ -46,6 +46,7 @@ set tabstop=4
 set shiftwidth=4
 set rnu
 :let g:session_autosave = 'no'
+set iskeyword+=-
 
 " Replace characters
 set list
@@ -113,7 +114,8 @@ au BufNewFile,BufRead *.mdn set filetype=markdown
 au BufNewFile,BufRead *.md set tw=79
 au BufNewFile,BufRead *.md set filetype=markdown
 
-au BufNewFile,BufRead *.html imap htinit <!DOCTYPE html><Enter><html><Enter><head><enter><meta charset="utf-8"><enter><title></title><enter></head><enter><body><enter></body><enter></html><up><up><up><up><right><right><right><right><right><right><right><right>
+au BufNewFile,BufRead *.html imap htinit <!DOCTYPE html><Enter><html><Enter><head><enter><meta charset="utf-8"><enter><title></title><enter></head><enter><body><enter></body><enter></html><Up><Up><Up><Up><Right><Right><Right><Right><Right><Right><Right><Right>
+au BufNewFile,BufRead *.html imap htag <Esc>vbyi<<Esc><Right>wi<Right>></<Esc>pi<Right>><Esc>bb<Right>i
 
 " Syntastic
 let g:loaded_syntastic_java_javac_checker = 1
