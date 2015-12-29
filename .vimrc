@@ -88,8 +88,9 @@ noremap a v
 noremap o y
 noremap e p
 
- " Make nxc look like C
+ " File types
 au BufNewFile,BufRead *.nxc set filetype=c
+au BufNewFile,BufRead *.pl6 set filetype=perl6
 
 set colorcolumn=80
 

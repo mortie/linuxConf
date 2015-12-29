@@ -5,6 +5,7 @@ ECODE=0
 
 if [ "$1" = "" ]; then
 	echo "mshot <name>"
+	exit 1
 fi
 
 sleep 0.2
