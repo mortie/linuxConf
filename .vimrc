@@ -50,7 +50,7 @@ set iskeyword+=-
 
 " Replace characters
 set list
-set listchars=tab:>.
+set listchars=tab:>-
 
  " Useful things
 nmap <C-o> :

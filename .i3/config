@@ -181,6 +181,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
 	status_command i3status
+	separator_symbol " | "
 
 	colors {
 		focused_workspace  $border $background $text
