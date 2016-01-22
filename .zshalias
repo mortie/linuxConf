@@ -4,6 +4,7 @@ alias sudo="sudo env PATH=$PATH"
 alias ytdl="youtube-dl"
 alias c="fasd_cd -d"
 alias please="history -1 | awk '{\$1=\"\"; print substr(\$0,2)}' | xargs sudo"
+alias rand="LC_ALL=C tr -dc A-Za-z0-9_ < /dev/urandom | head -c $1"
 
 function irc
 {

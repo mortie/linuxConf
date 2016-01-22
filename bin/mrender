@@ -6,7 +6,7 @@ function render()
 {
 	C=$(cat "$1")
 	echo -n "$C" | mformat
-	echo -n "$C" | mformat | pandoc --latex-engine=xelatex -B "$HOME/bin/mrender.tex" -o "$2"
+	echo -n "$C" | mformat | pandoc --latex-engine=pdflatex -B "$HOME/bin/mrender.tex" -o "$2"
 }
 
 function fileinfo()

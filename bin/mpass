@@ -1,5 +1,12 @@
 #!/bin/bash
 
+if [ "$1" = "" ]; then
+	echo "Usage:"
+	echo -e "\tmpass create <name>"
+	echo -e "\tmpass get <name> [type|out]"
+	exit 1
+fi
+
 TMP_IN=$(mktemp /tmp/mpass.XXXXXXXXXX)
 TMP_OUT=$(mktemp /tmp/mpass.XXXXXXXXXX)
 
@@ -91,6 +98,10 @@ elif [ "$1" = "get" ]; then
 	if [ "$3" = "type" ]; then
 		sleep 1
 		xdotool type "$chars"
+
+	# Output the password if the user wants that
+	elif [ "$3" = "out" ]; then
+		echo "$chars"
 
 	# Just put it in the clipboard if the user doesn't want it typed
 	else

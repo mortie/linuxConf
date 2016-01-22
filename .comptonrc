@@ -1,6 +1,6 @@
 # Opacity
 menu-opacity = 1;
-#inactive-opacity = 0.9;
+inactive-opacity = 1;
 #0.96;
 
 fading = true;
@@ -19,5 +19,5 @@ fade-out-step = 0.1;
 wintypes:
 {
 #  dock = { opacity = 0.6 };
-  tooltip = { opacity = 0.8 };
+  tooltip = { opacity = 1 };
 };

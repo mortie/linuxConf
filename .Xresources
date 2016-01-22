@@ -1,4 +1,4 @@
-URxvt.font:                 xft:Inconsolata:size=12
+URxvt.font:                 xft:Inconsolata:size=14
 URxvt.letterSpace:          -1
  
 ! XFT and Font settings

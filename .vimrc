@@ -16,6 +16,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'scrooloose/syntastic'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'scrooloose/nerdtree'
 
  " Vundle end
 call vundle#end()            " required
@@ -82,6 +83,17 @@ noremap n j
 noremap s l
 noremap <C-h> b
 noremap <C-s> w
+augroup dirmap_dvorak_fix
+	autocmd!
+	autocmd filetype nerdtree call Fix_dirmap_dvorak()
+	autocmd filetype netrw call Fix_dirmap_dvorak()
+augroup END
+function! Fix_dirmap_dvorak()
+	noremap <buffer> h h
+	noremap <buffer> t k
+	noremap <buffer> n j
+	noremap <buffer> s l
+endfunction
 
  " Dvorak: Fix control keys
 noremap a v
