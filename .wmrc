@@ -12,3 +12,5 @@ sh ~/.startup.sh
 
 synclient RTCornerButton=0
 synclient VertEdgeScroll=0
+
+sshfs serve.mort.coffee:sshfs ssh
