@@ -29,3 +29,6 @@ PROMPT_ARROW="%(?:%{$fg_bold[green]%}$ :%{$fg_bold[red]%}$ %s)"
 PS1="$PROMPT_HOST$PROMPT_CWD$PROMPT_ARROW%{$reset_color%}"
 
 export TERM="xterm"
+
+# gem
+PATH="$PATH:$HOME/.gem/ruby/2.3.0/bin"
