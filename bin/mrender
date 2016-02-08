@@ -1,12 +1,16 @@
 #!/bin/bash
 
 TMP=$(mktemp /tmp/mrender.XXXXXXXX.pdf)
+DIR=$(pwd)
 
 function render()
 {
 	C=$(cat "$1")
-	echo -n "$C" | mformat
-	echo -n "$C" | mformat | pandoc --latex-engine=pdflatex -B "$HOME/bin/mrender.tex" -o "$2"
+	F=$(echo -n "$C" | mformat)
+	cd ~
+	echo -n "$F"
+	echo -n "$F" | pandoc --latex-engine=pdflatex -B "$HOME/bin/mrender.tex" -o "$2"
+	cd "$DIR"
 }
 
 function fileinfo()
@@ -33,13 +37,14 @@ elif [ "$2" = "" ]; then
 	PID="$!"
 
 	sleep 1;
-	F=$(fileinfo "$FILE")
+	OLD=$(ls -R --full-time "$FILE")
 	while :; do
+		NEW=$(ls -R --full-time "$FILE")
 
 		# Rerender if file changes
-		if [ "$F" != "$(fileinfo "$FILE")" ]; then
-			F=$(fileinfo "$FILE")
+		if [ "$OLD" != "$NEW" ]; then
 			echo "File changed, rerendering."
+			OLD="$NEW"
 			render "$FILE" "$TMP"
 		fi
 
