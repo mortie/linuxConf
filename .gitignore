@@ -10,6 +10,7 @@
 .config/*
 !.config/dunst
 !.config/fontconfig
+!.config/fish
 !.irssi
 !.irssi/*
 

@@ -64,8 +64,4 @@ if [ $issues -ne 0 ]; then
 	fi
 fi
 
-if [ "$SHELL" != "/bin/zsh" ]; then
-	sudo chsh "$USER" -s /bin/zsh
-fi
-
 echo "Everything set up!"

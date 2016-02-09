@@ -46,7 +46,7 @@ filetype plugin indent on
 set tabstop=4
 set shiftwidth=4
 set rnu
-:let g:session_autosave = 'no'
+":let g:session_autosave = 'no'
 set iskeyword+=-
 
 " Replace characters
