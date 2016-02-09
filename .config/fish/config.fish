@@ -1,3 +1,5 @@
+cat .zshalias | sed 's/{//; s/}/end/' | source -
+
 set fish_greeting ""
 set fish_color_command "yellow"
 
