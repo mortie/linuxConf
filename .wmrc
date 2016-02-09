@@ -6,7 +6,7 @@ setxkbmap dvorak -option "ctrl:nocaps" -option "altwin:swap_alt_win"
 compton --config ~/.comptonrc --backend glx --vsync opengl-swc --paint-on-overlay &
 feh --bg-scale ~/background.jpg
 
-sxhkd -c ~/.sxhkdrc &
+SHELL=/bin/sh sxhkd -c ~/.sxhkdrc &
 
 sh ~/.startup.sh
 

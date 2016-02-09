@@ -1,4 +1,4 @@
-cat .zshalias | sed 's/{//; s/}/end/' | . -
+cat ~/.shrc | sed 's/{//; s/}/end/; s/fi/end/; s/;\s*then//' | . -
 
 set fish_greeting ""
 set fish_color_command "yellow"

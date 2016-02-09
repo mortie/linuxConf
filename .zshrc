@@ -10,7 +10,7 @@ else
 fi
 alias ll="ls -l"
 alias la="ls -a"
-source ~/.zshalias
+source ~/.shrc
 
 # completion
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
