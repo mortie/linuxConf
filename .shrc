@@ -1,0 +1,24 @@
+export SHRC=1
+
+alias attach="ssh serve.mort.coffee -t \"tmux attach -t $1\""
+alias weblet="ssh weblet.mort.coffee -t \"tmux attach -t $1\""
+alias sudo="sudo env PATH=$PATH"
+alias ytdl="youtube-dl"
+alias c="fasd_cd -d"
+alias please="history -1 | awk '{\$1=\"\"; print substr(\$0,2)}' | xargs sudo"
+alias rand="LC_ALL=C tr -dc A-Za-z0-9_ < /dev/urandom | head -c $1"
+
+function irc
+{
+	attach irc$1 | tee >(mbell "irc $1")
+}
+
+function mkcd
+{
+	mkdir "$1"
+	cd "$1"
+}
+
+if [ ! "$TMUX" = "" ]; then
+	export TERM="xterm-256color"
+fi
