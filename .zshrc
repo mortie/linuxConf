@@ -18,9 +18,6 @@ zstyle ':completion:*' menu select
 autoload -U compinit
 compinit
 
-# fasd
-eval "$(fasd --init auto)"
-
 # prompt
 autoload -U colors && colors
 PROMPT_HOST="%{${fg_bold[yellow]}%}%m "
