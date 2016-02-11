@@ -11,9 +11,10 @@
 !.config/dunst
 !.config/fontconfig
 !.config/fish
+!.config/stupidterm.ini
+
 !.irssi
 !.irssi/*
-
 !.i3
 !.vim
 .vim/.netrwhist

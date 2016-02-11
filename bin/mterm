@@ -1,0 +1,8 @@
+#!/bin/bash
+for term in st urxvt; do
+	echo "$term"
+	if which "$term" &> /dev/null; then
+		$term
+		exit $!
+	fi
+done
