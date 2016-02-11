@@ -193,8 +193,8 @@ bar {
 }
 
 bindsym $mod+space scratchpad show
-for_window [instance="urxvt-scratchpad"] move scratchpad
-exec urxvt -name "urxvt-scratchpad" -e tmux
+for_window [instance="scratchpad"] move scratchpad
+exec mterm "tmux" "scratchpad"
 
 for_window [class="Pinta"] floating enable
 

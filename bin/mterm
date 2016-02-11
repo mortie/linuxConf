@@ -1,8 +1,35 @@
 #!/bin/bash
-for term in st urxvt; do
-	echo "$term"
-	if which "$term" &> /dev/null; then
-		$term
-		exit $!
+
+function isterm()
+{
+	which "$1" &> /dev/null
+}
+
+P_CMD=""
+P_NAME=""
+P_EXEC=""
+
+if isterm st; then
+	P_CMD="st"
+	if [ "$1" != "" ]; then
+		P_EXEC="-- $1"
 	fi
-done
+	if [ "$2" != "" ]; then
+		P_NAME="--name '$2'"
+	fi
+elif isterm urxvt; then
+	P_CMD="urxvt"
+	if [ "$1" != "" ]; then
+		P_EXEC="-e '$1'"
+	fi
+	if [ "$2" != "" ]; then
+		P_NAME="-name '$2'"
+	fi
+else
+	echo "No suitable terminal found."
+	exit 1
+fi
+
+C="$P_CMD $P_NAME $P_EXEC"
+eval "$C"
+exit $?
