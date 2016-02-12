@@ -3,7 +3,6 @@ cat ~/.shrc \
 	| sed 's/fi/end/' \
 	| sed 's/;\s*then//' \
 	| sed 's/export \(..*\)=/set -x \1 /' \
-	| sed 's/$1/$argv[1]/' \
 	| . -
 
 set fish_greeting ""
