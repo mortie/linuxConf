@@ -1,4 +1,10 @@
-cat ~/.shrc | sed 's/{//; s/}/end/; s/fi/end/; s/;\s*then//; s/export \(..*\)=/set -x \1 /' | . -
+cat ~/.shrc \
+	| sed 's/{//; s/}/end/' \
+	| sed 's/fi/end/' \
+	| sed 's/;\s*then//' \
+	| sed 's/export \(..*\)=/set -x \1 /' \
+	| sed 's/$1/$argv[1]/' \
+	| . -
 
 set fish_greeting ""
 set fish_color_command "yellow"
