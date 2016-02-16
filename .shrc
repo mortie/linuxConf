@@ -12,8 +12,9 @@ function irc
 
 function mkcd
 {
-	mkdir "$1"
-	cd "$1"
+	DIR="$1"
+	mkdir "$DIR"
+	cd "$DIR"
 }
 
 if [ ! "$TMUX" = "" ]; then

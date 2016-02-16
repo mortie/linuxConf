@@ -58,6 +58,8 @@ nmap <C-o> :
 nmap \p :set paste!<CR>
 nmap <C-c> <ESC>
 imap <C-c> <ESC>
+nmap <C-t> <ESC><Up>A<Enter>
+imap <C-t> <ESC><Up>A<Enter>
 command BadTab call SetBadTab()
 function SetBadTab()
 	:set expandtab
@@ -126,6 +128,8 @@ au BufNewFile,BufRead *.mdn set filetype=markdown
 
 au BufNewFile,BufRead *.md set tw=79
 au BufNewFile,BufRead *.md set filetype=markdown
+
+au BufNewFile,BufRead *.hbs set filetype=html
 
 au BufNewFile,BufRead *.html imap htinit <!DOCTYPE html><Enter><html><Enter><head><enter><meta charset="utf-8"><enter><title></title><enter></head><enter><body><enter></body><enter></html><Up><Up><Up><Up><Right><Right><Right><Right><Right><Right><Right><Right>
 au BufNewFile,BufRead *.html imap htag <Esc>vbyi<<Esc>A></<Esc>pi<Right>><Esc>bb<Right>i
