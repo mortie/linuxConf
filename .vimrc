@@ -60,6 +60,7 @@ nmap <C-c> <ESC>
 imap <C-c> <ESC>
 nmap <C-t> <ESC><Up>A<Enter>
 imap <C-t> <ESC><Up>A<Enter>
+nmap s/ :perldo s/
 command BadTab call SetBadTab()
 function SetBadTab()
 	:set expandtab
@@ -147,5 +148,4 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 " Multiple Cursors
-
 let g:multi_cursor_quit_key='<C-c>'
