@@ -1,30 +1,29 @@
 #!/bin/bash
 
-function out()
-{
-	echo "$(tput bold)$1$(tput sgr0)"
-}
+BOLD=$(tput bold)
+RESET=$(tput sgr0)
 
 DIR=$(pwd)
 TMP=$(mktemp -d /tmp/jac.XXXXXXXX)
 cp -r * "$TMP"
 cd "$TMP"
 
-javac *.java
+javac *.java 2> >(grep -v '^Picked up _JAVA_OPTIONS:')
 if [ $? != 0 ]; then
 	cd "$DIR"
 	rm -r "$TMP"
 	exit 1
 fi
 
-echo
-
 RAN=0
 for F in $(grep -il *.java -e 'public static void main'); do
-	NAME=$(sed 's/\.java$//' <<< "$F")
-	out "$(tput bold)java '$NAME' $@$(tput sgr0)"
-	java "$NAME" $@
 	echo
+	NAME=$(sed 's/\.java$//' <<< "$F")
+	echo -n "$BOLD"
+	echo -n "java '$NAME'"
+	for A in "$@"; do echo -n " '$A'"; done
+	echo "$RESET"
+	java "$NAME" "$@" 2> >(grep -v '^Picked up _JAVA_OPTIONS:')
 	RAN=1
 done
 [ "$RAN" != 1 ] && out "No appropriate java files found."
