@@ -1,3 +1,7 @@
+if [ -f ~/.mlocked ]; then
+	mlock
+fi
+
 source "$HOME/.profile"
 export XDG_CONFIG_HOME="$HOME/.config"
 

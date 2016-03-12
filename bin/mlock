@@ -1,5 +1,6 @@
 #!/bin/bash
 
+touch ~/.mlocked
 TMP="$(mktemp /tmp/scrot.XXXXXXXX.png)"
 scrot "$TMP"
 
@@ -13,3 +14,4 @@ composite -gravity center ~/assets/img/lock.png "$TMP" "$TMP"
 i3lock -e -i "$TMP" -n
 
 rm "$TMP"
+rm ~/.mlocked

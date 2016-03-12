@@ -26,7 +26,7 @@ for F in $(grep -il *.java -e 'public static void main'); do
 	java "$NAME" "$@" 2> >(grep -v '^Picked up _JAVA_OPTIONS:')
 	RAN=1
 done
-[ "$RAN" != 1 ] && out "No appropriate java files found."
+[ "$RAN" != 1 ] && echo "${BOLD}No appropriate java files found.$RESET"
 
 cd "$DIR"
 rm -r "$TMP"
