@@ -20,3 +20,13 @@ function mkcd
 if [ ! "$TMUX" = "" ]; then
 	export TERM="xterm-256color"
 fi
+
+function cd
+{
+	builtin cd $@
+	pwd > ~/.lastdir
+}
+
+if [ -f ~/.lastdir ]; then
+	cd $(cat ~/.lastdir)
+fi

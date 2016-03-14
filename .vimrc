@@ -135,6 +135,8 @@ au BufNewFile,BufRead *.hbs set filetype=html
 au BufNewFile,BufRead *.html imap htinit <!DOCTYPE html><Enter><html><Enter><head><enter><meta charset="utf-8"><enter><title></title><enter></head><enter><body><enter></body><enter></html><Up><Up><Up><Up><Right><Right><Right><Right><Right><Right><Right><Right>
 au BufNewFile,BufRead *.html imap htag <Esc>vbyi<<Esc>A></<Esc>pi<Right>><Esc>bb<Right>i
 
+au BufNewFile,BufRead *.json imap tag <Esc>bi"<Esc>A":<Space>
+
 " Syntastic
 let g:loaded_syntastic_java_javac_checker = 1
 
