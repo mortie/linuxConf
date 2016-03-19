@@ -50,6 +50,7 @@ set rnu
 set iskeyword+=-
 set foldmethod=indent
 au BufRead * normal zR
+set linebreak
 
 " Replace characters
 set list
