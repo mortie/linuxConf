@@ -2,21 +2,9 @@
 export LC_ALL="en_US.UTF-8"
 source "$HOME/.profile"
 
-# make zsh behave
-
-#Rebind HOME and END to do the decent thing:
-bindkey '\e[1~' beginning-of-line
-bindkey '\e[4~' end-of-line
-case $TERM in (xterm*)
-bindkey '\eOH' beginning-of-line
-bindkey '\eOF' end-of-line
-esac
-#And DEL too, as well as PGDN and insert:
-bindkey '\e[3~' delete-char
-bindkey '\e[6~' end-of-history
-bindkey '\e[2~' redisplay
-#Now bind pgup to paste the last word of the last command,
-bindkey '\e[5~' insert-last-word
+# delete key
+bindkey "^[[3~" delete-char
+bindkey "^[3;5~" delete-char
 
 # neat aliases
 if [ $(uname) = "Linux" ]; then

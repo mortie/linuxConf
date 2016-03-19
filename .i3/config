@@ -194,7 +194,7 @@ bar {
 
 bindsym $mod+space scratchpad show
 for_window [instance="scratchpad"] move scratchpad
-exec mterm "tmux" "scratchpad"
+exec scratchpad
 
 for_window [class="Pinta"] floating enable
 

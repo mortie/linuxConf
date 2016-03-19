@@ -48,6 +48,8 @@ set shiftwidth=4
 set rnu
 ":let g:session_autosave = 'no'
 set iskeyword+=-
+set foldmethod=indent
+au BufRead * normal zR
 
 " Replace characters
 set list
