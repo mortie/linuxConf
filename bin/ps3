@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if [ $(whoami) != "root" ]; then
+	echo "Must be executed as root."
+	exit 1
+fi
+
+driver()
+{
+	xboxdrv --id "$1" --detach-kernel-driver
+}
+
+driver 0 &
+PID1="$!"
+driver 1 &
+PID2="$!"
+driver 2 &
+PID3="$!"
+driver 3 &
+PID4="$!"
+
+cleanup()
+{
+	echo "Exiting..."
+	kill "$PID1" -9 &> /dev/null
+	kill "$PID2" -9 &> /dev/null
+	kill "$PID3" -9 &> /dev/null
+	kill "$PID4" -9 &> /dev/null
+
+	sleep 0.2
+	exit 1
+}
+
+trap cleanup SIGINT SIGTERM EXIT
+
+while :; do sleep 1; done

@@ -2,10 +2,6 @@
 export LC_ALL="en_US.UTF-8"
 source "$HOME/.profile"
 
-# delete key
-bindkey "^[[3~" delete-char
-bindkey "^[3;5~" delete-char
-
 # neat aliases
 if [ $(uname) = "Linux" ]; then
 	alias ls="ls --color=always"
@@ -31,3 +27,7 @@ PS1="$PROMPT_HOST$PROMPT_CWD$PROMPT_ARROW%{$reset_color%}"
 
 # gem
 PATH="$PATH:$HOME/.gem/ruby/2.3.0/bin"
+
+# binds
+bindkey -e
+bindkey "\e[3~" delete-char

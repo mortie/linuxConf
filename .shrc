@@ -29,5 +29,5 @@ function cd
 }
 
 if [ -f ~/.lastdir ]; then
-	cd $(cat ~/.lastdir)
+	cd "$(cat ~/.lastdir)"
 fi
