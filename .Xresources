@@ -28,29 +28,40 @@ URxvt.iso14755_52: false
 URxvt.keysym.Shift-Control-C: perl:clipboard:copy
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 
-URxvt.background: #000000
+!URxvt.background: #000000
+URxvt*background: rgba:0000/0000/0000/c800
+URxvt*depth: 32
 URxvt.foreground: #EEEEEE
+
 ! black
-URxvt.color0: #000000
-URxvt.color8: #606060
+*.color0:       #000000
+*.color8:       #595959
+
 ! red
-URxvt.color1: #B85335
-URxvt.color9: #CF6A4C
+*.color1:       #f075ac
+*.color9:       #f5a2b5
+
 ! green
-URxvt.color2: #799D6A
-URxvt.color10: #99AD6A
+*.color2:       #8eed74
+*.color10:      #a3f2a0
+
 ! yellow
-URxvt.color3: #FFB964
-URxvt.color11: #FAD07A
+*.color3:       #f0b575
+*.color11:      #f5cda2
+
 ! blue
-URxvt.color4: #667899
-URxvt.color12: #8197BF
+*.color4:       #7594f0
+*.color12:      #a2c1f5
+
 ! magenta
-URxvt.color5: #8787AF
-URxvt.color13: #C6B6EE
+*.color5:       #df77ed
+*.color13:      #d2a2f5
+
 ! cyan
-URxvt.color6: #668799
-URxvt.color14: #8FBFDC
+*.color6:       #7ce5eb
+*.color14:      #a0e9f2
+
 ! white
-URxvt.color7: #EEEEEE
-URxvt.color15: #FFFFFF
+*.color7:       #f5f5f5
+*.color15:      #fdfdfd
+
