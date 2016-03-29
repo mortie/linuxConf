@@ -1,4 +1,4 @@
 #!/bin/bash
-while :; do
+while [ $(pgrep scratchpad | wc -l) -le 2 ]; do
 	mterm "tmux" "scratchpad"
 done

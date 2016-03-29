@@ -29,9 +29,8 @@ URxvt.keysym.Shift-Control-C: perl:clipboard:copy
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 
 !URxvt.background: #000000
-URxvt*background: rgba:0000/0000/0000/c800
-URxvt*depth: 32
 URxvt.foreground: #EEEEEE
+URxvt.background: #000000
 
 ! black
 *.color0:       #000000
