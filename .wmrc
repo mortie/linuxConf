@@ -10,6 +10,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 xset r rate 200 60
 setxkbmap dvorak -option "ctrl:nocaps" -option "altwin:swap_alt_win"
 compton -c --config ~/.comptonrc --backend glx --vsync opengl-swc --paint-on-overlay &
+scratchpad &
 
 SHELL=/bin/sh sxhkd -c ~/.sxhkdrc &
 
