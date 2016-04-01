@@ -52,6 +52,10 @@ set foldmethod=indent
 au BufRead * normal zR
 set linebreak
 
+" Fix alt
+execute "set <M-t>=\et"
+execute "set <M-n>=\en"
+
 " Replace characters
 set list
 set listchars=tab:>-
@@ -63,6 +67,11 @@ nmap <C-c> <ESC>
 imap <C-c> <ESC>
 nmap <C-t> <ESC><Up>A<Enter>
 imap <C-t> <ESC><Up>A<Enter>
+nmap <M-t> <ESC>:m -2<Enter>
+imap <M-t> <ESC>:m -2<Enter>i
+nmap <M-n> <ESC>:m +1<Enter>
+imap <M-n> <ESC>:m +1<Enter>i
+
 vmap s/ :perldo s/
 command BadTab call SetBadTab()
 function SetBadTab()

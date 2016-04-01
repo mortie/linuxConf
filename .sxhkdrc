@@ -38,7 +38,7 @@ mod4 + shift + v
 
 # norwegian
 mod4 + Tab
-	setxkbmap {no, dvorak}
+	setxkbmap {no, dvorak} -option "ctrl:nocaps" -option "altwin:swap_alt_win"
 
 # lock screen
 mod4 + l
