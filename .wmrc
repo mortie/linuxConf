@@ -1,4 +1,9 @@
 feh --bg-fill ~/background.jpg &
+xrdb ~/.Xresources
+xrdb -override ~/.Xresources-override
+
+feh --bg-scale ~/background.jpg
+>>>>>>> 65de48ca720306ac9fffa24bd0f84bab35c3ad0a
 if [ -f ~/.mlocked ]; then
 	sleep 0.1
 	mlock
@@ -12,6 +17,7 @@ setxkbmap dvorak -option "ctrl:nocaps" -option "altwin:swap_alt_win"
 compton -c --config ~/.comptonrc --backend glx --vsync opengl-swc --paint-on-overlay &
 scratchpad &
 
+pkill -9 sxhkd
 SHELL=/bin/sh sxhkd -c ~/.sxhkdrc &
 
 sh ~/.startup.sh
