@@ -1,4 +1,4 @@
-feh --bg-scale ~/background.jpg
+feh --bg-fill ~/background.jpg &
 if [ -f ~/.mlocked ]; then
 	sleep 0.1
 	mlock
