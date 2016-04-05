@@ -9,15 +9,7 @@ P_CMD=""
 P_NAME=""
 P_EXEC=""
 
-if isterm st; then
-	P_CMD="st"
-	if [ "$1" != "" ]; then
-		P_EXEC="-- $1"
-	fi
-	if [ "$2" != "" ]; then
-		P_NAME="--name '$2'"
-	fi
-elif isterm urxvt; then
+if isterm urxvt; then
 	P_CMD="urxvt"
 	if [ "$1" != "" ]; then
 		P_EXEC="-e '$1'"
