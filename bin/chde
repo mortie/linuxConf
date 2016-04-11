@@ -1,0 +1,50 @@
+#!/bin/bash
+
+XSESSIONS="/usr/share/xsessions/"
+
+lower()
+{
+	echo "$1" | tr '[:upper:]' '[:lower:]'
+}
+
+getde()
+{
+	for F in $(ls "$XSESSIONS"); do
+		N=$(cat "$XSESSIONS/$F" | grep '^Name=' | cut -d '=' -f 2)
+		if [ "$(lower "$N")" = "$(lower "$1")" ]; then
+			echo $(cat "$XSESSIONS/$F" | grep '^Exec=' | cut -d '=' -f 2)
+		fi
+	done
+	echo ""
+}
+
+DE=""
+NAME="$@"
+if [ "$NAME" = "" ]; then
+	echo "Available DEs:"
+	for F in $(ls "$XSESSIONS"); do
+		echo $(cat "$XSESSIONS/$F" | grep '^Name=' | cut -d '=' -f 2)
+	done
+	while [ "$DE" = "" ]; do
+		read NAME
+
+		DE=$(getde "$NAME")
+
+		if [ "$DE" = "" ]; then
+			echo "No such entry: $NAME"
+			echo ""
+		fi
+	done
+
+else
+	DE=$(getde "$NAME")
+	if [ "$DE" = "" ]; then
+		echo "No such entry: $NAME"
+		exit 1
+	fi
+fi
+
+echo "Switching to $DE."
+echo "exec $DE" > ~/.xinitrc
+
+pkill X

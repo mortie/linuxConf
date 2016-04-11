@@ -48,15 +48,13 @@ set shiftwidth=4
 set rnu
 ":let g:session_autosave = 'no'
 set iskeyword+=-
-set foldmethod=indent
-au BufRead * normal zR
 set linebreak
 
 " Fix alt
 execute "set <M-t>=\et"
 execute "set <M-n>=\en"
 
-" Replace characters
+" Visible tabs
 set list
 set listchars=tab:>-
 
@@ -120,6 +118,8 @@ au BufNewFile,BufRead *.nxc set filetype=c
 au BufNewFile,BufRead *.pl6 set filetype=perl6
 
 set colorcolumn=80
+highlight ColorColumn ctermfg=0
+highlight ColorColumn ctermbg=10
 
 au BufNewFile,BufRead *.java imap sopl System.out.println("
 au BufNewFile,BufRead *.java imap nmain class  {<Enter>public static void main(String[] args) {<Enter><Tab><Backspace><Enter>}<Enter>}<Up><Up><Up><Up><Right><Right><Right><Right><Right>
@@ -143,6 +143,8 @@ au BufNewFile,BufRead *.md set tw=79
 au BufNewFile,BufRead *.md set filetype=markdown
 
 au BufNewFile,BufRead *.hbs set filetype=html
+
+au BufNewFile,BufRead *.fxml set filetype=xml
 
 au BufNewFile,BufRead *.html imap htinit <!DOCTYPE html><Enter><html><Enter><head><enter><meta charset="utf-8"><enter><title></title><enter></head><enter><body><enter></body><enter></html><Up><Up><Up><Up><Right><Right><Right><Right><Right><Right><Right><Right>
 au BufNewFile,BufRead *.html imap htag <Esc>vbyi<<Esc>A></<Esc>pi<Right>><Esc>bb<Right>i
