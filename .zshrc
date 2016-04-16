@@ -1,6 +1,5 @@
 # locale
 export LC_ALL="en_US.UTF-8"
-source "$HOME/.profile"
 
 # neat aliases
 if [ $(uname) = "Linux" ]; then

@@ -1,9 +1,11 @@
 #!/bin/sh
 
-synclient -l | grep -P "TouchpadOff\s+\=\s+0"
+DEVICE=11
+
+xinput list-props "$DEVICE" | grep -P '\(138\):\s+1'
 
 if [ $? -eq 0 ]; then
-	synclient TouchpadOff=1
+	xinput set-prop "$DEVICE" 138 0
 else
-	synclient TouchpadOff=0
+	xinput set-prop "$DEVICE" 138 1
 fi

@@ -1,0 +1,1 @@
+martin@serve.mort.coffee:cloud/ /home/martin/cloud fuse.sshfs noauto,x-systemd.automount,_netdev,users,exec,idmap=user,IdentityFile=/home/martin/.ssh/id_rsa,allow_other,follow_symlinks,reconnect,ServerAliveInterval=5,ServerAliveCountMax=2 0 0

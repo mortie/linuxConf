@@ -1,66 +1,42 @@
 #!/bin/bash
 
-issues=0
-
-check_command()
-{
-	exists=0
-
-	for arg in "$@"; do
-		which "$arg" &> /dev/null
-		if [ "$?" -eq 0 ]; then
-			exists=1
-		fi
-	done
-
-	if [ "$exists" -eq 0 ]; then
-		issues=1
-		echo "Missing command: $@"
-	fi
-}
-
-check_file()
-{
-	if [ ! -f "$1" ]; then
-		issues=1
-		echo "Missing file: $1"
-	fi
-}
-
-check_command "zsh"
-check_command "tmux"
-check_command "vim"
-check_command "python"
-check_command "xdotool"
-check_command "compton"
-check_command "amixer"
-check_command "xbacklight"
-check_command "feh"
-check_command "xsel" "pbcopy"
-check_command "recordmydesktop"
-check_command "mplayer"
-check_command "scrot" "screencapture"
-check_command "notify-send" "terminal-notifier"
-check_command "dunst" "terminal-notifier"
-check_command "curl"
-check_command "sudo"
-check_command "mutt"
-check_command "w3m"
-check_command "i3lock"
-check_command "convert"
-check_command "pandoc"
-check_command "zathura"
-check_command "pinta"
-check_command "sxhkd"
-check_command "dmenu"
-
-if [ $issues -ne 0 ]; then
-	echo "Some things are missing. Continue? (y/n)"
-	read response
-	if [ "$response" != "y" ]; then
-		echo "Aborting."
-		exit 1
-	fi
+if [ $(whoami) != "root" ]; then
+	echo "Must be run as root."
+	exit 1
 fi
 
-echo "Everything set up!"
+deltacp()
+{
+	SRC="$1"
+	DST="$2"
+	START="#START MORTCUSTOM"
+	END="#END MORTCUSTOM"
+
+	if grep "$START" "$DST" > /dev/null; then
+		sed -i "/$START/,/$END/d" "$DST"
+	fi
+
+	echo "$START" >> "$DST"
+	cat "$SRC" >> "$DST"
+	echo "$END" >> "$DST"
+}
+
+cpr()
+{
+	rm -r "$2";
+	cp "$1" "$2";
+}
+
+cp setup/profile.sh /etc/profile.d/mort-custom.sh
+deltacp setup/fstab /etc/fstab
+
+mkdir -p tmp
+mkdir -p mnt
+mkdir -p src
+mkdir -p cloud
+[ ! -d uni ] && ln -s cloud/uni uni
+[ ! -d dev ] && ln -s cloud/dev dev
+
+cpr setup/config/dunst .config/dunst
+
+exit 0

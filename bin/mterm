@@ -12,7 +12,7 @@ P_EXEC=""
 if isterm urxvt; then
 	P_CMD="urxvt"
 	if [ "$1" != "" ]; then
-		P_EXEC="-e '$1'"
+		P_EXEC="-e sh -c '$1'"
 	fi
 	if [ "$2" != "" ]; then
 		P_NAME="-name '$2'"
