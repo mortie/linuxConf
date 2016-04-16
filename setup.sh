@@ -23,8 +23,8 @@ deltacp()
 
 cpr()
 {
-	rm -r "$2";
-	cp "$1" "$2";
+	rm -r "$2" &> /dev/null
+	cp -r "$1" "$2";
 }
 
 cp setup/profile.sh /etc/profile.d/mort-custom.sh
