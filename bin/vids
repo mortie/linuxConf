@@ -1,0 +1,213 @@
+#!/usr/bin/env python
+
+import curses
+import os
+import subprocess
+import traceback
+import sys
+
+class Conf:
+    VIDSFILE = ".vids"    
+
+class Colors:
+    DIR = 2
+    WATCHED = 3
+    META = 6
+
+class Keys:
+    UP = [65, 116, 107]
+    DOWN = [66, 110, 108]
+    ENTER = [10, 101]
+    SPACE = [32]
+    BACKSPACE = [127]
+
+class App:
+    scr = None
+    depth = 0
+
+    class Ent:
+        name = None
+        type = None
+        path = None
+
+        def __init__(self, name, type, path):
+            self.name = name
+            self.type = type
+            self.path = path
+
+    def __init__(self):
+        self.scr = curses.initscr()
+        curses.start_color()
+        curses.use_default_colors()
+        curses.noecho()
+        curses.cbreak()
+        for i in range(0, curses.COLORS):
+            curses.init_pair(i, i, -1)
+
+        self.list(os.getcwd())
+
+    def setwatched(self, vidspath, ent, watched):
+        if ent.name in watched: return
+        if ent.type == "dir": return
+
+        watched.append(ent.name)
+        with open(vidspath, "a+") as f:
+            f.write(ent.name+"\n")
+
+    def setunwatched(self, vidspath, ent, watched):
+        if ent.name not in watched: return
+        if ent.type == "dir": return
+
+        del watched[watched.index(ent.name)]
+
+        if len(watched) == 0:
+            os.remove(vidspath)
+        else:
+            with open(vidspath, "w") as f:
+                for w in watched:
+                    f.write(w+"\n")
+
+    def togglewatched(self, vidspath, ent, watched):
+        if ent.name in watched:
+            self.setunwatched(vidspath, ent, watched)
+        else:
+            self.setwatched(vidspath, ent, watched)
+
+    def watch(self, vidspath, ent, watched):
+        self.setwatched(vidspath, ent, watched)
+        cmds = [
+            "xdg-open",
+            "open"
+        ]
+
+        for cmd in cmds:
+            try:
+                subprocess.call([cmd, ent.path])
+                return
+            except: pass
+
+    def addstr(self, x, y, text, col=0):
+        scry, scrx = self.scr.getmaxyx()
+        if len(text) > scrx - 1:
+            text = text[:scrx - 1]
+
+        self.scr.addstr(x, y, text.ljust(scrx - 1), col)
+
+    def list(self, path):
+        self.depth += 1
+        self.scr.clear()
+        vidspath = os.path.join(path, Conf.VIDSFILE)
+
+        # Get watched entities
+        watched = []
+        if os.path.isfile(vidspath):
+            with open(vidspath, "r") as f:
+                for line in f:
+                    line = line.replace("\n", "")
+                    if (line == ""): continue
+                    watched.append(line)
+
+        # Get entities
+        ents = None
+        entDirs = []
+        entFiles = []
+        for f in sorted(os.listdir(path)):
+            if f[0] == '.':
+                continue
+
+            p = os.path.join(path, f)
+            if os.path.isfile(p):
+                entFiles.append(self.Ent(f, "file", p))
+            elif os.path.isdir(p):
+                entDirs.append(self.Ent(f, "dir", p))
+        ents = entDirs + entFiles
+
+        scry, scrx = self.scr.getmaxyx()
+        char = 0
+        ent = None
+
+        cursor = 0
+        scroll = 0
+        relcursor = 0
+
+        # Main loop, with drawing and key events
+        while True:
+
+            if cursor < len(ents):
+                ent = ents[cursor]
+            else:
+                ent = None
+
+            # Keys
+            if char in Keys.UP:
+                if cursor > 0:
+                    cursor -= 1
+                    if relcursor < 4 and scroll > 0:
+                        scroll -= 1
+            elif char in Keys.DOWN:
+                if cursor < len(ents) - 1:
+                    cursor += 1
+                    if relcursor > scry - 6 and scroll < len(ents) - scry + 1:
+                        scroll += 1
+            elif char in Keys.ENTER and ent != None:
+                if ent.type == "dir":
+                    self.list(os.path.join(path, ent.name))
+                else:
+                    self.watch(vidspath, ent, watched)
+                    self.scr.clear()
+            elif char in Keys.SPACE and ent != None:
+                self.togglewatched(vidspath, ent, watched)
+            elif char in Keys.BACKSPACE and self.depth > 1:
+                self.depth -= 1
+                self.scr.clear()
+                return
+            
+            relcursor = cursor - scroll
+
+            # Draw relevant entities
+            linenum = 0
+            for i in range(scroll,  scry - 1 + scroll):
+                if i >= len(ents):
+                    self.addstr(linenum, 0, "")
+                    continue
+
+                ent = ents[i]
+
+                col = 0
+                text = ent.name
+                if cursor == i:
+                    col |= curses.A_BOLD
+                    text = "* "+ent.name
+                else:
+                    text = "  "+ent.name
+
+                if ent.name in watched:
+                    col |= curses.color_pair(Colors.WATCHED)
+                elif ent.type == "dir":
+                    col |= curses.color_pair(Colors.DIR)
+
+                self.addstr(i - scroll, 0, text, col)
+                linenum += 1
+
+            self.addstr(
+                scry - 1,
+                0,
+                path,
+                curses.color_pair(Colors.META) | curses.A_BOLD
+            )
+
+            # Wait for char
+            char = self.scr.getch()
+
+try:
+    app = App()
+except KeyboardInterrupt:
+    pass
+except Exception:
+    curses.endwin()
+    try:
+        os.system("stty sane")
+    except: pass
+    traceback.print_exc()
+finally:
+    curses.endwin()
