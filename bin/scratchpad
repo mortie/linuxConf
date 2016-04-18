@@ -1,4 +1,4 @@
 #!/bin/bash
 while [ $(pgrep scratchpad | wc -l) -le 2 ]; do
-	mterm "tmux" "scratchpad"
+	mterm "tmux new -s scratchpad || tmux attach -t scratchpad" "scratchpad"
 done

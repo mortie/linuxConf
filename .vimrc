@@ -136,6 +136,8 @@ au BufNewFile,BufRead *.mdn imap Ae Æ
 au BufNewFile,BufRead *.mdn imap Aa Å
 au BufNewFile,BufRead *.mdn imap noe no e<Left><Backspace><Right>
 au BufNewFile,BufRead *.mdn imap Noe No e<Left><Backspace><Right>
+au BufNewFile,BufRead *.mdn imap metae meta e<Left><Backspace><Right>
+au BufNewFile,BufRead *.mdn imap Metae Meta e<Left><Backspace><Right>
 au BufNewFile,BufRead *.mdn imap Oe Ø
 au BufNewFile,BufRead *.mdn set filetype=markdown
 

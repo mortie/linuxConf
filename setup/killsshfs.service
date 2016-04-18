@@ -1,0 +1,10 @@
+[Unit]
+After=network.target
+
+[Service]
+RemainAfterExit=yes
+ExecStart=-/bin/true
+ExecStop=-/usr/bin/pkill sshfs
+
+[Install]
+WantedBy=multi-user.target
