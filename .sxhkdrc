@@ -1,10 +1,10 @@
 # audio
 XF86Audio{Raise,Lower}Volume
-	pactl set-sink-volume 0 {+5%,-5%} && killall -USR1 i3status
+	maudio volume {+5%,-5%} && killall -USR1 i3status
 shift + XF86Audio{Raise,Lower}Volume
-	pactl set-sink-volume 0 {+1%,-1%} && killall -USR1 i3status
+	maudio volume {+1%,-1%} && killall -USR1 i3status
 XF86AudioMute
-	pactl set-sink-mute 0 toggle
+	maudio mute toggle
 
 # brightness
 XF86MonBrightness{Up,Down}

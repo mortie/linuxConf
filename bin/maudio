@@ -1,0 +1,19 @@
+#!/bin/bash
+
+getsinks()
+{
+	echo $(pactl list | grep '^Card #' | sed 's/.*#//')
+}
+
+allsinks()
+{
+	for SINK in $(getsinks); do
+		pactl "$1" "$SINK" "$2"
+	done
+}
+
+if [ "$1" = "volume" ]; then
+	allsinks "set-sink-volume" "$2"
+elif [ "$1" = "mute" ]; then
+	allsinks "set-sink-mute" "$2"
+fi
