@@ -1,5 +1,10 @@
 #!/bin/bash
 
+err()
+{
+	echo "$@" > /dev/stderr
+}
+
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
@@ -17,13 +22,13 @@ fi
 
 RAN=0
 for F in $(grep -il *.java -e 'public static void main'); do
-	echo
+	err
 	NAME=$(sed 's/\.java$//' <<< "$F")
-	echo -n "$BOLD"
-	echo -n "java '$NAME'"
-	for A in "$@"; do echo -n " '$A'"; done
-	echo "$RESET"
-	java "$NAME" "$@" 2> >(grep -v '^Picked up _JAVA_OPTIONS:')
+	err -n "$BOLD"
+	err -n "java '$NAME'"
+	for A in "$@"; do err -n " '$A'"; done
+	err "$RESET"
+	java "$NAME" "$@"
 	RAN=1
 done
 [ "$RAN" != 1 ] && echo "${BOLD}No appropriate java files found.$RESET"

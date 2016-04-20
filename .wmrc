@@ -15,7 +15,6 @@ setxkbmap dvorak -option "ctrl:nocaps" -option "altwin:swap_alt_win"
 compton -c --config ~/.comptonrc --backend glx --vsync opengl-swc --paint-on-overlay &
 scratchpad &
 
-krunner &
 gnome-keyring-daemon &
 nm-applet &
 
