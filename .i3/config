@@ -18,6 +18,9 @@ hide_edge_borders both
 for_window [class="^.*"] border pixel 1
 for_window [title="^float$"] floating enable
 
+# floating sizes
+for_window [title=".*"] resize set width 1000 height 1000
+
 #colors
 #solarized theme, weird
 set $background #000000
