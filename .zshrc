@@ -1,6 +1,9 @@
 # locale
 export LC_ALL="en_US.UTF-8"
 
+# Editor
+export EDITOR=vim
+
 # neat aliases
 if [ $(uname) = "Linux" ]; then
 	alias ls="ls --color=always"

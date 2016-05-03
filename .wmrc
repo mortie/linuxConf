@@ -16,7 +16,6 @@ compton -c --config ~/.comptonrc --backend glx --vsync opengl-swc --paint-on-ove
 maudio volume 0%
 
 scratchpad &
-~/.i3/m3/m3 &
 gnome-keyring-daemon &
 nm-applet &
 
