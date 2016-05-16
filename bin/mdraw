@@ -1,5 +1,9 @@
 #!/bin/bash
 
+################################################
+## This script is for drawing. Used with vim. ##
+################################################
+
 if [ "$1" = "" ]; then
 	echo "Usage: $0 <path> [name]"
 	exit 1

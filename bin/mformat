@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+/********************************************************************
+ ** This script converts a file into something pandoc understands. **
+ ********************************************************************/
+
 var str = "";
 
 var reps = [

@@ -1,4 +1,8 @@
 #!/bin/bash
 
+#######################################
+## Displays non-error notifications. ##
+#######################################
+
 msound ding
 mnotificationwrapper "low" "$HOME/assets/img/info.png" "$1" "$2"

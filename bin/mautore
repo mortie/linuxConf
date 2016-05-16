@@ -1,5 +1,10 @@
 #!/bin/bash
 
+###########################################################
+## This scripts lets you run/restart programs every time ##
+## files in a directory changes.                         ##
+###########################################################
+
 if [ "$1" = "" ]; then
 	echo "Usage: $0 <command> [dir] [time]"
 fi

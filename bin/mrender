@@ -1,5 +1,11 @@
 #!/bin/bash
 
+#########################################################
+## Uses mformat to format text, then feed it to pandoc ##
+## to create a pdf. Displays the pdf with zathura if   ##
+## no output file is specified.                        ##
+#########################################################
+
 TMP=$(mktemp /tmp/mrender.XXXXXXXX.pdf)
 DIR=$(pwd)
 
@@ -9,7 +15,7 @@ function render()
 	F=$(echo -n "$C" | mformat)
 	cd ~
 	echo -n "$F"
-	echo -n "$F" | pandoc --latex-engine=pdflatex -B "$HOME/bin/mrender.tex" -o "$2"
+	echo -n "$F" | pandoc --standalone --latex-engine=pdflatex -B "$HOME/bin/mrender.tex" -o "$2"
 	cd "$DIR"
 }
 

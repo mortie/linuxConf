@@ -1,5 +1,10 @@
 #!/bin/bash
 
+####################################################
+## This script starts a terminal, optionally with ##
+## a window name and executing a command.         ##
+####################################################
+
 function isterm()
 {
 	which "$1" &> /dev/null

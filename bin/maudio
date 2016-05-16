@@ -1,5 +1,9 @@
 #!/bin/bash
 
+########################################################################
+## This script controls the volume of all audio cards simultaneously. ##
+########################################################################
+
 getsinks()
 {
 	echo $(pactl list | grep '^Card #' | sed 's/.*#//')

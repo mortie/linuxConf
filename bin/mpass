@@ -1,5 +1,9 @@
 #!/bin/bash
 
+########################################################
+## This script lets you create or retrieve passwords. ##
+########################################################
+
 if [ "$1" = "" ]; then
 	echo "Usage:"
 	echo -e "\tmpass create <name>"

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+######################################################
+## This is a script for creating and reading notes. ##
+######################################################
+
 if [ "$1" = "read" ]; then
 	if [ "$2" = "" ]; then
 		echo "Usage: mnote read <subject> <yyyy-mm-dd>"

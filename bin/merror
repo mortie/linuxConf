@@ -1,4 +1,8 @@
 #!/bin/bash
 
+##############################
+## Send error notification. ##
+##############################
+
 msound error
 mnotificationwrapper "critical" "$HOME/assets/img/error.png" "$1" "$2"

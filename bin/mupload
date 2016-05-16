@@ -1,6 +1,8 @@
 #!/bin/bash
 
-OS=$(uname)
+#############################################
+## This script uploads a file to a server. ##
+#############################################
 
 if [ "$1" == "" ] || [ "$2" == "" ]; then
 	echo "mupload <file> <name>"

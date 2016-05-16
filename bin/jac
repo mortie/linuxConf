@@ -1,5 +1,11 @@
 #!/bin/bash
 
+####################################################################
+## This script copies everything to a temporary directory,        ##
+## compiles it with javac, and then executes all classes          ##
+## with a main method. Useful to avoid clutter with .class files. ##
+####################################################################
+
 err()
 {
 	echo "$@" > /dev/stderr

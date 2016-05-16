@@ -1,5 +1,9 @@
 #!/bin/bash
 
+##############################################################
+## This script lets you copy/paste things on multiple OSes. ##
+##############################################################
+
 OS=$(uname)
 
 if [ "$1" = "paste" ]; then

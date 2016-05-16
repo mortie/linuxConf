@@ -1,5 +1,9 @@
 #!/bin/bash
 
+######################################################
+## Wrapper for notifications on multiple platforms. ##
+######################################################
+
 OS=$(uname)
 
 if [ "$OS" = "Darwin" ]; then

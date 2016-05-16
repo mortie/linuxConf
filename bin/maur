@@ -1,5 +1,10 @@
 #!/bin/bash
 
+######################################################################
+## This script installs things from the AUR by cloning the git repo ##
+## and running the pkgbuild script.                                 ##
+######################################################################
+
 DIR=$(pwd)
 TMP=$(mktemp -d /tmp/aur.XXXXXXXX)
 cd "$TMP"

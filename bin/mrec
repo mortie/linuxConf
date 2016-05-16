@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#########################################################
+## Script to record the screen and put it on a server. ##
+#########################################################
+
 OS=$(uname)
 
 source ~/.mrecrc

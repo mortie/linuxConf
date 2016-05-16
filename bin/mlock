@@ -1,5 +1,9 @@
 #!/bin/bash
 
+###################################
+## This script locks the screen. ##
+###################################
+
 touch ~/.mlocked
 TMP="$(mktemp /tmp/scrot.XXXXXXXX.png)"
 scrot "$TMP"

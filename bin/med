@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#####################################################################
+## Editor which takes input from stdin and sends output to stdout. ##
+#####################################################################
+
 TMP_FILE=$(mktemp /tmp/med.XXXXXXXXXX)
 
 cat - > "$TMP_FILE"

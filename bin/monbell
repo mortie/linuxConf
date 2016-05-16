@@ -1,5 +1,9 @@
 #!/bin/bash
 
+###################################################################
+## This script runs a command whenever it sees a bell character. ##
+###################################################################
+
 while true; do
 	# Read, ignoring escapes, until the first bell char if
 	# no bell is received in 10 seconds, the script loops

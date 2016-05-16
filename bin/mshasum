@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#############################
+## Gets a sha512 checksum. ##
+#############################
+
 if [ $(which sha512sum) ]; then
 	cat - | sha512sum
 elif [ $(which shasum) ]; then

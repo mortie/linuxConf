@@ -37,7 +37,7 @@ mod4 + shift + v
 	xdotool click 2
 
 # norwegian
-shift + Tab
+ctrl + Tab
 	setxkbmap {no, dvorak} -option "ctrl:nocaps" -option "altwin:swap_alt_win"
 mod4 + Tab
 	setxkbmap {no, dvorak} -option "ctrl:nocaps" -option "altwin:swap_alt_win"

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#############################################
+## This script unzips various zip formats. ##
+#############################################
+
 if [ "$1" = "" ]; then
 	echo "Usage: munzip <file>";
 	exit 1;
