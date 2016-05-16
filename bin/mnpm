@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#####################################################################
+## This script installs NPM modules in a temp directory.           ##
+## Some npm modules want symlinks, but sshfs doesn't support that. ##
+#####################################################################
+
+set -e
+
+DIR=$(pwd)
+TMP=$(mktemp -d /tmp/mnpm.XXXXXXXX)
+cd "$TMP"
+
+echo "Installing to $TMP..."
+npm init -y
+npm install --save "$1"
+
+echo "Rsyncing..."
+rsync --recursive --info=progress2 --times --compress node_modules "$DIR"
+
+echo "Done."
+echo "#############" >> "$DIR/package.json"
+grep -A 2 '"dependencies":' package.json >> "$DIR/package.json"
+echo "Added dependency to the end of your package.json. You have to manually edit it."
+
+cd "$DIR"
+rm -r "$TMP"
