@@ -1,0 +1,10 @@
+#!/bin/bash
+
+git add .
+git status
+
+echo "Commit message?"
+if read message; then
+	git commit -m "$message"
+	git push
+fi

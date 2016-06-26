@@ -19,6 +19,8 @@ elif [[ "$1" == *.zip ]]; then
 	unzip "$1"
 elif [[ "$1" == *.tgz ]]; then
 	tar vxzf "$1"
+elif [[ "$1" == *.7z ]]; then
+	7za e "$1"
 else
 	echo "Unknown format."
 	exit 1
