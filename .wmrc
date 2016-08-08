@@ -22,7 +22,7 @@ nm-applet &
 pkill -9 sxhkd
 SHELL=/bin/sh sxhkd -c ~/.sxhkdrc &
 
-synclient RTCornerButton=0
-synclient VertEdgeScroll=0
+synclient RTCornerButton=0 &
+synclient VertEdgeScroll=0 &
 
 sh ~/.startup.sh &
