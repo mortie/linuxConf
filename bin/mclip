@@ -13,6 +13,13 @@ if [ "$1" = "paste" ]; then
 		xsel -ob
 	fi
 
+elif [ "$1" = "type" ]; then
+	if [ "$OS" = "Darwin" ]; then
+		echo "Unavailable on Darwin."
+	else
+		xdotool type $(xsel -b)
+	fi
+
 elif [ "$1" = "get" ]; then
 	if [ "$OS" = "Darwin" ]; then
 		pbpaste

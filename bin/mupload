@@ -16,7 +16,7 @@ URL="http://d.mort.coffee/$2"
 
 echo "$URL" | mclip
 
-scp "$1" "martin@serve.mort.coffee:cloud/www/$2"
+scp "$1" "martin@serve.mort.coffee:remote/www/$2"
 if [ $? -eq 0 ]; then
 	echo "$URL"
 else
