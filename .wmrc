@@ -18,6 +18,7 @@ maudio volume 0%
 scratchpad &
 gnome-keyring-daemon &
 nm-applet &
+owncloud &
 
 pkill -9 sxhkd
 SHELL=/bin/sh sxhkd -c ~/.sxhkdrc &

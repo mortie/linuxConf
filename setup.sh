@@ -58,6 +58,8 @@ mkdir -p src
 fixuser src
 mkdir -p cloud
 fixuser cloud
+mkdir -p remote
+fixuser remote
 [ ! -h uni ] && ln -s cloud/uni uni
 fixuser uni
 [ ! -h dev ] && ln -s cloud/dev dev
