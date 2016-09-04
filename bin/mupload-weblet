@@ -10,7 +10,7 @@ elif [ ! -f "$1" ]; then
 	exit 1
 fi
 
-URL="http://s.mort.coffee/d/$2"
+URL="https://s.mort.coffee/d/$2"
 
 echo "$URL" | mclip
 
