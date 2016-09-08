@@ -25,6 +25,25 @@ function tryifi
 	ssh -t martindn@login.ifi.uio.no 'rm -rf ~/tmp; mv ~/tmp2 ~/tmp; cd ~/tmp; bash'
 }
 
+function pack
+{
+	if [ "$1" = "" ]; then
+		NAME="martindn"
+	else
+		NAME="$1"
+	fi
+	DIR=$(pwd)
+	TMP=$(mktemp -d /tmp/pack.XXXXXXXXXX)
+	cp -r * "$TMP"
+	cd "$TMP"
+	mkdir "$NAME"
+	mv * "$NAME" 2>/dev/null
+	tar -czvf "$NAME.tgz" "$NAME"
+	cd "$DIR"
+	mv "$TMP/$NAME.tgz" .
+	rm -rf "$TMP"
+}
+
 if [ ! "$TMUX" = "" ]; then
 	export TERM="xterm-256color"
 fi
