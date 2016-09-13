@@ -16,7 +16,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'scrooloose/syntastic'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'scrooloose/nerdtree'
+Plugin 'rust-lang/rust.vim'
 
  " Vundle end
 call vundle#end()            " required
