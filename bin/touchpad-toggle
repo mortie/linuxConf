@@ -3,8 +3,8 @@
 for pad in $(touchpad-id); do
 	xinput list-props $pad | grep -P '\(138\):\s+1'
 	if [ $? -eq 0 ]; then
-		xinput set-prop $pad 138 0
+		xinput disable $pad
 	else
-		xinput set-prop $pad 138 1
+		xinput enable $pad
 	fi
 done
