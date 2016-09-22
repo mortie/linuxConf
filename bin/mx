@@ -1,4 +1,14 @@
 #!/bin/bash
 
-[ "$1" != "" ] && echo "$1" > ~/.xinitrc
+if [ "$1" != "" ]; then
+	if [ "$1" = "kde" ]; then
+		cmd="startkde"
+	elif [ "$1" = "gnome" ]; then
+		cmd="gnome-session"
+	else
+		cmd="$1"
+	fi
+	echo "exec $cmd" > ~/.xinitrc
+fi
+
 startx
