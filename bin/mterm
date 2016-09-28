@@ -14,7 +14,15 @@ P_CMD=""
 P_NAME=""
 P_EXEC=""
 
-if isterm urxvt; then
+if isterm termite; then
+	P_CMD="termite"
+	if [ "$1" != "" ]; then
+		P_EXEC="-e 'sh -c \"$1\"'"
+	fi
+	if [ "$2" != "" ]; then
+		P_NAME="--name '$2'"
+	fi
+elif isterm urxvt; then
 	P_CMD="urxvt"
 	if [ "$1" != "" ]; then
 		P_EXEC="-e sh -c '$1'"
