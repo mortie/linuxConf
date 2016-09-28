@@ -12,10 +12,10 @@
 set $mod Mod4
 
 # hide dem borders
-hide_edge_borders both
+# hide_edge_borders both
 
 # hide dem titles
-for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 0
 for_window [title="^float$"] floating enable
 
 # floating sizes
@@ -23,6 +23,7 @@ for_window [title=".*"] resize set width 1000 height 1000
 
 #colors
 #solarized theme, weird
+set $win-border #555555
 set $background #000000
 set $back-inact #1C1C1C
 set $back-urgen #B85335
@@ -34,7 +35,7 @@ set $t-in #888888
 set $t-ur #CF6A4C
 
 # class                 border  background  text  indicator
-client.focused          $border $background $text #31392F
+client.focused          $border $win-border $text #31392F
 client.focused_inactive $bor-in $background $t-in #676767
 client.unfocused        $bor-in $background $t-in #515151
 client.urgent           $bor-ur $back-urgen $t-ur #900000
@@ -197,6 +198,7 @@ bar {
 
 bindsym $mod+space scratchpad show
 for_window [instance="scratchpad"] move scratchpad
+for_window [instance="scratchpad"] border pixel 2
 for_window [class="Pinta"] floating enable
 
 # Gaps
