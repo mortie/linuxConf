@@ -145,6 +145,7 @@ au BufNewFile,BufRead *.md set tw=79
 au BufNewFile,BufRead *.md set filetype=markdown
 
 au BufNewFile,BufRead *.hbs set filetype=html
+au BufNewFile,BufRead *.rs set filetype=rust
 
 au BufNewFile,BufRead *.fxml set filetype=xml
 
@@ -167,3 +168,6 @@ let g:syntastic_check_on_wq = 0
 
 " Multiple Cursors
 let g:multi_cursor_quit_key='<C-c>'
+
+" No, rust, I don't want your stinking spaces
+let g:rust_recommended_style = 0
