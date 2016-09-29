@@ -12,10 +12,10 @@
 set $mod Mod4
 
 # hide dem borders
-# hide_edge_borders both
+hide_edge_borders both
 
 # hide dem titles
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 2
 for_window [title="^float$"] floating enable
 
 # floating sizes
@@ -198,7 +198,6 @@ bar {
 
 bindsym $mod+space scratchpad show
 for_window [instance="scratchpad"] move scratchpad
-for_window [instance="scratchpad"] border pixel 2
 for_window [class="Pinta"] floating enable
 
 # Gaps
