@@ -19,6 +19,7 @@ scratchpad &
 gnome-keyring-daemon &
 nm-applet &
 owncloud &
+dunst &
 
 pkill -9 sxhkd
 SHELL=/bin/sh sxhkd -c ~/.sxhkdrc &

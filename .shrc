@@ -19,10 +19,15 @@ function mkcd
 	cd "$DIR"
 }
 
+function cptemp
+{
+	scp -r . "${1}:tmp2"
+	ssh -t "$1" 'rm -rf ~/tmp; mv ~/tmp2 ~/tmp; cd ~/tmp; bash'
+}
+
 function tryifi
 {
-	scp -r . martindn@login.ifi.uio.no:tmp2
-	ssh -t martindn@login.ifi.uio.no 'rm -rf ~/tmp; mv ~/tmp2 ~/tmp; cd ~/tmp; bash'
+	cptemp martindn@login.ifi.uio.no
 }
 
 function pack
@@ -32,6 +37,7 @@ function pack
 	else
 		NAME="$1"
 	fi
+	rm "$NAME.tgz"
 	DIR=$(pwd)
 	TMP=$(mktemp -d /tmp/pack.XXXXXXXXXX)
 	cp -r * "$TMP"

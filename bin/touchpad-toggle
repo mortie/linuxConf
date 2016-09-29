@@ -4,7 +4,9 @@ for pad in $(touchpad-id); do
 	xinput list-props $pad | grep -P '\(138\):\s+1'
 	if [ $? -eq 0 ]; then
 		xinput disable $pad
+		mnotifymsg "Touchpad Disabled"
 	else
 		xinput enable $pad
+		mnotifymsg "Touchpad Enabled"
 	fi
 done
