@@ -7,7 +7,9 @@ import traceback
 import sys
 
 class Conf:
-    VIDSFILE = ".vids"    
+    VIDSFILE = ".vids"
+    PATHFILE = os.path.expanduser("~/.vidspath")
+    IGNOREDEXTS = [".srt"]
 
 class Colors:
     DIR = 2
@@ -44,7 +46,18 @@ class App:
         for i in range(0, curses.COLORS):
             curses.init_pair(i, i, -1)
 
-        self.list(os.getcwd())
+        goto = os.getcwd().split("/")
+        goto.pop(0)
+        if os.path.isfile(Conf.PATHFILE):
+            with open(Conf.PATHFILE, "r") as f:
+                goto = f.readline().split("/")
+                if goto[0] == "": goto.pop(0)
+
+        self.list("/", goto)
+
+    def writepath(self, path):
+        with open(Conf.PATHFILE, "w") as f:
+            f.write(path)
 
     def setwatched(self, vidspath, ent, watched):
         if ent.name in watched: return
@@ -82,7 +95,7 @@ class App:
 
         for cmd in cmds:
             try:
-                subprocess.call([cmd, ent.path])
+                subprocess.Popen([cmd, ent.path])
                 return
             except: pass
 
@@ -93,27 +106,32 @@ class App:
 
         self.scr.addstr(x, y, text.ljust(scrx - 1), col)
 
-    def list(self, path):
-        self.depth += 1
-        self.scr.clear()
-        vidspath = os.path.join(path, Conf.VIDSFILE)
+    def getfiles(self, path, vidspath):
 
         # Get watched entities
         watched = []
         if os.path.isfile(vidspath):
-            with open(vidspath, "r") as f:
-                for line in f:
-                    line = line.replace("\n", "")
-                    if (line == ""): continue
-                    watched.append(line)
+            f = open(vidspath, "r")
+
+            for line in f:
+                line = line.replace("\n", "")
+                if line == "": continue
+
+                watched.append(line)
+
+            f.close()
 
         # Get entities
-        ents = None
         entDirs = []
         entFiles = []
         for f in sorted(os.listdir(path)):
             if f[0] == '.':
                 continue
+
+            ignored = False
+            for ign in Conf.IGNOREDEXTS:
+                if f.endswith(ign): ignored = True
+            if ignored: continue
 
             p = os.path.join(path, f)
             if os.path.isfile(p):
@@ -122,6 +140,18 @@ class App:
                 entDirs.append(self.Ent(f, "dir", p))
         ents = entDirs + entFiles
 
+        return ents, watched
+
+    def list(self, path, goto=[]):
+        self.depth += 1
+
+        if len(goto) != 0:
+            p = os.path.join(path, goto.pop(0))
+            self.list(p, goto)
+
+        vidspath = os.path.join(path, Conf.VIDSFILE)
+        ents, watched = self.getfiles(path, vidspath)
+
         scry, scrx = self.scr.getmaxyx()
         char = 0
         ent = None
@@ -129,6 +159,8 @@ class App:
         cursor = 0
         scroll = 0
         relcursor = 0
+
+        self.scr.clear()
 
         # Main loop, with drawing and key events
         while True:
@@ -151,7 +183,14 @@ class App:
                         scroll += 1
             elif char in Keys.ENTER and ent != None:
                 if ent.type == "dir":
-                    self.list(os.path.join(path, ent.name))
+                    p = os.path.join(path, ent.name)
+
+                    # Write the new path, run list, which blocks until
+                    # the user goes back one level, at which point we can
+                    # write the old path again
+                    self.writepath(p)
+                    self.list(p)
+                    self.writepath(path)
                 else:
                     self.watch(vidspath, ent, watched)
                     self.scr.clear()
@@ -193,15 +232,16 @@ class App:
                 scry - 1,
                 0,
                 path,
-                curses.color_pair(Colors.META) | curses.A_BOLD
-            )
+                curses.color_pair(Colors.META) | curses.A_BOLD)
 
             # Wait for char
             char = self.scr.getch()
 
 try:
     app = App()
+    curses.endwin()
 except KeyboardInterrupt:
+    curses.endwin()
     pass
 except Exception:
     curses.endwin()
@@ -209,5 +249,3 @@ except Exception:
         os.system("stty sane")
     except: pass
     traceback.print_exc()
-finally:
-    curses.endwin()
