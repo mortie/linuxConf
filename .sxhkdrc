@@ -26,7 +26,7 @@ mod4 + comma
 
 # screenshot
 Print
-	mshot scr
+	mshot scr-#TIME
 
 # touchpad toggle
 mod4 + d

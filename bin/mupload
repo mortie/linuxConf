@@ -12,11 +12,13 @@ elif [ ! -f "$1" ]; then
 	exit 1
 fi
 
-URL="https://d.mort.coffee/$2"
+TIME=$(date +%s | tail -c 8)
+NAME=$(sed "s/#TIME/$TIME/" <<< "$2")
+URL="https://d.mort.coffee/$NAME"
 
 echo "$URL" | mclip
 
-scp "$1" "martin@serve.mort.coffee:remote/www/$2"
+scp "$1" "martin@serve.mort.coffee:remote/www/$NAME"
 if [ $? -eq 0 ]; then
 	echo "$URL"
 else

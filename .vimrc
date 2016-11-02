@@ -171,3 +171,6 @@ let g:multi_cursor_quit_key='<C-c>'
 
 " No, rust, I don't want your stinking spaces
 let g:rust_recommended_style = 0
+
+" I don't want sql key maps
+let g:omni_sql_no_default_maps = 1

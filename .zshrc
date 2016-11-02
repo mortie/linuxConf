@@ -33,3 +33,8 @@ PATH="$PATH:$HOME/.gem/ruby/2.3.0/bin"
 # binds
 bindkey -e
 bindkey "\e[3~" delete-char
+
+# TERM being xterm-termite causes issues, let's just set it to xterm
+case "$TERM" in
+	xterm-*) export TERM="xterm";;
+esac
