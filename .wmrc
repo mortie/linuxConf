@@ -17,8 +17,6 @@ maudio volume 0%
 
 scratchpad &
 gnome-keyring-daemon &
-nm-applet &
-owncloud &
 dunst &
 
 pkill -9 sxhkd
@@ -28,3 +26,21 @@ synclient RTCornerButton=0 &
 synclient VertEdgeScroll=0 &
 
 sh ~/.startup.sh &
+
+# delays aren't a great way to make sure they're started
+# in the correct order
+
+for p in redshift-gtk nm-applet owncloud nextcloud; do
+	pkill "$p"
+	echo killed $p: $?
+done
+
+sleep 0.1
+redshift-gtk &
+
+sleep 0.1
+nm-applet &
+
+sleep 0.1
+owncloud &
+nextcloud &
