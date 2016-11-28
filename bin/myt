@@ -7,19 +7,28 @@ if [ "$URL" = "" ]; then
 	exit 1
 fi
 
+# Start mpv
 mpv --x11-name myt-mpv "$URL" &
 PID=$!
 
-xdotool search --sync --classname 'myt-mpv' \
-	windowsize 480 270 \
-	windowmove 100% 100% \
+# If there's no process yet, it probably crashed
+sleep 1
+if ! kill -0 "$PID"; then
+	merror "Invalid URL"
+	exit 1
+fi
 
-xdotool search --sync --classname 'myt-mpv' \
-	windowmove --relative -- -480 -270
+# Notify
+mnotifymsg "Playing", "$URL"
 
-xdotool search --sync --classname 'myt-mpv' \
-	windowmove --relative -- -24 -24
+# Resize  and move
+WIN=$(xdotool search --sync --classname 'myt-mpv')
+xdotool windowsize "$WIN" 480 270
+xdotool windowmove "$WIN" 100% 100%
+xdotool windowmove --relative -- "$WIN" -480 -270
+xdotool windowmove --relative -- "$WIN" -24 -24
 
+# Don't quit until mpv stops
 while kill -0 "$PID"; do
 	sleep 1
 done

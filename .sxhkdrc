@@ -28,6 +28,10 @@ mod4 + comma
 Print
 	mshot scr-#TIME
 
+# popup video
+XF86AudioPlay
+	myt
+
 # touchpad toggle
 mod4 + d
 	touchpad-toggle
