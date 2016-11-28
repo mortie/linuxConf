@@ -118,8 +118,8 @@ au BufNewFile,BufRead *.nxc set filetype=c
 au BufNewFile,BufRead *.pl6 set filetype=perl6
 
 set colorcolumn=80
-highlight ColorColumn ctermfg=0
-highlight ColorColumn ctermbg=10
+highlight ColorColumn ctermbg=0
+highlight ColorColumn ctermfg=5
 
 au BufNewFile,BufRead *.java imap sopl System.out.println("
 au BufNewFile,BufRead *.java imap nmain class  {<Enter>public static void main(String[] args) {<Enter><Tab><Backspace><Enter>}<Enter>}<Up><Up><Up><Up><Right><Right><Right><Right><Right>

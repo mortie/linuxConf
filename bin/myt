@@ -1,3 +1,25 @@
 #!/bin/bash
 
-mpv $(mclip get)
+URL=$(mclip get)
+
+if [ "$URL" = "" ]; then
+	merror "No URL in clipboard!"
+	exit 1
+fi
+
+mpv --x11-name myt-mpv "$URL" &
+PID=$!
+
+xdotool search --sync --classname 'myt-mpv' \
+	windowsize 480 270 \
+	windowmove 100% 100% \
+
+xdotool search --sync --classname 'myt-mpv' \
+	windowmove --relative -- -480 -270
+
+xdotool search --sync --classname 'myt-mpv' \
+	windowmove --relative -- -24 -24
+
+while kill -0 "$PID"; do
+	sleep 1
+done

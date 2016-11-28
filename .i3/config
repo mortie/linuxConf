@@ -199,6 +199,7 @@ bar {
 bindsym $mod+space scratchpad show
 for_window [instance="scratchpad"] move scratchpad
 for_window [class="Pinta"] floating enable
+for_window [instance="myt-mpv"] floating enable
 
 # Gaps
 smart_gaps on
