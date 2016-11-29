@@ -1,0 +1,55 @@
+/*
+ * Install Stylish and FXOpera to firefox.
+ * Add this stylesheet as a custom Stylish style.
+ */
+
+#identity-box, #dropmarker-icon, #historydropmarker, #autocomplete-history-dropmarker, #urlbar-history-dropmarker, #dropmarker {
+	display: none !important;
+}
+
+#urlbar-reload-button {
+	display: none !important;
+}
+#urlbar-search-button {
+	display: none !important;
+}
+
+/* remove back/fwd/search */
+
+#nav-bar  #back-button > .toolbarbutton-icon {
+ display: none !important;
+}
+ #forward-button {
+ display: none !important;
+}
+#TabsToolbar > toolbarbutton {
+	display: none;
+}
+#TabsToolbar > toolbarbutton ~ toolbarbutton {
+	display: inline-block;
+}
+
+/* brighter tabs when active*/
+
+#tabbrowser-tabs .tabbrowser-tab[selected=true] {
+	background: white;
+}
+
+#urlbar {
+	border: none !important;
+	background: transparent !important;
+	margin-top: -1px !important;
+	margin-left: 0px !important;
+	margin-right: 10px;
+	border-radius: 0px;
+	padding: 0px !important;
+	color: #000 !important;
+	height: 10px;
+	font-size: 14px;
+}
+
+/* Tabs: no icons */
+/* .tabbrowser-tabs .tab-icon-image { display: none !important; } */
+.tabbrowser-tabs .tab-icon-image {
+	filter: grayscale(1);
+}

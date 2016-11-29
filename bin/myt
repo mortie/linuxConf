@@ -19,13 +19,17 @@ if ! kill -0 "$PID"; then
 fi
 
 # Notify
-mnotifymsg "Playing", "$URL"
+mnotifymsg "Playing" "$URL"
 
 # Resize  and move
 WIN=$(xdotool search --sync --classname 'myt-mpv')
+sleep 0.5
 xdotool windowsize "$WIN" 480 270
+sleep 0.1
 xdotool windowmove "$WIN" 100% 100%
+sleep 0.1
 xdotool windowmove --relative -- "$WIN" -480 -270
+sleep 0.1
 xdotool windowmove --relative -- "$WIN" -24 -24
 
 # Don't quit until mpv stops
