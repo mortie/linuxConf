@@ -32,7 +32,7 @@ Print
 	mshot scr-#TIME
 
 # popup video
-XF86AudioPlay
+shift + XF86AudioPlay
 	myt
 
 # touchpad toggle
