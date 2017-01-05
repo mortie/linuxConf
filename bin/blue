@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+device="88:C6:26:D8:B2:9C"
+hci="hci0"
+
+# Connect
+if [ "$1" == "off" ]; then
+	sudo hciconfig "$hci" down
+else
+	sudo hciconfig "$hci" up
+	sudo hcitool cc "$device"
+fi
