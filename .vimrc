@@ -14,7 +14,7 @@ call vundle#begin()
  " Plugins
 Plugin 'gmarik/Vundle.vim'
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'scrooloose/syntastic'
+" Plugin 'vim-syntastic/syntastic'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'rust-lang/rust.vim'
 
@@ -155,16 +155,14 @@ au BufNewFile,BufRead *.html imap htag <Esc>vbyi<<Esc>A></<Esc>pi<Right>><Esc>bb
 au BufNewFile,BufRead *.json imap tag <Esc>bi"<Esc>A":<Space>
 
 " Syntastic
-let g:loaded_syntastic_java_javac_checker = 1
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
 
 " Multiple Cursors
 let g:multi_cursor_quit_key='<C-c>'
