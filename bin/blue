@@ -1,14 +1,79 @@
-#!/bin/sh
+#!/usr/bin/env node
 
-set -e
+var device = "88:C6:26:D8:B2:9C";
+var hci = "hci0"
 
-device="88:C6:26:D8:B2:9C"
-hci="hci0"
+var {spawn, spawnSync} = require("child_process");
 
-# Connect
-if [ "$1" == "off" ]; then
-	sudo hciconfig "$hci" down
-else
-	sudo hciconfig "$hci" up
-	sudo hcitool cc "$device"
-fi
+function run(cmd, args) {
+	console.log("Running", cmd, args.join(" "));
+	var child = spawnSync(cmd, args);
+	var output = false;
+	if (child.stdout.toString().trim()) {
+		output = true;
+		console.log("Output:");
+		console.log(child.stdout.toString()
+			.trim().split("\n")
+			.map(l => "\t"+l).join(""));
+	}
+	if (child.stderr.toString().trim()) {
+		output = true;
+		console.log("Error:");
+		console.log(child.stderr.toString()
+			.trim().split("\n")
+			.map(l => "\t"+l).join(""));
+	}
+
+	if (!output)
+		console.log("Done.");
+}
+
+function waitFor(child, arr) {
+	if (typeof arr == "string")
+		arr = [arr];
+
+	return new Promise(function(resolve, reject) {
+		function cb(str) {
+			for (var i in arr) {
+				if (str.indexOf(arr[i]) !== -1) {
+					child.stdout.removeListener("data", cb);
+					resolve(i);
+				}
+			}
+		}
+
+		child.stdout.on("data", cb);
+	});
+}
+
+if (process.argv[2] == "off") {
+	run("sudo", [ "modprobe", "-r", "btusb" ]);
+	run("mnotify", [ "Disconnected." ]);
+} else {
+	run("sudo", [ "rfkill", "unblock", "bluetooth" ]);
+	run("sudo", [ "modprobe", "btusb" ]);
+	run("sudo", [ "hciconfig", hci, "on" ]);
+	run("sudo", [ "systemctl", "restart", "bluetooth" ]);
+
+	var child = spawn("bluetoothctl");
+	child.stdout.on("data", d => console.log(d.toString().trim()));
+
+	waitFor(child, ["# "])
+		.then(() => {
+			child.stdin.write("power on\n");
+			return waitFor(child, ["Changing power on succeeded"]);
+		})
+		.then(() => {
+			child.stdin.write("connect "+device+"\n");
+			return waitFor(child, ["Connected: ", "Failed to connect: "]);
+		})
+		.then(code => {
+			if (code == 1)
+				run("merror", [ "Couldn't connect." ]);
+			else
+				run("mnotify", [ "Connected." ]);
+
+			child.stdin.write("quit\n");
+		})
+		.catch(err => console.error("Error: "+err));
+}
