@@ -48,12 +48,10 @@ function waitFor(child, arr) {
 
 if (process.argv[2] == "off") {
 	run("sudo", [ "modprobe", "-r", "btusb" ]);
+	run("pactl", [ "set-default-sink", "0" ]);
 	run("mnotify", [ "Disconnected." ]);
 } else {
-	run("sudo", [ "rfkill", "unblock", "bluetooth" ]);
-	run("sudo", [ "modprobe", "btusb" ]);
-	run("sudo", [ "hciconfig", hci, "on" ]);
-	run("sudo", [ "systemctl", "restart", "bluetooth" ]);
+	run("sudo", [ "rebluetooth" ]);
 
 	var child = spawn("bluetoothctl");
 	child.stdout.on("data", d => console.log(d.toString().trim()));

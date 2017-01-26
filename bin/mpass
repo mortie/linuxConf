@@ -61,19 +61,39 @@ if [ "$1" = "create" ]; then
 	chars=$(LC_ALL=C tr -dc A-Za-z0-9_ < /dev/urandom | head -c "$nchars")
 
 	echo "$chars" > "$TMP_IN"
-	echo "$chars" | mclip
 
 	getpass | openssl enc -aes-256-cbc -a -in "$TMP_IN" -out "$TMP_OUT" -pass stdin
 	tryerr
 
 	enc=$(cat "$TMP_OUT")
-
 	passsum=$(getpass | mshasum | cut -d ' ' -f 1)
-
 	code=$(curl -k -s -X POST -d "$enc" "https://pass.mort.coffee/put/$2/$passsum")
 	tryerr "$code"
 
 	echo -n "$chars" | mclip
+
+	mnotify "Password created" "$2"
+
+# Set password: mpass set <name> <password>
+elif [ "$1" = "set" ]; then
+	if [ "$2" = "" ] || [ "$3" = "" ]; then
+		echo "Usage: mpass set <name> <password>"
+		cleanup
+		exit 1
+	fi
+
+	echo "$3" > "$TMP_IN"
+	echo "$3" | mclip
+
+	getpass | openssl enc -aes-256-cbc -a -in "$TMP_IN" -out "$TMP_OUT" -pass stdin
+	tryerr
+
+	enc=$(cat "$TMP_OUT")
+	passsum=$(getpass | mshasum | cut -d ' ' -f 1)
+	code=$(curl -k -s -X POST -d "$enc" "https://pass.mort.coffee/put/$2/$passsum")
+	tryerr "$code"
+
+	echo -n "$3" | mclip
 
 	mnotify "Password created" "$2"
 

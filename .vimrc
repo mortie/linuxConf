@@ -172,3 +172,6 @@ let g:rust_recommended_style = 0
 
 " I don't want sql key maps
 let g:omni_sql_no_default_maps = 1
+
+" Lisp deserves special whitespace settings
+au Filetype scheme setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
