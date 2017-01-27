@@ -1,0 +1,15 @@
+#!/bin/sh
+
+######################################################
+# This is a silly script to just reload everything   #
+# bluetooth related, as a shotgun approach to fixing #
+# bluetooth issues.                                  #
+######################################################
+
+sudo modprobe -r btusb
+sudo modprobe btusb
+sudo systemctl restart bluetooth
+sudo rfkill unblock bluetooth
+sudo hciconfig hci0 up
+sudo bluetooth off
+sudo bluetooth on
