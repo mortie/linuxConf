@@ -4,52 +4,48 @@
  */
 
 #identity-box, #dropmarker-icon, #historydropmarker, #autocomplete-history-dropmarker, #urlbar-history-dropmarker, #dropmarker {
-	display: none !important;
+    display: none !important;
 }
 
-#urlbar-reload-button {
-	display: none !important;
-}
 #urlbar-search-button {
-	display: none !important;
+    display: none !important;
 }
 
-/* remove back/fwd/search */
-
-#nav-bar  #back-button > .toolbarbutton-icon {
- display: none !important;
-}
- #forward-button {
- display: none !important;
-}
-#TabsToolbar > toolbarbutton {
-	display: none;
-}
 #TabsToolbar > toolbarbutton ~ toolbarbutton {
-	display: inline-block;
+    display: inline-block;
 }
 
 /* brighter tabs when active*/
 
 #tabbrowser-tabs .tabbrowser-tab[selected=true] {
-	background: white;
+    background: white;
 }
 
 #urlbar {
-	border: none !important;
-	background: transparent !important;
-	margin-top: -1px !important;
-	margin-left: 0px !important;
-	margin-right: 10px;
-	border-radius: 0px;
-	padding: 0px !important;
-	color: #000 !important;
-	height: 10px;
-	font-size: 14px;
+    border: none !important;
+    background: transparent !important;
+    margin-top: -1px !important;
+    margin-left: 0px !important;
+    margin-right: 10px;
+    border-radius: 0px;
+    padding: 0px !important;
+    color: #000 !important;
+    height: 10px;
+    font-size: 14px;
 }
 
 /* Tabs: no icons */
 /* .tabbrowser-tabs .tab-icon-image { display: none !important; } */
 .tabbrowser-tabs .tab-icon-image {
-	filter: grayscale(1);
+    filter: grayscale(1);
+}
+
+/* no navbar unless necessary */
+#navigator-toolbox #nav-bar {
+    transition: height 0.1s;
+    height: 0px;
+    overflow: hidden;
+}
+#navigator-toolbox:hover #nav-bar {
+    height: 34px;
 }
