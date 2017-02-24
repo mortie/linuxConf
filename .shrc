@@ -1,6 +1,7 @@
 alias attach="ssh serve.mort.coffee -t \"tmux attach -t $1\""
 alias weblet="ssh weblet.mort.coffee -t \"tmux attach -t $1\""
 alias testlet="ssh testlet.mort.coffee -t \"tmux attach -t $1\""
+alias minelet="ssh minelet.mort.coffee -t \"tmux attach -t $1\""
 alias ytdl="youtube-dl"
 alias c="fasd_cd -d"
 alias please="history -1 | awk '{\$1=\"\"; print substr(\$0,2)}' | xargs sudo"
@@ -63,4 +64,8 @@ function cd
 
 if [ -f ~/.lastdir ]; then
 	cd "$(cat ~/.lastdir)"
+fi
+
+if [ -f ~/.shrc-local ]; then
+	. ~/.shrc-local
 fi
