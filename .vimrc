@@ -46,6 +46,8 @@ filetype plugin indent on
 set tabstop=4
 set shiftwidth=4
 set rnu
+set nu
+set so=5
 ":let g:session_autosave = 'no'
 set iskeyword+=-
 set linebreak
@@ -175,3 +177,6 @@ let g:omni_sql_no_default_maps = 1
 
 " Lisp deserves special whitespace settings
 au Filetype scheme setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+
+" ASM should probably have 8 long tabs
+au Filetype asm setlocal tabstop=8 shiftwidth=8
