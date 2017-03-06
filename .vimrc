@@ -48,6 +48,7 @@ set shiftwidth=4
 set rnu
 set nu
 set so=5
+set clipboard=unnamedplus
 ":let g:session_autosave = 'no'
 set iskeyword+=-
 set linebreak

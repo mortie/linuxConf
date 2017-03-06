@@ -200,6 +200,6 @@ for_window [instance="myt-mpv"] floating enable
 
 # Gaps
 smart_gaps on
-gaps inner 20
+gaps inner 16
 
 exec --no-startup-id sh ~/.wmrc

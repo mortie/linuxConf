@@ -13,7 +13,7 @@ convert "$TMP"   \
 	-scale 2000% \
 	"$TMP"
 
-composite -gravity center ~/assets/img/lock.png "$TMP" "$TMP"
+# composite -gravity center ~/assets/img/lock.png "$TMP" "$TMP"
 
 i3lock -e -i "$TMP" -n
 
