@@ -9,6 +9,16 @@ alias rand="LC_ALL=C tr -dc A-Za-z0-9_ < /dev/urandom | head -c $1"
 alias autoremove='sudo pacman -Rcns $(pacman -Qdtq)'
 alias packer="packer --noedit"
 
+dots=".."
+ups="../"
+for i in {1..20}; do
+	alias "$dots"="cd $ups"
+	dots="$dots."
+	ups="$ups../"
+done
+dots=""
+ups=""
+
 function irc
 {
 	attach irc$1 | tee >(mbell "irc $1")
@@ -23,6 +33,10 @@ function mkcd
 
 function cptemp
 {
+	if [ "$1" = "" ]; then
+		echo "Usage: $0 <host>"
+		return 1
+	fi
 	scp -r . "${1}:tmp2"
 	ssh -t "$1" 'rm -rf ~/tmp; mv ~/tmp2 ~/tmp; cd ~/tmp; bash'
 }
