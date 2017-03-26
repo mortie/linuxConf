@@ -52,6 +52,8 @@ set clipboard=unnamedplus
 ":let g:session_autosave = 'no'
 set iskeyword+=-
 set linebreak
+set fileencodings=utf-8
+set encoding=utf-8
 
 " Fix alt
 execute "set <M-t>=\et"

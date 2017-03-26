@@ -30,6 +30,8 @@ mod4 + comma
 # screenshot
 Print
 	mshot scr-#TIME
+shift + Print
+	mshot scr-#TIME select
 
 # popup video
 shift + XF86AudioPlay

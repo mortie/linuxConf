@@ -9,10 +9,15 @@ alias rand="LC_ALL=C tr -dc A-Za-z0-9_ < /dev/urandom | head -c $1"
 alias autoremove='sudo pacman -Rcns $(pacman -Qdtq)'
 alias packer="packer --noedit"
 
+function cddots
+{
+	cd "$1"
+	[ "$2" != "" ] && cd "$2"
+}
 dots=".."
 ups="../"
 for i in {1..20}; do
-	alias "$dots"="cd $ups"
+	alias "$dots"="cddots $ups"
 	dots="$dots."
 	ups="$ups../"
 done
