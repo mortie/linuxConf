@@ -13,6 +13,7 @@ function cddots
 {
 	cd "$1"
 	[ "$2" != "" ] && cd "$2"
+	return 0
 }
 dots=".."
 ups="../"
@@ -23,6 +24,7 @@ for i in {1..20}; do
 done
 dots=""
 ups=""
+alias ","="cd"
 
 function irc
 {
