@@ -41,7 +41,7 @@ fixuser()
 
 cpr()
 {
-	rm -r "$2" &> /dev/null
+	rm -rf "$2"
 	cp -r "$1" "$2";
 }
 
@@ -66,5 +66,6 @@ fixuser uni
 fixuser dev
 
 cpr setup/config/dunst .config/dunst
+cpr setup/mort-custom.sh /etc/profile.d/mort-custom.sh
 
 exit 0
