@@ -1,5 +1,5 @@
 [options]
-font = Inconsolata 13
+font = Inconsolata 11
 cursor_blink = off
 
 [colors]
