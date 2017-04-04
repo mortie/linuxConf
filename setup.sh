@@ -45,7 +45,12 @@ cpr()
 	cp -r "$1" "$2";
 }
 
-deltacp setup/fstab /etc/fstab
+if ! [ $(hostname) = "elli" ]; then
+	umount remote &>/dev/null
+	deltacp setup/fstab /etc/fstab
+	mount remote
+fi
+
 cp setup/killsshfs.service /etc/systemd/system/killsshfs.service
 systemctl enable killsshfs
 systemctl start killsshfs
