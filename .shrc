@@ -9,6 +9,7 @@ alias rand="LC_ALL=C tr -dc A-Za-z0-9_ < /dev/urandom | head -c $1"
 alias autoremove='sudo pacman -Rcns $(pacman -Qdtq)'
 alias packer="packer --noedit"
 alias pbin="curl -T - https://p.iotek.org"
+alias diff="diff --color=auto"
 
 function cddots
 {
