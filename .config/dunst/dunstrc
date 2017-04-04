@@ -1,5 +1,5 @@
 [global]
-    font = Monospace 11
+    font = Monospace 10
 
     # allow a small subset of html markup:
     # <b>bold</b>
@@ -59,7 +59,7 @@
     # right side of the screen.  Y is measured from the top and down respectevly.
     # The width can be negative. In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "300x10-30+20"
+    geometry = "300x5-30+20"
 
     # The transparency of the window. range: [0; 100]
     # This option will only work if a compositing windowmanager is present (e.g. xcompmgr, compiz, etc..)
@@ -92,17 +92,17 @@
     # The height of a single line. If the height is smaller than the font height,
     # it will get raised to the font height.
     # This adds empty space above and under the text.
-    line_height = 2
+    line_height = 0
 
     # Draw a line of 'separatpr_height' pixel height between two notifications.
     # Set to 0 to disable
     separator_height = 2
 
     # padding between text and separator
-    padding = 11
+    padding = 8
 
     # horizontal padding
-    horizontal_padding = 11
+    horizontal_padding = 8
 
     # Define a color for the separator.
     # possible values are:
@@ -151,7 +151,7 @@
     # Otherwise the '#' and following  would be interpreted as a comment.
     background = "#222222"
     foreground = "#eeeeee"
-    timeout = 1
+    timeout = 2
 
 [urgency_normal]
     background = "#285577"

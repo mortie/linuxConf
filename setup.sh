@@ -70,7 +70,6 @@ fixuser uni
 [ ! -h dev ] && ln -s cloud/dev dev
 fixuser dev
 
-cpr setup/config/dunst .config/dunst
 cpr setup/mort-custom.sh /etc/profile.d/mort-custom.sh
 
 exit 0
