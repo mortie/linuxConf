@@ -25,7 +25,7 @@ function conntmux
 		fi
 	fi
 }
-alias attach="conntmux serve.mort.coffee"
+alias elli="conntmux serve.mort.coffee"
 alias weblet="conntmux weblet.mort.coffee"
 alias testlet="conntmux testlet.mort.coffee"
 alias minelet="conntmux minelet.mort.coffee"
