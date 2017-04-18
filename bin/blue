@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var device = "88:C6:26:D8:B2:9C";
+	var device = "44:5E:F3:B8:BF:3D";
 var hci = "hci0"
 
 var {spawn, spawnSync} = require("child_process");

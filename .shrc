@@ -11,6 +11,18 @@ alias packer="packer --noedit"
 alias pbin="curl -T - https://p.iotek.org"
 alias diff="diff --color=auto"
 
+function conntmux
+{
+	ssh "$1" -t "tmux attach -t \"$2\""
+	if [ "$?" != 0 ]; then
+		ssh "$1" -t "tmux new -s \"$2\""
+	fi
+}
+alias attach="conntmux serve.mort.coffee"
+alias weblet="conntmux weblet.mort.coffee"
+alias testlet="conntmux testlet.mort.coffee"
+alias minelet="conntmux minelet.mort.coffee"
+
 function cddots
 {
 	cd "$1"
@@ -27,11 +39,6 @@ done
 dots=""
 ups=""
 alias ","="cd"
-
-function irc
-{
-	attach irc$1 | tee >(mbell "irc $1")
-}
 
 function mkcd
 {
