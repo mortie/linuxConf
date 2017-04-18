@@ -48,7 +48,7 @@ else #start recording
 	sleep 0.2
 	echo "$1" > ~/.mrec/name
 
-	ffmpeg -f x11grab -r 30 -s "${W}x${H}" -i :0.0 -vcodec libx264 -threads 0 ~/.mrec/rec.mp4 > ~/.mrec/log 2>&1 &
+	ffmpeg -f x11grab -r 30 -s "${W}x${H}" -i "$DISPLAY" -vcodec libx264 -threads 0 ~/.mrec/rec.mp4 > ~/.mrec/log 2>&1 &
 
 	echo $! > ~/.mrec/pid
 
