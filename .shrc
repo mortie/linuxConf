@@ -15,7 +15,14 @@ function conntmux
 {
 	ssh "$1" -t "tmux attach -t \"$2\""
 	if [ "$?" != 0 ]; then
-		ssh "$1" -t "tmux new -s \"$2\""
+		echo -n "The '$2' session doesn't exist. Create it? [Y/n] "
+		read reply
+		if [ "$reply" = "" ] || [ "$reply" = "y" ] || [ "$reply" = "Y" ]; then
+			ssh "$1" -t "tmux new -s \"$2\""
+		else
+			echo "Exiting."
+			return 1
+		fi
 	fi
 }
 alias attach="conntmux serve.mort.coffee"
