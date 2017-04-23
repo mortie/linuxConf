@@ -30,6 +30,19 @@ PS1="$PROMPT_HOST$PROMPT_CWD$PROMPT_ARROW%{$reset_color%}"
 # gem
 PATH="$PATH:$HOME/.gem/ruby/2.3.0/bin"
 
+# history
+HISTFILE=~/.zhistory
+HISTSIZE=10000
+SAVEHIST=10000
+setopt append_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
+setopt inc_append_history
+setopt share_history
+
 # binds
 bindkey -e
 bindkey "\e[3~" delete-char
