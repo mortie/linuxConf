@@ -48,7 +48,6 @@ set shiftwidth=4
 set rnu
 set nu
 set so=5
-set clipboard=unnamedplus
 ":let g:session_autosave = 'no'
 set iskeyword+=-
 set linebreak
@@ -74,6 +73,14 @@ nmap <M-t> <ESC>:m -2<Enter>
 imap <M-t> <ESC>:m -2<Enter>i
 nmap <M-n> <ESC>:m +1<Enter>
 imap <M-n> <ESC>:m +1<Enter>i
+noremap  y "+y
+noremap  Y "+Y
+noremap  p "+p
+noremap  P "+P
+vnoremap y "+y
+vnoremap Y "+Y
+vnoremap p "+p
+vnoremap P "+P
 
 vmap s/ :perldo s/
 command BadTab call SetBadTab()
