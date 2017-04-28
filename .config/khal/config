@@ -1,0 +1,24 @@
+[calendars]
+[[Personal]]
+path = ~/.calendars/personal
+color = light green
+
+[[Deadlines]]
+path = ~/.calendars/deadlines
+color = light red
+
+[[Mine Studier]]
+path = ~/.calendars/minestudier
+color = dark blue
+
+[default]
+highlight_event_days = True
+timedelta = 5d
+default_calendar = Personal
+
+[locale]
+timeformat = %H:%M
+dateformat = %d/%m
+longdateformat = %d/%m/%Y
+datetimeformat = %d/%m %H:%M
+longdatetimeformat = %d/%m/%Y %H:%M

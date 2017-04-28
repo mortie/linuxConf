@@ -36,7 +36,7 @@ deltacp()
 
 fixuser()
 {
-	chown -h "$REALUSER" "$1"
+	chown -R -h "$REALUSER" "$1"
 }
 
 cpr()
@@ -71,5 +71,31 @@ fixuser uni
 fixuser dev
 
 cpr setup/mort-custom.sh /etc/profile.d/mort-custom.sh
+
+# vdirsyncer
+setup_vdirsyncer() {
+	echo -n "Set up vdirsyncer? [Y/n] "
+	read reply
+	if [ "$reply" != "n" ] && [ "$reply" != "N" ]; then
+		echo -n "vdirsyncer username? "
+		read username
+		if [ "$username" = "" ]; then
+			return
+		fi
+
+		echo -n "vdirsyncer password? "
+		read password
+		if [ "$password" = "" ]; then
+			return
+		fi
+
+		cpr setup/vdirsyncer .vdirsyncer
+		sed -i "s/<USERNAME>/$username/; s/<PASSWORD>/$password/" .vdirsyncer/config
+		fixuser .vdirsyncer
+	fi
+}
+if ! [ -f .vdirsyncer ]; then
+	setup_vdirsyncer
+fi
 
 exit 0

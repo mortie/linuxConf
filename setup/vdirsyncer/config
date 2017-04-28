@@ -1,0 +1,30 @@
+[general]
+status_path = "~/.vdirsyncer/status"
+
+[pair calendar]
+a = "calendar_local"
+b = "calendar_remote"
+collections = ["from b"]
+
+[storage calendar_local]
+type = "filesystem"
+path = "~/.calendars"
+fileext = ".ics"
+[storage calendar_remote]
+type = "caldav"
+url = "https://cloud.mort.coffee/remote.php/dav/calendars/mort/"
+username = "<USERNAME>"
+password = "<PASSWORD>"
+
+[pair minestudier]
+a = "minestudier_local"
+b = "minestudier_remote"
+collections = null
+
+[storage minestudier_local]
+type = "filesystem"
+path = "~/.calendars/minestudier/"
+fileext = ".ics"
+[storage minestudier_remote]
+type = "http"
+url = "https://minestudier.uio.no/nb/calendar/c0337eeq/schedule.ics"
