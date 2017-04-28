@@ -81,6 +81,8 @@ vnoremap y "+y
 vnoremap Y "+Y
 vnoremap p "+p
 vnoremap P "+P
+vnoremap x "+x
+vnoremap X "+X
 
 vmap s/ :perldo s/
 command BadTab call SetBadTab()
