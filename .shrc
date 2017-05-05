@@ -21,10 +21,9 @@ function conntmux
 		fi
 	fi
 }
-alias elli="conntmux serve.mort.coffee"
-alias weblet="conntmux weblet.mort.coffee"
-alias testlet="conntmux testlet.mort.coffee"
-alias minelet="conntmux minelet.mort.coffee"
+for name in elli weblet testlet minelet; do
+	alias "$name"="conntmux $name"
+done
 
 function cddots
 {
@@ -50,7 +49,7 @@ function mkcd
 	cd "$DIR"
 }
 
-function cptemp
+function cpt
 {
 	if [ "$1" = "" ]; then
 		echo "Usage: $0 <host>"
@@ -58,11 +57,6 @@ function cptemp
 	fi
 	scp -r . "${1}:tmp2"
 	ssh -t "$1" 'rm -rf ~/tmp; mv ~/tmp2 ~/tmp; cd ~/tmp; bash'
-}
-
-function tryifi
-{
-	cptemp martindn@login.ifi.uio.no
 }
 
 function pack
