@@ -15,7 +15,7 @@ set $mod Mod4
 hide_edge_borders both
 
 # hide dem titles
-for_window [class="^.*"] border pixel 2
+for_window [class="^.*"] border pixel 3
 for_window [title="^float$"] floating enable
 
 # floating sizes
@@ -23,8 +23,8 @@ for_window [title=".*"] resize set width 1000 height 1000
 
 #colors
 #solarized theme, weird
-set $win-border #555555
-set $background #000000
+set $win-border #454545
+set $background #202020
 set $back-inact #1C1C1C
 set $back-urgen #B85335
 set $border #1C1C1C
@@ -33,6 +33,7 @@ set $bor-ur #1C1C1C
 set $text #FFB946
 set $t-in #888888
 set $t-ur #CF6A4C
+set $barbackground #00000000
 
 # class                 border  background  text  indicator
 client.focused          $border $win-border $text #31392F
@@ -185,9 +186,9 @@ bar {
 	separator_symbol " | "
 
 	colors {
-		focused_workspace  $border $background $text
-		active_workspace   $border $background $t-in
-		inactive_workspace $border $background $t-in
+		focused_workspace  $border $barbackground $text
+		active_workspace   $border $barbackground $t-in
+		inactive_workspace $border $barbackground $t-in
 		statusline #dddddd
 		separator #eeeeee
 	}
