@@ -17,6 +17,7 @@
 #
 # Some additional things:
 #     `clip` after expressions will copy ans to your clipboard with 'xsel -ib'.
+#     `$c` or `$C` will be replaced with your clipboard content using 'xsel -b'.
 
 # If we get an argument, we're in calculator mode, and the argument is the
 # result of the previous expression.
@@ -38,8 +39,11 @@ exists() {
 	which "$1" >/dev/null 2>/dev/null
 }
 
+# Replace $c with clipboard contents
+export paste=$(xsel -b)
+cmd=$(echo -n "$cmd" | awk '{ gsub("\\$[cC]", ENVIRON["paste"]); print($0) }')
+
 # If not in calculator mode, and the command exists, run it
-echo $cmd
 if [ "$1" = "" ] && exists $(echo "$cmd" | cut -d ' ' -f 1); then
 	echo "$cmd" | sh
 
@@ -76,6 +80,9 @@ print('{!r}'.format(res))
 "
 
 	# Run python, and then rerun with python's output as input
-	ans=$(python -c "$pycode")
+	ans=$(python -c "$pycode" 2>/dev/null)
+	if [ "$?" != 0 ]; then
+		ans="'Syntax Error'"
+	fi
 	$0 "$ans"
 fi
