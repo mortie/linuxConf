@@ -1,0 +1,23 @@
+#!/bin/sh
+if [ "$1" = "" ]; then
+	cmd=$(dmenu_path | dmenu)
+else
+	cmd=$(dmenu_path | dmenu -p "$1")
+fi
+
+if [ "$cmd" = "" ]; then
+	exit 0
+fi
+
+if which $(cut -d ' ' -f 1 <<< "$cmd") 2>/dev/null && [ "$1" = "" ]; then
+	sh <<< "$cmd"
+else
+	if [ "$1" != "" ]; then
+		cmd="$1 $cmd"
+	fi
+
+	ans=$(python -c "print($cmd)")
+	if [ $? = 0 ]; then
+		mmenu "$ans"
+	fi
+fi
