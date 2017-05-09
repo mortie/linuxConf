@@ -2,14 +2,17 @@
 if [ "$1" = "" ]; then
 	cmd=$(dmenu_path | dmenu)
 else
-	cmd=$(dmenu_path | dmenu -p "$1")
+	cmd=$(dmenu -p "$1" <<< "$")
+	if [ "$cmd" = "$" ]; then
+		exit 0
+	fi
 fi
 
 if [ "$cmd" = "" ]; then
 	exit 0
 fi
 
-if which $(cut -d ' ' -f 1 <<< "$cmd") 2>/dev/null && [ "$1" = "" ]; then
+if [ "$1" = "" ] && which $(cut -d ' ' -f 1 <<< "$cmd") 2>/dev/null; then
 	sh <<< "$cmd"
 else
 	if [ "$1" != "" ]; then
@@ -18,6 +21,6 @@ else
 
 	ans=$(python -c "print($cmd)")
 	if [ $? = 0 ]; then
-		mmenu "$ans"
+		$0 "$ans" # Rerun with previous output as input
 	fi
 fi
