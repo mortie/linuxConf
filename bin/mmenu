@@ -34,7 +34,7 @@ if [ "$cmd" = "" ]; then
 	exit 0
 fi
 
-# Wrapper aroundn which to get only the return code, not stdout/err
+# Wrapper around which to get only the return code, not stdout/err
 exists() {
 	which "$1" >/dev/null 2>/dev/null
 }
