@@ -11,11 +11,11 @@
 # In this new run, only the entry '$' is available, and will exit the session;
 # any other input will again be fed into python.
 #
-# Some additional things are available in your expression:
+# Some more variables and functions are available in your expression:
 #     ans: The result of the previous expression.
 #     base(num, b=16): convert num to base b.
 #
-# Some additional things:
+# Additional stuff:
 #     `clip` after expressions will copy ans to your clipboard with 'xsel -ib'.
 #     `$c` or `$C` will be replaced with your clipboard content using 'xsel -b'.
 
