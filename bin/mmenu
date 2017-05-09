@@ -14,10 +14,12 @@
 # Some additional things are available in your expression:
 #     ans: The result of the previous expression.
 #     base(num, b=16): convert num to base b.
-
+#
 # Some additional things:
 #     `clip` after expressions will copy ans to your clipboard with 'xsel -ib'.
 
+# If we get an argument, we're in calculator mode, and the argument is the
+# result of the previous expression.
 if [ "$1" = "" ]; then
 	cmd=$(dmenu_path | dmenu)
 else
@@ -31,14 +33,22 @@ if [ "$cmd" = "" ]; then
 	exit 0
 fi
 
+# Wrapper aroundn which to get only the return code, not stdout/err
 exists() {
 	which "$1" >/dev/null 2>/dev/null
 }
 
+# If not in calculator mode, and the command exists, run it
+echo $cmd
 if [ "$1" = "" ] && exists $(echo "$cmd" | cut -d ' ' -f 1); then
 	echo "$cmd" | sh
-elif [ "$cmd" = "clip" ]; then
+
+# If we're in command mode and receive "clip",
+# add it to the clipboard
+elif [ "$1" != "" ] && [ "$cmd" = "clip" ]; then
 	echo -n "$1" | xsel -ib
+
+# Otherwise just run the expression through python
 else
 	pycode="
 ans = $([ "$1" = "" ] && echo 0 || echo "$1")
@@ -65,8 +75,7 @@ except:
 print('{!r}'.format(res))
 "
 
+	# Run python, and then rerun with python's output as input
 	ans=$(python -c "$pycode")
-	if [ $? = 0 ]; then
-		$0 "$ans" # Rerun with previous output as input
-	fi
+	$0 "$ans"
 fi
