@@ -21,42 +21,57 @@
 #     `clip` after expressions will copy ans to your clipboard with 'xsel -ib'.
 #     `$c` or `$C` will be replaced with your clipboard content using 'xsel -b'.
 
-# If we get an argument, we're in calculator mode, and the argument is the
-# result of the previous expression.
-if [ "$1" = "" ]; then
-	cmd=$(dmenu_path | dmenu)
-else
-	cmd=$(echo "$" | dmenu -p "$1")
-	if [ "$cmd" = "$" ]; then
-		exit 0
-	fi
-fi
-
-if [ "$cmd" = "" ]; then
-	exit 0
-fi
-
 # Wrapper around which to get only the return code, not stdout/err
 exists() {
 	which "$1" >/dev/null 2>/dev/null
 }
 
-# Replace $c with clipboard contents
-export paste=$(xsel -b)
-cmd=$(echo -n "$cmd" | awk '{ gsub("\\$[cC]", ENVIRON["paste"]); print($0) }')
-
-# If not in calculator mode, and the command exists, run it
-if [ "$1" = "" ] && exists $(echo "$cmd" | cut -d ' ' -f 1); then
-	echo "$cmd" | sh
-
-# If we're in command mode and receive "clip",
-# add it to the clipboard
-elif [ "$1" != "" ] && [ "$cmd" = "clip" ]; then
-	echo -n "$1" | xsel -ib
-
-# Otherwise just run the expression through python
+# menu_cmd, defaulting to dmenu
+if [ -z "$1" ]; then
+	menu_cmd="dmenu"
 else
-	pycode="
+	menu_cmd="$1"
+fi
+
+# options_cmd, defaulting to dmenu_path
+if [ -z "$2" ]; then
+	options_cmd="dmenu_path"
+else
+	options_cmd="$2"
+fi
+
+run() {
+	# If we get an argument, we're in calculator mode, and the argument is the
+	# result of the previous expression.
+	if [ "$1" = "" ]; then
+		cmd=$($options_cmd | $menu_cmd -p "run:")
+	else
+		cmd=$(echo "$" | $menu_cmd -p "$1:")
+		if [ "$cmd" = "$" ]; then
+			exit 0
+		fi
+	fi
+
+	if [ "$cmd" = "" ]; then
+		exit 0
+	fi
+
+	# Replace $c with clipboard contents
+	export paste=$(xsel -b)
+	cmd=$(echo -n "$cmd" | awk '{ gsub("\\$[cC]", ENVIRON["paste"]); print($0) }')
+
+	# If not in calculator mode, and the command exists, run it
+	if [ "$1" = "" ] && exists $(echo "$cmd" | cut -d ' ' -f 1); then
+		echo "$cmd" | sh
+
+	# If we're in command mode and receive "clip",
+	# add it to the clipboard
+	elif [ "$1" != "" ] && [ "$cmd" = "clip" ]; then
+		echo -n "$1" | xsel -ib
+
+	# Otherwise just run the expression through python
+	else
+		pycode="
 ans = $([ "$1" = "" ] && echo 0 || echo "$1")
 
 def digit_to_char(digit):
@@ -81,10 +96,13 @@ except:
 print('{!r}'.format(res))
 "
 
-	# Run python, and then rerun with python's output as input
-	ans=$(python -c "$pycode" 2>/dev/null)
-	if [ "$?" != 0 ]; then
-		ans="'Syntax Error'"
+		# Run python, and then rerun with python's output as input
+		ans=$(python -c "$pycode" 2>/dev/null)
+		if [ "$?" != 0 ]; then
+			ans="'Syntax Error'"
+		fi
+		run "$ans"
 	fi
-	$0 "$ans"
-fi
+}
+
+run
