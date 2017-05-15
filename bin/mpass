@@ -62,7 +62,7 @@ if [ "$1" = "create" ]; then
 
 	echo "$chars" > "$TMP_IN"
 
-	getpass | openssl enc -aes-256-cbc -a -in "$TMP_IN" -out "$TMP_OUT" -pass stdin
+	getpass | openssl-1.0 enc -aes-256-cbc -a -in "$TMP_IN" -out "$TMP_OUT" -pass stdin -md md5
 	tryerr
 
 	enc=$(cat "$TMP_OUT")
@@ -85,7 +85,7 @@ elif [ "$1" = "set" ]; then
 	echo "$3" > "$TMP_IN"
 	echo "$3" | mclip
 
-	getpass | openssl enc -aes-256-cbc -a -in "$TMP_IN" -out "$TMP_OUT" -pass stdin
+	getpass | openssl enc -aes-256-cbc -a -in "$TMP_IN" -out "$TMP_OUT" -pass stdin -md md5
 	tryerr
 
 	enc=$(cat "$TMP_OUT")
@@ -112,7 +112,7 @@ elif [ "$1" = "get" ]; then
 	fi
 	echo "" >> "$TMP_IN"
 
-	getpass | openssl enc -aes-256-cbc -a -d -in "$TMP_IN" -out "$TMP_OUT" -pass stdin
+	getpass | openssl enc -aes-256-cbc -a -d -in "$TMP_IN" -out "$TMP_OUT" -pass stdin -md md5
 	tryerr
 
 	chars=$(cat "$TMP_OUT")
