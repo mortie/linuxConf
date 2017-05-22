@@ -38,12 +38,12 @@ for name in $(gethosts ~/.ssh/config ~/.ssh-local); do
 done
 
 to() {
-	if ! grep "$1/" <<< "$(pwd)" >/dev/null; then
+	if ! echo "$(pwd)" | grep -q -- "$1/"; then
 		echo "Dir not in path: '$1'"
 		return 1
 	fi
 
-	while grep "$1/?*" <<< "$(pwd)" >/dev/null; do
+	while echo "$(pwd)" | grep -q -- "$1/?*"; do
 		cd ..
 	done
 }
