@@ -61,8 +61,8 @@ execute "set <M-n>=\en"
 " Visible tabs
 set list
 set listchars=tab:>-
-hi Whitespace ctermfg=DarkGray
-match Whitespace /\s/
+hi tabs ctermfg=DarkGray
+match tabs /\t/
 
  " Useful things
 nmap <C-o> :
