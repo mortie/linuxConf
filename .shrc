@@ -25,7 +25,7 @@ conntmux() {
 }
 gethosts() {
 	for f in "$@"; do
-		cat "$f" | grep 'Host ' | cut -d ' ' -f 2
+		[ -f "$f" ] && cat "$f" | grep 'Host ' | cut -d ' ' -f 2
 	done
 }
 for name in $(gethosts ~/.ssh/config ~/.ssh-local); do
