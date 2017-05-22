@@ -44,8 +44,11 @@ to() {
 	fi
 
 	while echo "$(pwd)" | grep -q -- "$1/?*"; do
-		cd ..
+		builtin cd ..
 	done
+
+	# to pushd if cd does pushd
+	cd .
 }
 
 cddots() {
@@ -102,10 +105,13 @@ if [ ! "$TMUX" = "" ]; then
 	export TERM="xterm-256color"
 fi
 
-cd() {
-	builtin cd "$@"
-	pwd > ~/.lastdir
-}
+if which pushd 2>/dev/null >/dev/null; then
+	cd() {
+		pushd -q "$@"
+		pwd > ~/.lastdir
+	}
+	alias back="popd -q"
+fi
 
 if [ -f ~/.lastdir ]; then
 	cd "$(cat ~/.lastdir)"
