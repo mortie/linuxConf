@@ -11,12 +11,17 @@ alias diff="diff --color=auto"
 alias make="make -j $(getconf _NPROCESSORS_ONLN)"
 
 conntmux() {
-	ssh "$1" -t "tmux attach -t \"$2\""
+	if [ -z "$2" ]; then
+		session="gen"
+	else
+		session="$2"
+	fi
+	ssh "$1" -t "tmux attach -t \"$session\""
 	if [ "$?" != 0 ]; then
-		echo -n "The '$2' session doesn't exist. Create it? [Y/n] "
+		echo -n "The session '$session' doesn't exist. Create it? [Y/n] "
 		read reply
 		if [ "$reply" = "" ] || [ "$reply" = "y" ] || [ "$reply" = "Y" ]; then
-			ssh "$1" -t "tmux new -s \"$2\""
+			ssh "$1" -t "tmux new -s \"$session\""
 		else
 			echo "Exiting."
 			return 1
