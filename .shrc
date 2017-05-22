@@ -37,6 +37,17 @@ for name in $(gethosts ~/.ssh/config ~/.ssh-local); do
 	alias "$name"="conntmux $name"
 done
 
+to() {
+	if ! grep "$1/" <<< "$(pwd)" >/dev/null; then
+		echo "Dir not in path: '$1'"
+		return 1
+	fi
+
+	while grep "$1/?*" <<< "$(pwd)" >/dev/null; do
+		cd ..
+	done
+}
+
 cddots() {
 	cd "$1"
 	[ "$2" != "" ] && cd "$2"
