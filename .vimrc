@@ -41,6 +41,7 @@ map <F1> :SaveSession<CR>
 map <F2> :OpenSession!<CR>
 
 " Configure
+let g:is_posix = 1
 syntax on
 filetype plugin indent on
 set tabstop=4
