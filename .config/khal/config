@@ -11,6 +11,10 @@ color = light red
 path = ~/.calendars/minestudier
 color = dark blue
 
+[[Work]]
+path = ~/.calendars/work
+color = yellow
+
 [default]
 highlight_event_days = True
 timedelta = 5d
