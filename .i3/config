@@ -35,11 +35,11 @@ set $t-in #888888
 set $t-ur #CF6A4C
 set $barbackground #00000000
 
-# class                 border  background  text  indicator
-client.focused          $border $win-border $text #31392F
-client.focused_inactive $bor-in $background $t-in #676767
-client.unfocused        $bor-in $background $t-in #515151
-client.urgent           $bor-ur $back-urgen $t-ur #900000
+# class                 border  background  text  indicator   child_border
+client.focused          $border $win-border $text $win-border $win-border
+client.focused_inactive $bor-in $background $t-in $background $background
+client.unfocused        $bor-in $background $t-in $background $background
+client.urgent           $bor-ur $back-urgen $t-ur $back-urgen $back-urgen
 
 # font for window titles. ISO 10646 = Unicode
 #apt-get install xfonts-terminus
