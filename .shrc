@@ -109,7 +109,11 @@ fi
 
 if which pushd 2>/dev/null >/dev/null; then
 	cd() {
-		pushd -q "$@"
+		if [ "$*" = "" ]; then
+			pushd -q "$HOME"
+		else
+			pushd -q "$@"
+		fi
 		pwd > ~/.lastdir
 	}
 	alias back="popd -q"

@@ -1,0 +1,62 @@
+display * {
+	resolution max
+	rate max
+	where { left-of primary }
+}
+
+input * {
+	type pointer
+	options [
+		[ "libinput Tapping Enabled" 1 ]
+	]
+}
+
+input * {
+	type keyboard
+	commands [
+		"xset r rate 200 60"
+		"setxkbmap dvorak -option ctrl:swapcaps -option altwin:swap_alt_win"
+	]
+}
+
+input "Razer Razer Naga" {
+	type pointer
+	options [
+		[ "libinput Accel Speed" -0.8 ]
+	]
+}
+
+wallpaper {
+	path /home/martin/background.jpg
+}
+
+process misc {
+	run [
+		[ scratchpad ]
+		[ gnome-keyring-daemon ]
+		[ dunst ]
+		[ redshift-gtk ]
+		[ nm-applet ]
+		[ owncloud ]
+		[ nextcloud ]
+		[ scratchpad ]
+	] as group
+	in "$(HOME)"
+}
+
+process compton {
+	run [ compton -c
+		--config .comptonrc --backend glx
+		--vsync opengl-swc --paint-on-overlay ]
+	in "$(HOME)"
+}
+
+process sxhkd {
+	run [ sxhkd -c .sxhkdrc ] in "$(HOME)"
+	env { SHELL /bin/sh }
+	delay 1000
+}
+
+process startup {
+	run [ sh .startup.sh ] in "$(HOME)"
+}

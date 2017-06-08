@@ -1,42 +1,10 @@
-feh --bg-scale ~/background.jpg &
 xrdb ~/.Xresources
 xrdb -override ~/.Xresources-override
 
-feh --bg-scale ~/background.jpg
 if [ -f ~/.mlocked ]; then
 	sleep 0.1
 	mlock
 fi
 
-export XDG_CONFIG_HOME="$HOME/.config"
-
-xset r rate 200 60
-setxkbmap dvorak -option "ctrl:swapcaps" -option "altwin:swap_alt_win"
-compton -c --config ~/.comptonrc --backend glx --vsync opengl-swc --paint-on-overlay &
-maudio volume 0%
-
-scratchpad &
-gnome-keyring-daemon &
-dunst &
-
-pkill -9 sxhkd
-SHELL=/bin/sh sxhkd -c ~/.sxhkdrc &
-
-synclient RTCornerButton=0 &
-synclient VertEdgeScroll=0 &
-
-# delays aren't a great way to make sure they're started
-# in the correct order
-
-for p in redshift-gtk nm-applet owncloud nextcloud; do
-	pkill "$p"
-	echo killed $p: $?
-done
-
-redshift-gtk &
-nm-applet &
-sleep 0.1
-owncloud &
-nextcloud &
-
-sh ~/.startup.sh &
+[ -f ~/.dedaemon.log ] && mv ~/.dedaemon.log ~/.dedaemon.log.old
+dedaemon ~/.dedaemon.hcnf 2>~/.dedaemon.log
