@@ -76,16 +76,18 @@ nmap <M-t> <ESC>:m -2<Enter>
 imap <M-t> <ESC>:m -2<Enter>i
 nmap <M-n> <ESC>:m +1<Enter>
 imap <M-n> <ESC>:m +1<Enter>i
-noremap  y "+y
-noremap  Y "+Y
-noremap  p "+p
-noremap  P "+P
-vnoremap y "+y
-vnoremap Y "+Y
-vnoremap p "+p
-vnoremap P "+P
-vnoremap x "+x
-vnoremap X "+X
+if has("clipboard")
+	noremap  y "+y
+	noremap  Y "+Y
+	noremap  p "+p
+	noremap  P "+P
+	vnoremap y "+y
+	vnoremap Y "+Y
+	vnoremap p "+p
+	vnoremap P "+P
+	vnoremap x "+x
+	vnoremap X "+X
+endif
 
 vmap s/ :perldo s/
 command BadTab call SetBadTab()
