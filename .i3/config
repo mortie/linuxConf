@@ -95,6 +95,12 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+# move workspace
+bindsym $mod+Control+h move workspace to output left
+bindsym $mod+Control+t move workspace to output up
+bindsym $mod+Control+n move workspace to output down
+bindsym $mod+Control+s move workspace to output right
+
 # split in horizontal orientation
 bindsym $mod+c split h
 
@@ -203,4 +209,5 @@ for_window [instance="myt-mpv"] floating enable
 smart_gaps on
 gaps inner 16
 
+exec --no-startup-id sh -c 'dedaemon stop; dedaemon ~/.dedaemon.hcnf'
 exec --no-startup-id sh ~/.wmrc
