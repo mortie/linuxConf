@@ -5,6 +5,3 @@ if [ -f ~/.mlocked ]; then
 	sleep 0.1
 	mlock
 fi
-
-[ -f ~/.dedaemon.log ] && mv ~/.dedaemon.log ~/.dedaemon.log.old
-dedaemon ~/.dedaemon.hcnf 2>~/.dedaemon.log

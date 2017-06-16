@@ -1,5 +1,9 @@
+general {
+	log "$(HOME)/.dedaemon.log"
+}
+
 display * {
-	resolution max
+	mode max
 	rate max
 	where { left-of primary }
 }
