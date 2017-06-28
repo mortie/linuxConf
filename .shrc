@@ -9,11 +9,34 @@ alias packer="packer --noedit"
 alias pbin="curl -T - https://p.iotek.org"
 alias diff="diff --color=auto"
 alias make="make -j $(getconf _NPROCESSORS_ONLN)"
+alias syu="packer -Syu"
+alias grepr="grep -r"
 
+# Copy the absolute path of a file to the clipboard.
 ccc() {
 	readlink -f "$1" | mclip
 }
 
+# Edit a file based on its name.
+vis() {
+	if ! [ -z "$2" ]; then
+		file="$(find . -name "$1")"
+	elif ! [ -z "$visdir" ]; then
+		file="$(find "$visdir" -name "$1")"
+	else
+		file="$(find "." -name "$1")"
+	fi
+
+	if [ -z "$file" ]; then
+		echo "Didn't find a file named '$1'."
+		return 1
+	else
+		echo $file
+		$EDITOR "$(echo "$file" | head -n 1)"
+	fi
+}
+
+# Connect to a tmux session on a server.
 conntmux() {
 	if [ -z "$2" ]; then
 		session="gen"
@@ -32,6 +55,8 @@ conntmux() {
 		fi
 	fi
 }
+
+# Create aliases for conntmux.
 gethosts() {
 	for f in "$@"; do
 		[ -f "$f" ] && cat "$f" | grep 'Host ' | cut -d ' ' -f 2
@@ -41,6 +66,7 @@ for name in $(gethosts ~/.ssh/config ~/.ssh-local); do
 	alias "$name"="conntmux $name"
 done
 
+# Go up through the hierarchy until the path ends with $1.
 to() {
 	if ! echo "$(pwd)" | grep -q -- "$1/"; then
 		echo "Dir not in path: '$1'"
@@ -55,6 +81,7 @@ to() {
 	done
 }
 
+# .. = cd ../.., ... = cd ../../.., etc.
 cddots() {
 	cd "$1/$2"
 }
@@ -69,12 +96,14 @@ dots=""
 ups=""
 alias ","="cd"
 
+# Make a directory and cd to it.
 mkcd() {
 	DIR="$1"
 	mkdir -p "$DIR"
 	cd "$DIR"
 }
 
+# Copy files in current directory to a temp dir on a server, and ssh to it.
 cpt() {
 	if [ "$1" = "" ]; then
 		echo "Usage: $0 <host>"
@@ -84,6 +113,7 @@ cpt() {
 	ssh -t "$1" 'rm -rf ~/tmp; mv ~/tmp2 ~/tmp; cd ~/tmp; bash'
 }
 
+# Pack the content of the current directory into $1.tgz.
 pack() {
 	if [ "$1" = "" ]; then
 		NAME="martindn"
@@ -103,10 +133,7 @@ pack() {
 	rm -rf "$TMP"
 }
 
-if [ ! "$TMUX" = "" ]; then
-	export TERM="xterm-256color"
-fi
-
+# If pushd/popd exists, make cd pushd, and back popd.
 if which pushd 2>/dev/null >/dev/null; then
 	cd() {
 		if [ "$*" = "" ]; then
@@ -119,6 +146,12 @@ if which pushd 2>/dev/null >/dev/null; then
 	alias back="popd -q"
 fi
 
+# If in tmux, pretend the terminal is xterm-256color.
+if [ ! "$TMUX" = "" ]; then
+	export TERM="xterm-256color"
+fi
+
+# Go to the directory which was last cd'd to.
 if [ -f ~/.lastdir ]; then
 	cd "$(cat ~/.lastdir)"
 fi
@@ -126,3 +159,35 @@ fi
 if [ -f ~/.shrc-local ]; then
 	. ~/.shrc-local
 fi
+
+pyswitch() {
+	py2=$(which python2)
+	py3=$(which python3)
+	py=$(which python)
+
+	if [ -z "$py2" ]; then
+		echo "Python 2 doesn't exist."
+		return 1
+	elif [ -z "$py3" ]; then
+		echo "Python 3 doesn't exist."
+		return 1
+	elif [ -z "$py" ]; then
+		echo "Python doesn't exist."
+		return 1
+	fi
+
+	echo -e -n "\033[31;1m$(python --version 2>&1)"
+
+	if python --version 2>&1 | grep 'Python 2' >/dev/null; then
+		sudo rm "$py"
+		sudo ln -s "$py3" "$py"
+	elif python --version 2>&1 | grep 'Python 3' >/dev/null; then
+		sudo rm "$py"
+		sudo ln -s "$py2" "$py"
+	else
+		echo "Your pyhton is neither version 2 nor 3, sorry."
+		return 1
+	fi
+
+	echo -e " \033[33;1m=> \033[32;1m$(python --version 2>&1)"
+}

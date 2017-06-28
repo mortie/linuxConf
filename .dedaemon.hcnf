@@ -30,6 +30,13 @@ input "Razer Razer Naga" {
 	]
 }
 
+#input "DLL0665:01 06CB:76AD Touchpad" {
+#	type pointer
+#	options [
+#		[ "Trackpad Sensitivity" 0.6 ]
+#	]
+#}
+
 wallpaper {
 	path /home/martin/background.jpg
 }
