@@ -1,7 +1,6 @@
 #!/bin/bash
 
 timeout_msec=1000
-#timeout_msec=-1
 timeout_nsec=$((timeout_msec * 1000000))
 
 #
