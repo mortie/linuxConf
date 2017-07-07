@@ -1,6 +1,7 @@
 #!/bin/bash
 
 timeout_msec=1000
+#timeout_msec=-1
 timeout_nsec=$((timeout_msec * 1000000))
 
 #
@@ -89,7 +90,7 @@ zoom_win() {
 	if [[ $(xdotool getwindowgeometry "$1") =~ $zoom_win_rx ]]; then
 		state_fromx=${BASH_REMATCH[1]}
 		state_fromy=${BASH_REMATCH[2]}
-		staet_tox=$(($state_fromx + ${BASH_REMATCH[3]}))
+		state_tox=$(($state_fromx + ${BASH_REMATCH[3]}))
 		state_toy=$(($state_fromy + ${BASH_REMATCH[4]}))
 	else
 		echo "Invalid window geometry."
