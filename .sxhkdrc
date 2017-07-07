@@ -20,6 +20,12 @@ mod4 + {a, o, e, u, k}
 	mousetree {left, down, up, right, reset}
 mod4 + comma
 	xdotool click 1
+mod4 + shift + comma
+	xdotool {mousedown, mouseup} 1
+mod4 + apostrophe
+	xdotool click 3
+mod4 + shift + apostrophe
+	xdotool {mousedown, mouseup} 3
 
 # screenshot
 Print
