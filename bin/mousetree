@@ -1,0 +1,112 @@
+#!/bin/bash
+
+timeout_msec=1000
+timeout_nsec=$((timeout_msec * 1000000))
+
+#
+## Get system location
+#
+
+# Get display dimensions
+dims_rx='([0-9]+)x([0-9]+) pixels'
+if [[ $(xdpyinfo | grep dimensions) =~ $dims_rx ]]; then
+	width=${BASH_REMATCH[1]}
+	height=${BASH_REMATCH[2]}
+else
+	echo "Invalid mouse location."
+	exit 1
+fi
+
+# Get mouse location
+loc_rx='x:([0-9]+) y:([0-9]+)'
+if [[ $(xdotool getmouselocation) =~ $loc_rx ]]; then
+	x=${BASH_REMATCH[1]}
+	y=${BASH_REMATCH[2]}
+else
+	echo "Invalid mouse location."
+	exit 1
+fi
+
+#
+## Read and write state
+#
+
+state_f="/tmp/thinger-$USER"
+state_rx='([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+)'
+
+state_parse() {
+	if [[ $1 =~ $state_rx ]]; then
+		state_fromx="${BASH_REMATCH[1]}"
+		state_fromy="${BASH_REMATCH[2]}"
+		state_tox="${BASH_REMATCH[3]}"
+		state_toy="${BASH_REMATCH[4]}"
+	else
+		echo "Invalid state in $state_f."
+		return 1
+	fi
+}
+
+state_read() {
+	state_fromx=0
+	state_fromy=0
+	state_tox=$width
+	state_toy=$height
+
+	if [ -f "$state_f" ]; then
+		local fdate=$(date +%s%N -r "$state_f")
+		local diff=$(($(date +%s%N) - $fdate))
+		if [ $timeout_msec = -1 ] || [ $diff -le $timeout_nsec ]; then
+			state_parse "$(cat "$state_f")"
+		fi
+	fi
+}
+
+state_write() {
+	echo "$state_fromx $state_fromy $state_tox $state_toy" > "$state_f"
+}
+
+#
+## Util
+#
+
+avg() {
+	echo $((($1 + $2) / 2))
+}
+
+move() {
+	xdotool mousemove $1 $2
+}
+
+#
+## Interface
+#
+
+# reset: Remove the state file and exit
+if [ "$1" = reset ]; then
+	rm -f "$state_f"
+	exit 0
+fi
+
+# Read state for up/down/left/right
+state_read
+
+# up/down/left/right
+if [ "$1" = up ]; then
+	state_toy=$y
+	move $x $(avg $y $state_fromy)
+elif [ "$1" = down ]; then
+	state_fromy=$y
+	move $x $(avg $y $state_toy)
+elif [ "$1" = left ]; then
+	state_tox=$x
+	move $(avg $x $state_fromx) $y
+elif [ "$1" = right ]; then
+	state_fromx=$x
+	move $(avg $x $state_tox) $y
+else
+	echo "Usage: $0 <up|down|left|right|reset>"
+	exit 1
+fi
+
+# Write updated state
+state_write
