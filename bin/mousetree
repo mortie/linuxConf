@@ -42,7 +42,7 @@ state_parse() {
 		state_toy="${BASH_REMATCH[4]}"
 	else
 		echo "Invalid state in $state_f."
-		return 1
+		exit 1
 	fi
 }
 
