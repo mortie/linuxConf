@@ -16,8 +16,10 @@ alt + XF86MonBrightness{Up,Down}
 	xbacklight {-inc,-dec}} 1 -time 0 -steps 1
 
 # mouse
-mod4 + {a, o, e, u, k}
-	mousetree {left, down, up, right, reset}
+mod4 + {a, o, e, u}
+	mousetree {left, down, up, right}
+mod4 + {q, j, k}
+	mousetree {reset, zoom-cursor, zoom-window}
 mod4 + comma
 	xdotool click 1
 mod4 + shift + comma
