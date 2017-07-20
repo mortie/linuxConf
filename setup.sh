@@ -45,6 +45,8 @@ cpr()
 	cp -r "$1" "$2";
 }
 
+./setup/install.sh
+
 if ! [ $(hostname) = "elli" ]; then
 	umount remote &>/dev/null
 	deltacp setup/fstab /etc/fstab
