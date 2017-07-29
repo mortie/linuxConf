@@ -6,7 +6,7 @@
 
 getsinks()
 {
-	echo $(pactl list | grep '^Card #' | sed 's/.*#//')
+	echo $(pacmd list-sinks | grep '* index:' | cut -d ':' -f 2)
 }
 
 allsinks()
