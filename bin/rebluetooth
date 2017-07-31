@@ -9,7 +9,9 @@
 sudo modprobe -r btusb
 sudo modprobe btusb
 sudo systemctl restart bluetooth
+sudo rfkill block bluetooth
 sudo rfkill unblock bluetooth
+sudo systemctl restart bluetooth
 sudo hciconfig hci0 up
 sudo bluetooth off
 sudo bluetooth on
