@@ -7,6 +7,7 @@
 
 if [ "$1" = "" ]; then
 	echo "Usage: $0 <command> [dir] [time]"
+	exit 1
 fi
 
 if [ "$2" = "" ]; then
@@ -28,19 +29,20 @@ PID=$!
 OLD=$(ls -R --full-time "$DIR")
 
 while :; do
-	NEW=$(ls -R --full-time "$DIR"/*)
+	NEW=$(ls -R --full-time "$DIR")
 	if [ "$OLD" != "$NEW" ]; then
-		OLD="$NEW"
-
-		kill -9 "$PID" > /dev/null
-		[ $? != "0" ] && echo "Process $PID doesn't exist."
+		kill -9 "$PID" > /dev/null 2>/dev/null
 
 		$CMD &
 		PID=$!
 
 		# Print bell character
-		echo -e "\a"
+		printf "\a"
 	fi
 
 	sleep "$TIME"
+
+	if [ "$OLD" != "$NEW" ]; then
+		OLD=$(ls -R --full-time "$DIR")
+	fi
 done
