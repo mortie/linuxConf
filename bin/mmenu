@@ -57,17 +57,18 @@ run() {
 	fi
 
 	# Replace $c with clipboard contents
-	export paste="$(xsel -b)"
-	cmd=$(echo -n "$cmd" | awk '{ gsub("\\$[cC]", ENVIRON["paste"]); print($0) }')
+	paste="$(xsel -b)"
+	export paste
+	cmd=$(printf "%s" "$cmd" | awk '{ gsub("\\$[cC]", ENVIRON["paste"]); print($0) }')
 
 	# If not in calculator mode, and the command exists, run it
-	if [ "$1" = "" ] && exists $(echo "$cmd" | cut -d ' ' -f 1); then
+	if [ "$1" = "" ] && exists "$(echo "$cmd" | cut -d ' ' -f 1)"; then
 		echo "$cmd" | sh
 
 	# If we're in command mode and receive "clip",
 	# add it to the clipboard
 	elif [ "$1" != "" ] && [ "$cmd" = "clip" ]; then
-		echo -n "$1" | xsel -ib
+		printf "%s" "$1" | xsel -ib
 
 	# Otherwise just run the expression through python
 	else
