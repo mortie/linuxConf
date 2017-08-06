@@ -173,6 +173,8 @@ au BufNewFile,BufRead *.html imap htag <Esc>vbyi<<Esc>A></<Esc>pi<Right>><Esc>bb
 
 au BufNewFile,BufRead *.json imap tag <Esc>bi"<Esc>A":<Space>
 
+au BufNewFile,BufRead *.h imap hguard <Esc>A_H<Esc>^gU$y$i#ifndef <Esc>A<Return>#define <Esc>pA<Return><Esc>GA<Return>#endif
+
 " Syntastic
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
