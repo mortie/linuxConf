@@ -30,13 +30,6 @@ input "Razer Razer Naga" {
 	]
 }
 
-#input "DLL0665:01 06CB:76AD Touchpad" {
-#	type pointer
-#	options [
-#		[ "Trackpad Sensitivity" 0.6 ]
-#	]
-#}
-
 wallpaper {
 	path /home/martin/background.jpg
 }
@@ -51,14 +44,13 @@ process misc {
 		[ owncloud ]
 		[ nextcloud ]
 		[ scratchpad ]
+		[ parcellite ]
 	] as group
 	in "$(HOME)"
 }
 
 process compton {
-	run [ compton -c
-		--config .comptonrc --backend glx
-		--vsync opengl-swc --paint-on-overlay ]
+	run [ compton --config .comptonrc ]
 	in "$(HOME)"
 }
 
@@ -71,3 +63,5 @@ process sxhkd {
 process startup {
 	run [ sh .startup.sh ] in "$(HOME)"
 }
+
+include .dedaemon-local.hcnf
