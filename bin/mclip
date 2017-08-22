@@ -31,8 +31,8 @@ else
 	content=$(cat -)
 
 	if [ "$OS" = "Darwin" ]; then
-		echo -n "$content" | pbcopy
+		printf "%s" "$content" | pbcopy
 	else
-		echo -n "$content" | xsel -ib
+		printf "%s" "$content" | xsel -ib
 	fi
 fi
