@@ -26,3 +26,6 @@ dateformat = %d/%m
 longdateformat = %d/%m/%Y
 datetimeformat = %d/%m %H:%M
 longdatetimeformat = %d/%m/%Y %H:%M
+
+[view]
+agenda_event_format = {calendar-color}{cancelled}{start-end-time-style} {title}{repeat-symbol}
