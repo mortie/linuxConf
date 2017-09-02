@@ -15,7 +15,9 @@ function render()
 	F=$(echo -n "$C" | mformat)
 	cd ~
 	echo -n "$F"
-	echo -n "$F" | pandoc --standalone --latex-engine=pdflatex -B "$HOME/bin/mrender.tex" -o "$2"
+	echo -n "$F" | pandoc \
+		--standalone --latex-engine=pdflatex \
+		-H "$HOME/bin/mrender.tex" -o "$2"
 	cd "$DIR"
 }
 

@@ -1,6 +1,12 @@
+\usepackage{xcolor}
+
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\sub}[1]{_{#1}}
 \newcommand{\mmatrix}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\definecolor{codebg}{rgb}{0.95, 0.95, 0.95}
+\let\oldTexttt\texttt
+\renewcommand{\texttt}[1]{\oldTexttt{\colorbox{codebg}{\textbf{#1}}}}
