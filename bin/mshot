@@ -8,7 +8,7 @@ OS=$(uname)
 ECODE=0
 
 if [ "$1" = "" ]; then
-	echo "mshot <name> [select]"
+	echo "mshot <name> [select] [local]"
 	exit 1
 fi
 
@@ -19,9 +19,9 @@ if [ "$OS" = "Darwin" ]; then
 	screencapture "$DIR/pic.png"
 else
 	if [ "$2" = "select" ]; then
-		scrot --select "$DIR/pic.png"
+		gnome-screenshot -a -f "$DIR/pic.png"
 	else
-		scrot "$DIR/pic.png"
+		gnome-screenshot -f "$DIR/pic.png"
 	fi
 fi
 

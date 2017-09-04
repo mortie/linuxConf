@@ -6,7 +6,7 @@
 
 touch ~/.mlocked
 TMP="$(mktemp /tmp/scrot.XXXXXXXX.png)"
-scrot "$TMP"
+gnome-screenshot -f "$TMP"
 
 convert "$TMP"   \
 	-scale 5%    \
