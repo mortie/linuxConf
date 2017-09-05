@@ -12,12 +12,13 @@ DIR=$(pwd)
 function render()
 {
 	C=$(cat "$1")
-	F=$(echo -n "$C" | mformat)
+	F=$(mformat <<< "$C")
 	cd ~
-	echo -n "$F"
-	echo -n "$F" | pandoc \
+	echo "$F"
+	pandoc \
 		--standalone --latex-engine=pdflatex \
-		-H "$HOME/bin/mrender.tex" -o "$2"
+		-H "$HOME/bin/mrender.tex" -o "$2" \
+		<<< "$F"
 	cd "$DIR"
 }
 
