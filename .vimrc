@@ -17,6 +17,7 @@ Plugin 'kchmck/vim-coffee-script'
 " Plugin 'vim-syntastic/syntastic'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'rust-lang/rust.vim'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
 
  " Vundle end
 call vundle#end()            " required
@@ -127,11 +128,6 @@ function! Fix_dirmap_dvorak()
 	noremap <buffer> s l
 endfunction
 
- " Dvorak: Fix control keys
-noremap a v
-noremap o y
-noremap e p
-
  " File types
 au BufNewFile,BufRead *.nxc set filetype=c
 au BufNewFile,BufRead *.pl6 set filetype=perl6
@@ -158,7 +154,7 @@ au BufNewFile,BufRead *.mdn imap Noe No e<Left><Backspace><Right>
 au BufNewFile,BufRead *.mdn imap metae meta e<Left><Backspace><Right>
 au BufNewFile,BufRead *.mdn imap Metae Meta e<Left><Backspace><Right>
 au BufNewFile,BufRead *.mdn imap Oe Ø
-au BufNewFile,BufRead *.mdn set filetype=markdown
+au BufNewFile,BufRead *.mdn set filetype=markdown.pandoc
 
 au BufNewFile,BufRead *.md set tw=79
 au BufNewFile,BufRead *.md set filetype=markdown
