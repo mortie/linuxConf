@@ -25,7 +25,7 @@ else
 	fi
 fi
 
-mupload "$DIR/pic.png" "img/${1}.png"
+mupload-weblet "$DIR/pic.png" "img/${1}.png"
 if [ $? -eq 0 ]; then
 	msound camera-shutter
 else

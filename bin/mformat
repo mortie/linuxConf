@@ -7,11 +7,8 @@
 var str = "";
 
 var reps = [
-	["(\\^[^ (){}\\[\\],\\.]+)", "$^{$1}$"]
+	[ /(\^[^ (){}\[\],\.]+)/g, "$^{$1}$" ]
 ];
-reps = reps.map(function(arr) {
-	return [new RegExp(arr[0], "g"), arr[1]];
-});
 
 process.stdin.on("data", function(data) {
 	str += data;

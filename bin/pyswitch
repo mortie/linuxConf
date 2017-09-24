@@ -9,7 +9,6 @@ col_arrow="\033[33;1m"
 col_new="\033[32;1m"
 col_rst="\033[0m"
 
-
 if [ -z "$py2" ]; then
 	echo "Python 2 doesn't exist."
 	exit 1
@@ -19,6 +18,25 @@ elif [ -z "$py3" ]; then
 elif [ -z "$py" ]; then
 	echo "Python doesn't exist."
 	exit 1
+fi
+
+if [ "$#" -ge 2 ]; then
+	target="$1"
+	shift
+	if "$0" "$target"; then
+		switched=1
+	else
+		switched=0
+	fi
+
+	"$@"
+	code=$?
+
+	if [ "$switched" = 1 ]; then
+		pyswitch
+	fi
+
+	exit "$code"
 fi
 
 pyprev="$(python --version 2>&1)"

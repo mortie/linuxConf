@@ -17,7 +17,7 @@ elif [ "$1" = "type" ]; then
 	if [ "$OS" = "Darwin" ]; then
 		echo "Unavailable on Darwin."
 	else
-		xdotool type $(mclip get)
+		xdotool type -- $(mclip get)
 	fi
 
 elif [ "$1" = "get" ]; then

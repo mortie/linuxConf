@@ -4,11 +4,11 @@
 ## This script locks the screen. ##
 ###################################
 
-mnotifymsg "Lock."
-
 touch ~/.mlocked
 TMP="$(mktemp /tmp/scrot.XXXXXXXX.png)"
 gnome-screenshot -f "$TMP"
+
+mnotifymsg "Lock."
 
 convert "$TMP"   \
 	-scale 5%    \

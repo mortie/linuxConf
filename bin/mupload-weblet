@@ -1,20 +1,24 @@
 #!/bin/bash
 
-OS=$(uname)
+#############################################
+## This script uploads a file to a server. ##
+#############################################
 
 if [ "$1" == "" ] || [ "$2" == "" ]; then
-	echo "mupload-weblet <file> <name>"
+	echo "mupload <file> <name>"
 	exit 1
 elif [ ! -f "$1" ]; then
 	echo "File $1 doesn't exist."
 	exit 1
 fi
 
-URL="https://s.mort.coffee/d/$2"
+TIME=$(date +%s | tail -c 8)
+NAME=$(sed "s/#TIME/$TIME/" <<< "$2")
+URL="https://s.mort.coffee/d/$NAME"
 
 echo "$URL" | mclip
 
-scp "$1" "martin@weblet.mort.coffee:/var/www/mort.coffee/s/public/d/$2"
+scp "$1" "martin@weblet.mort.coffee:/var/www/mort.coffee/s/public/d/$NAME"
 if [ $? -eq 0 ]; then
 	echo "$URL"
 else
