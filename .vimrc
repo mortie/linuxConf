@@ -55,6 +55,7 @@ set iskeyword+=-
 set linebreak
 set fileencodings=utf-8
 set encoding=utf-8
+set lazyredraw
 
 " Fix alt
 execute "set <M-t>=\et"
