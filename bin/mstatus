@@ -1,0 +1,116 @@
+#!/bin/bash
+
+interfaces() {
+	ip addr | grep -oE '^[0-9]+: [^:]+' | sed -E 's/^[0-9]+:\s+//'
+}
+
+table() {
+	in=$(echo "$1" | sed 's/\\n/\n/g; s/\\t/\t/g')
+	longest=0
+	while read str; do
+		key=$(echo "$str" | cut -f1)
+		klen=$(echo "$key" | wc -c)
+		if [ $klen -gt $longest ]; then
+			longest=$klen
+		fi
+	done <<< "$in"
+
+	while read str; do
+		key=$(echo "$str" | cut -f1)
+		val=$(echo "$str" | cut -f2)
+		klen=$(echo "$key" | wc -c)
+
+		spaces=""
+		for i in $(seq $(($longest - $klen))); do
+			spaces="$spaces "
+		done
+
+		printf "%s%s %s\n" "$key" "$spaces" "$val"
+	done <<< "$in"
+}
+
+addrs() {
+	ifs=$(interfaces)
+
+	longest=0
+	for dev in $ifs; do
+		len=$(echo "$dev" | wc -c)
+		if [ $len -gt $longest ]; then
+			longest=$len
+		fi
+	done
+
+	tstr=""
+	for dev in $ifs; do
+		len=$(echo "$dev" | wc -c)
+		spaces=""
+		for i in $(seq $(($longest - $len))); do
+			spaces="$spaces "
+		done
+
+		text=$(ip addr show dev "$dev")
+		ipv4=$(echo "$text" \
+			| grep 'inet ' \
+			| cut -d'/' -f1 \
+			| sed 's/\s*inet\s*//')
+		[ -z "$ipv4" ] && ipv4="Not Connected"
+		tstr="$tstr$dev:\t$ipv4\n"
+	done
+	table "$tstr"
+}
+
+mem() {
+	strs=$(free -h \
+		| grep -v total \
+		| sed -E 's/\s+/ /g')
+
+	tstr=""
+	while read str; do
+		name=$(echo "$str" | cut -d' ' -f1)
+		avail=$(echo "$str" | cut -d' ' -f4)
+		total=$(echo "$str" | cut -d' ' -f2)
+		tstr="$tstr$name\t$avail/$total\n"
+	done <<< "$strs"
+	table "$tstr"
+}
+
+disk_ignore="/(dev|run|var|sys)"
+disk() {
+	strs=$(df -h \
+		| grep -v Filesystem \
+		| sed -E 's/\s+/ /g')
+
+	tstr=""
+	while read str; do
+		name=$(echo "$str" | cut -d' ' -f6)
+		avail=$(echo "$str" | cut -d' ' -f4)
+		total=$(echo "$str" | cut -d' ' -f2)
+
+		if $(echo "$name" | grep >/dev/null -E "$disk_ignore"); then
+			continue
+		fi
+
+		tstr="$tstr$name:\t$avail/$total\n"
+	done <<< "$strs"
+	table "$tstr"
+}
+
+load() {
+	load=$(cat /proc/loadavg \
+		| cut -d' ' -f1 \
+		| sed 's/\.//; s/^0//')
+	echo "Load: $load%"
+}
+
+while :; do
+	printf "#\r"
+	taddrs=$(addrs)
+	tmem=$(mem)
+	tdisk=$(disk)
+	tload=$(load)
+	clear
+	printf "%s\n\n%s\n\n%s\n\n%s\n" "$taddrs" "$tmem" "$tdisk" "$tload" 
+	sleep 2
+done
+
+
