@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
-var device = "44:5E:F3:B8:BF:3D";
+var devs = {
+	jay: "C0:28:8D:15:B6:28",
+	magni: "C0:25:E9:2C:42:FE",
+};
+
 var hci = "hci0"
 
 var {spawn, spawnSync} = require("child_process");
@@ -51,6 +55,13 @@ if (process.argv[2] == "off") {
 	run("pactl", [ "set-default-sink", "0" ]);
 	run("mnotify", [ "Disconnected." ]);
 } else {
+	var device = devs[process.argv[2]];
+
+	if (!device) {
+		run("merror", [ "No such device: "+process.argv[2] ])
+		return;
+	}
+
 	run("sudo", [ "rebluetooth" ]);
 
 	var child = spawn("bluetoothctl");

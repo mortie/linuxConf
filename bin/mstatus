@@ -97,9 +97,33 @@ disk() {
 
 load() {
 	load=$(cat /proc/loadavg \
-		| cut -d' ' -f1 \
-		| sed 's/\.//; s/^0//')
-	echo "Load: $load%"
+		| cut -d' ' -f1)
+	echo "Load: $load"
+}
+
+temp() {
+	if [ -f /opt/vc/bin/vcgencmd ]; then
+		cpu=$(/opt/vc/bin/vcgencmd measure_temp \
+			| cut -d'=' -f2 \
+			| cut -d"'" -f1)
+		tstr="CPU:\t${cpu}°C"
+	elif which sensors >/dev/null; then
+		sens=$(sensors)
+		if [ "$?" != 0 ]; then
+			tstr="Temp:\tcommand 'sensors' failed."
+		else
+			tstr=$(echo "$sens" \
+				| grep -i "core .*:" \
+				| sed -E 's/\s+/ /g' \
+				| cut -d' ' -f1,3,2 \
+				| sed 's/\+//' \
+				| sed 's/: /\t/')
+		fi
+	else
+		tstr="Temp:\tNo temperature sources found."
+	fi
+
+	echo "Temp: $temp"
 }
 
 while :; do
@@ -108,9 +132,8 @@ while :; do
 	tmem=$(mem)
 	tdisk=$(disk)
 	tload=$(load)
+	ttemp=$(temp)
 	clear
-	printf "%s\n\n%s\n\n%s\n\n%s\n" "$taddrs" "$tmem" "$tdisk" "$tload" 
+	printf "%s\n\n" "$taddrs" "$tmem" "$tdisk" "$tload" "$ttemp"
 	sleep 2
 done
-
-

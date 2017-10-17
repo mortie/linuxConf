@@ -1,12 +1,12 @@
 [options]
 font = Inconsolata 11
 cursor_blink = off
-scrollback_lines = 1000
+scrollback_lines = 50000
 browser = firefox-nightly
 
 [colors]
 foreground = #EEEEEE
-background = #000000
+background = rgba(0, 0, 0, 0.93)
 
 # black
 color0  = #000000

@@ -5,10 +5,9 @@ alias c="fasd_cd -d"
 alias please="history -1 | awk '{\$1=\"\"; print substr(\$0,2)}' | xargs sudo"
 alias rand="LC_ALL=C tr -dc A-Za-z0-9_ < /dev/urandom | head -c $1"
 alias autoremove='sudo pacman -Rcns $(pacman -Qdtq)'
-alias packer="packer --noedit"
 alias pbin="curl -T - https://p.iotek.org"
 alias diff="diff --color=auto"
-alias syu="packer -Syu"
+alias syu="pacaur -Syu"
 alias rgrep="grep -r"
 alias ","="cd"
 
@@ -79,6 +78,9 @@ to() {
 	while echo "$(pwd)" | grep -q -- "$1/?*"; do
 		builtin cd ..
 	done
+
+	# again
+	cd .
 }
 
 # .. = cd ../.., ... = cd ../../.., etc.
@@ -143,7 +145,10 @@ if which pushd 2>/dev/null >/dev/null; then
 		fi
 		pwd > ~/.lastdir
 	}
-	alias back="popd -q"
+	back() {
+		popd -q
+		pwd > ~/.lastdir
+	}
 fi
 
 # If in tmux, pretend the terminal is xterm-256color.

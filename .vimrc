@@ -18,6 +18,7 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'rust-lang/rust.vim'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
+Plugin 'editorconfig/editorconfig-vim'
 
  " Vundle end
 call vundle#end()            " required

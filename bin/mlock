@@ -5,19 +5,20 @@
 ###################################
 
 touch ~/.mlocked
-TMP="$(mktemp /tmp/scrot.XXXXXXXX.png)"
-gnome-screenshot -f "$TMP"
+SRC="$(mktemp /tmp/scrot.XXXXXXXX.bmp)"
+DST="$(mktemp /tmp/scrot.XXXXXXXX.png)"
+gnome-screenshot -f "$SRC"
 
 mnotifymsg "Lock."
 
-convert "$TMP"   \
+convert "$SRC"   \
 	-scale 5%    \
 	-scale 2000% \
-	"$TMP"
+	"$DST"
 
 # composite -gravity center ~/assets/img/lock.png "$TMP" "$TMP"
 
-i3lock -e -i "$TMP" -n
+i3lock -e -i "$DST" -n
 
-rm "$TMP"
+rm "$SRC" "$DST"
 rm ~/.mlocked
