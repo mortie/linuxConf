@@ -46,6 +46,10 @@ setopt inc_append_history
 # binds
 bindkey -e
 bindkey "\e[3~" delete-char
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+bindkey '^[[3;5~' kill-word
+bindkey '^H' backward-kill-word
 
 # TERM being xterm-termite causes issues, let's just set it to xterm
 case "$TERM" in
