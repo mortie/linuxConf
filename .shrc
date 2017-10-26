@@ -9,6 +9,7 @@ alias pbin="curl -T - https://p.iotek.org"
 alias diff="diff --color=auto"
 alias syu="pacaur -Syu"
 alias rgrep="grep -r"
+alias blk="lsblk | grep -v '/var/lib/snapd'"
 alias ","="cd"
 
 # Copy the absolute path of a file to the clipboard.
