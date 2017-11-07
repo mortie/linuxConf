@@ -1,88 +1,64 @@
 #!/usr/bin/env node
 
-var devs = {
-	jay: "C0:28:8D:15:B6:28",
-	magni: "C0:25:E9:2C:42:FE",
-};
+var spawn = require("child_process").spawn;
 
-var hci = "hci0"
+var macs = {};
+macs[0] = macs.jay = "C0:28:8D:15:B6:28";
+macs[1] = macs.magni = "C0:25:E9:2C:42:FE";
 
-var {spawn, spawnSync} = require("child_process");
+class Process {
+	constructor(...args) {
+		this.child = spawn.apply(null, args);
 
-function run(cmd, args) {
-	console.log("Running", cmd, args.join(" "));
-	var child = spawnSync(cmd, args);
-	var output = false;
-	if (child.stdout.toString().trim()) {
-		output = true;
-		console.log("Output:");
-		console.log(child.stdout.toString()
-			.trim().split("\n")
-			.map(l => "\t"+l).join(""));
-	}
-	if (child.stderr.toString().trim()) {
-		output = true;
-		console.log("Error:");
-		console.log(child.stderr.toString()
-			.trim().split("\n")
-			.map(l => "\t"+l).join(""));
-	}
+		this.awaiting = null;
+		this.child.stderr.pipe(process.stderr);
+		this.child.stdout.on("data", d => {
+			process.stdout.write(d);
+			if (this.awaiting == null)
+				return;
 
-	if (!output)
-		console.log("Done.");
-}
-
-function waitFor(child, arr) {
-	if (typeof arr == "string")
-		arr = [arr];
-
-	return new Promise(function(resolve, reject) {
-		function cb(str) {
-			for (var i in arr) {
-				if (str.indexOf(arr[i]) !== -1) {
-					child.stdout.removeListener("data", cb);
-					resolve(i);
-				}
+			if (this.awaiting.pattern.test(d.toString())) {
+				clearTimeout(this.awaiting.timeout);
+				var res = this.awaiting.resolve;
+				this.awaiting = null;
+				res();
 			}
-		}
-
-		child.stdout.on("data", cb);
-	});
-}
-
-if (process.argv[2] == "off") {
-	run("sudo", [ "modprobe", "-r", "btusb" ]);
-	run("pactl", [ "set-default-sink", "0" ]);
-	run("mnotify", [ "Disconnected." ]);
-} else {
-	var device = devs[process.argv[2]];
-
-	if (!device) {
-		run("merror", [ "No such device: "+process.argv[2] ])
-		return;
+		});
 	}
 
-	run("sudo", [ "rebluetooth" ]);
+	waitFor(pattern) {
+		var timeout = setTimeout(() => {
+			spawn("mnotify", [ "Timeout waiting for pattern", pattern ]);
+			process.exit(1);
+		}, 6000);
 
-	var child = spawn("bluetoothctl");
-	child.stdout.on("data", d => console.log(d.toString().trim()));
+		return new Promise((resolve, reject) => {
+			this.awaiting = { pattern, resolve, timeout };
+		});
+	}
 
-	waitFor(child, ["# "])
-		.then(() => {
-			child.stdin.write("power on\n");
-			return waitFor(child, ["Changing power on succeeded"]);
-		})
-		.then(() => {
-			child.stdin.write("connect "+device+"\n");
-			return waitFor(child, ["Connected: ", "Failed to connect: "]);
-		})
-		.then(code => {
-			if (code == 1)
-				run("merror", [ "Couldn't connect." ]);
-			else
-				run("mnotify", [ "Connected." ]);
-
-			child.stdin.write("quit\n");
-		})
-		.catch(err => console.error("Error: "+err));
+	send(msg, pattern) {
+		this.child.stdin.write(msg);
+		return this.waitFor(pattern);
+	}
 }
+
+async function connect(mac) {
+	var proc = new Process("bluetoothctl");
+
+	await proc.waitFor(/Agent registered/);
+	await proc.send("power on\n", /Changing power on succeeded/);
+	await proc.send("agent on\n", /Agent (is already registered|registered)/);
+	await proc.send("default-agent\n", /Default agent request successful/);
+	await proc.send("connect "+mac+"\n", /Connection successful/);
+
+	spawn("mnotify", [ "Connected." ]);
+}
+
+var mac = macs[process.argv[2]];
+if (!mac) {
+	spawn("mnotify", [ "Unknown device", process.argv[2] ]);
+	process.exit(1);
+}
+
+connect(mac);
