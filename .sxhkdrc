@@ -56,3 +56,11 @@ mod4 + Tab
 # lock screen
 mod4 + l
 	mlock
+
+# bluetooth
+Insert
+	blue jay
+shift + Insert
+	blue magni
+ctrl + Insert
+	blue off

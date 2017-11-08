@@ -26,6 +26,10 @@ class Process {
 		});
 	}
 
+	kill() {
+		this.child.kill();
+	}
+
 	waitFor(pattern) {
 		var timeout = setTimeout(() => {
 			spawn("mnotify", [ "Timeout waiting for pattern", pattern ]);
@@ -43,6 +47,16 @@ class Process {
 	}
 }
 
+async function disconnect() {
+	var proc = new Process("bluetoothctl");
+
+	await proc.waitFor(/Agent registered/);
+	await proc.send("power off\n", /Changing power off succeeded/);
+
+	spawn("mnotify", [ "Disonnected." ]);
+	proc.kill();
+}
+
 async function connect(mac) {
 	var proc = new Process("bluetoothctl");
 
@@ -53,12 +67,17 @@ async function connect(mac) {
 	await proc.send("connect "+mac+"\n", /Connection successful/);
 
 	spawn("mnotify", [ "Connected." ]);
+	proc.kill();
 }
 
-var mac = macs[process.argv[2]];
-if (!mac) {
-	spawn("mnotify", [ "Unknown device", process.argv[2] ]);
-	process.exit(1);
-}
+if (process.argv[2] == "off") {
+	disconnect();
+} else {
+	var mac = macs[process.argv[2]];
+	if (!mac) {
+		spawn("mnotify", [ "Unknown device", process.argv[2] ]);
+		process.exit(1);
+	}
 
-connect(mac);
+	connect(mac);
+}
