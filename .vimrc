@@ -48,9 +48,11 @@ syntax on
 filetype plugin indent on
 set tabstop=4
 set shiftwidth=4
+set noexpandtab
 set rnu
 set nu
 set so=5
+let c_no_curly_error=1
 ":let g:session_autosave = 'no'
 set iskeyword+=-
 set linebreak
@@ -172,6 +174,8 @@ au BufNewFile,BufRead *.html imap htag <Esc>vbyi<<Esc>A></<Esc>pi<Right>><Esc>bb
 au BufNewFile,BufRead *.json imap tag <Esc>bi"<Esc>A":<Space>
 
 au BufNewFile,BufRead *.h imap hguard <Esc>A_H<Esc>^gU$y$i#ifndef <Esc>A<Return>#define <Esc>pA<Return><Esc>GA<Return>#endif
+
+au BufNewFile,BufRead *.vue set filetype=html
 
 " Syntastic
 " set statusline+=%#warningmsg#
