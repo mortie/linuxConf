@@ -23,7 +23,7 @@ for_window [title=".*"] resize set width 1000 height 1000
 
 #colors
 #solarized theme, weird
-set $win-border #656565
+set $win-border #7594F0
 set $background #202020
 set $back-inact #1C1C1C
 set $back-urgen #B85335
