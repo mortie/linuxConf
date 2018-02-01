@@ -21,17 +21,6 @@ autoload -U compinit
 compinit
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-# prompt
-autoload -U colors && colors
-if [ -z "$SSH_CLIENT" ]; then
-	PROMPT_HOST="%{${fg_bold[yellow]}%}%m "
-else
-	PROMPT_HOST="%{${fg_bold[green]}%}∞ %{${fg_bold[red]}%}%m%{$reset_color%} "
-fi
-PROMPT_CWD="%{${fg_bold[cyan]}%}%~ "
-PROMPT_ARROW="%(?:%{$fg_bold[green]%}$ :%{$fg_bold[red]%}$ %s)"
-PS1="$PROMPT_HOST$PROMPT_CWD$PROMPT_ARROW%{$reset_color%}"
-
 # gem
 PATH="$PATH:$HOME/.gem/ruby/2.3.0/bin"
 
@@ -59,3 +48,22 @@ bindkey '^H' backward-kill-word
 case "$TERM" in
 	xterm-*) export TERM="xterm";;
 esac
+
+# prompt
+#
+autoload -U colors && colors
+
+if [ "$USER" = root ]; then
+	PROMPT_USER="%{$reset_color%}%{${fg[red]}%}$USER%{$reset_color%}@"
+else
+	PROMPT_USER=""
+fi
+
+if [ -z "$SSH_CLIENT" ]; then
+	PROMPT_HOST="$PROMPT_USER%{${fg_bold[yellow]}%}%m "
+else
+	PROMPT_HOST="%{${fg_bold[green]}%}"$'%{\xe2\x88%}\x9e'" $PROMPT_USER%{${fg_bold[red]}%}%m "
+fi
+PROMPT_CWD="%{${fg_bold[cyan]}%}%~ "
+PROMPT_ARROW="%(?:%{$fg_bold[green]%}$ :%{$fg_bold[red]%}$ %s)"
+PS1="$PROMPT_HOST$PROMPT_CWD$PROMPT_ARROW%{$reset_color%}"
