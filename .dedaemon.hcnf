@@ -45,6 +45,7 @@ process misc {
 		[ nextcloud ]
 		[ scratchpad ]
 		[ parcellite ]
+		[ blueman-applet ]
 	] as group
 	in "$(HOME)"
 }
