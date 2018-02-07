@@ -110,6 +110,9 @@ set ignorecase
 set smartcase
 set hlsearch
 
+ " Search looks
+hi Search cterm=NONE ctermfg=black ctermbg=yellow
+
  " Disable swp
 set noswapfile
 
