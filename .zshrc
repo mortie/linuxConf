@@ -43,6 +43,7 @@ bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 bindkey '^[[3;5~' kill-word
 bindkey '^H' backward-kill-word
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 # TERM being xterm-termite causes issues, let's just set it to xterm
 case "$TERM" in
