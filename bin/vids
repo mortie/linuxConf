@@ -6,6 +6,10 @@ import subprocess
 import traceback
 import sys
 
+command=""
+if len(sys.argv) == 2:
+    command=sys.argv[1]
+
 class Conf:
     VIDSFILE = ".vids"
     PATHFILE = os.path.expanduser("~/.vidspath")
@@ -88,12 +92,21 @@ class App:
 
     def watch(self, vidspath, ent, watched):
         self.setwatched(vidspath, ent, watched)
+
+        if command != "":
+            sanitized = ent.path.replace("'", "\\'")
+            cmdstr = command + " '" + sanitized + "'"
+            subprocess.Popen(["sh", "-c", cmdstr]).wait()
+            return
+
         cmds = [
             "xdg-open",
             "open"
         ]
 
         for cmd in cmds:
+            if cmd == "":
+                continue
             try:
                 subprocess.Popen([cmd, ent.path])
                 return

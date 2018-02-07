@@ -23,7 +23,7 @@ else
 fi
 
 CMD="$1"
-$CMD &
+sh -c "$CMD" &
 PID=$!
 
 OLD=$(ls -R --full-time "$DIR")
@@ -33,7 +33,7 @@ while :; do
 	if [ "$OLD" != "$NEW" ]; then
 		kill -9 "$PID" > /dev/null 2>/dev/null
 
-		$CMD &
+		sh -c "$CMD" &
 		PID=$!
 
 		# Print bell character
