@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+dir="/tmp/py2.$USER"
+if ! [ -d "$dir" ]; then
+	mkdir "$dir"
+	ln -s /usr/bin/python2 "$dir/python"
+fi
+
+PATH="$dir:$PATH"
+export PATH
+
+"$@"
