@@ -66,7 +66,7 @@ execute "set <M-n>=\en"
 
 " Visible tabs
 set list
-set listchars=tab:>-
+set listchars=tab:>—
 hi tabs ctermfg=DarkGray
 match tabs /\t/
 
