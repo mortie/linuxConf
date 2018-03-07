@@ -5,36 +5,36 @@
 ## a window name and executing a command.         ##
 ####################################################
 
+set -e
+
+EXEC="$1"
+NAME="$2"
+DIR="$3"
+
 function isterm()
 {
 	which "$1" &> /dev/null
 }
 
-P_CMD=""
-P_NAME=""
-P_EXEC=""
+declare -a args
 
 if isterm termite; then
-	P_CMD="termite"
-	if [ "$1" != "" ]; then
-		P_EXEC="-e 'sh -c \"$1\"'"
+	cmd=termite
+	if ! [ -z "$EXEC" ]; then
+		args+=("-e")
+		args+=("$EXEC")
 	fi
-	if [ "$2" != "" ]; then
-		P_NAME="--name '$2'"
+	if ! [ -z "$NAME" ]; then
+		args+=("--name")
+		args+=("$NAME")
 	fi
-elif isterm urxvt; then
-	P_CMD="urxvt"
-	if [ "$1" != "" ]; then
-		P_EXEC="-e sh -c '$1'"
-	fi
-	if [ "$2" != "" ]; then
-		P_NAME="-name '$2'"
+	if ! [ -z "$DIR" ]; then
+		args+=("-d")
+		args+=("$DIR")
 	fi
 else
 	echo "No suitable terminal found."
 	exit 1
 fi
 
-C="$P_CMD $P_NAME $P_EXEC"
-eval "$C"
-exit $?
+"$cmd" "${args[@]}"

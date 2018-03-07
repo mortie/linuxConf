@@ -73,15 +73,9 @@ to() {
 		return 1
 	fi
 
-	# to pushd if cd does pushd
-	cd .
-
 	while echo "$(pwd)" | grep -q -- "$1/?*"; do
 		builtin cd ..
 	done
-
-	# again
-	cd .
 }
 
 # .. = cd ../.., ... = cd ../../.., etc.
@@ -136,30 +130,9 @@ pack() {
 	rm -rf "$TMP"
 }
 
-# If pushd/popd exists, make cd pushd, and back popd.
-if which pushd 2>/dev/null >/dev/null; then
-	cd() {
-		if [ "$*" = "" ]; then
-			pushd -q "$HOME"
-		else
-			pushd -q "$@"
-		fi
-		pwd > ~/.lastdir
-	}
-	back() {
-		popd -q
-		pwd > ~/.lastdir
-	}
-fi
-
 # If in tmux, pretend the terminal is xterm-256color.
 if [ ! "$TMUX" = "" ]; then
 	export TERM="xterm-256color"
-fi
-
-# Go to the directory which was last cd'd to.
-if [ -f ~/.lastdir ]; then
-	cd "$(cat ~/.lastdir)"
 fi
 
 if [ -f ~/.shrc-local ]; then
