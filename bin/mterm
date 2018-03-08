@@ -22,7 +22,7 @@ if isterm termite; then
 	cmd=termite
 	if ! [ -z "$EXEC" ]; then
 		args+=("-e")
-		args+=("$EXEC")
+		args+=("sh -c '$EXEC'")
 	fi
 	if ! [ -z "$NAME" ]; then
 		args+=("--name")
