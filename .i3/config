@@ -102,6 +102,17 @@ bindsym $mod+Control+t move workspace to output up
 bindsym $mod+Control+n move workspace to output down
 bindsym $mod+Control+s move workspace to output right
 
+bindsym $mod+Control+1 rename workspace to 1
+bindsym $mod+Control+2 rename workspace to 2
+bindsym $mod+Control+3 rename workspace to 3
+bindsym $mod+Control+4 rename workspace to 4
+bindsym $mod+Control+5 rename workspace to 5
+bindsym $mod+Control+6 rename workspace to 6
+bindsym $mod+Control+7 rename workspace to 7
+bindsym $mod+Control+8 rename workspace to 8
+bindsym $mod+Control+9 rename workspace to 9
+bindsym $mod+Control+0 rename workspace to 10
+
 # split in horizontal orientation
 bindsym $mod+c split h
 
