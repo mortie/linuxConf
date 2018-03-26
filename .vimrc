@@ -19,6 +19,7 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'rust-lang/rust.vim'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'justinmk/vim-syntax-extra'
 
  " Vundle end
 call vundle#end()            " required
