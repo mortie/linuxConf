@@ -16,6 +16,7 @@ xft.hinting: 1
 xft.hintstyle: hintful
 xft.lcdfilter: lcddefault
 xft.rgba: rgb
+Xcursor.size: 24
 
 URxvt.scrollBar: off
 
