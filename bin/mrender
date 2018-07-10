@@ -16,7 +16,7 @@ function render()
 	cd ~
 	echo "$F"
 	pandoc \
-		--standalone --latex-engine=pdflatex \
+		--standalone --pdf-engine=pdflatex \
 		-H "$HOME/bin/mrender.tex" -o "$2" \
 		<<< "$F"
 	cd "$DIR"

@@ -5,7 +5,9 @@ interfaces() {
 }
 
 table() {
-	in=$(echo "$1" | sed 's/\\n/\n/g; s/\\t/\t/g')
+	name="$1"
+	in=$(echo "$2" | sed 's/\\n/\n/g; s/\\t/\t/g')
+
 	longest=0
 	while read str; do
 		key=$(echo "$str" | cut -f1)
@@ -15,6 +17,7 @@ table() {
 		fi
 	done <<< "$in"
 
+	printf "%s%s%s\n" $(tput bold) "$name:" $(tput sgr0)
 	while read str; do
 		key=$(echo "$str" | cut -f1)
 		val=$(echo "$str" | cut -f2)
@@ -25,11 +28,13 @@ table() {
 			spaces="$spaces "
 		done
 
-		printf "%s%s %s\n" "$key" "$spaces" "$val"
+		printf "  %s%s %s\n" "$key" "$spaces" "$val"
 	done <<< "$in"
 }
 
 addrs() {
+	tstr=""
+
 	ifs=$(interfaces)
 
 	longest=0
@@ -40,7 +45,6 @@ addrs() {
 		fi
 	done
 
-	tstr=""
 	for dev in $ifs; do
 		len=$(echo "$dev" | wc -c)
 		spaces=""
@@ -56,31 +60,31 @@ addrs() {
 		[ -z "$ipv4" ] && ipv4="Not Connected"
 		tstr="$tstr$dev:\t$ipv4\n"
 	done
-	table "$tstr"
+	table Interfaces "$tstr"
 }
 
 mem() {
+	tstr=""
+
 	strs=$(free -h \
 		| grep -v total \
 		| sed -E 's/\s+/ /g')
-
-	tstr=""
 	while read str; do
 		name=$(echo "$str" | cut -d' ' -f1)
 		avail=$(echo "$str" | cut -d' ' -f4)
 		total=$(echo "$str" | cut -d' ' -f2)
 		tstr="$tstr$name\t$avail/$total\n"
 	done <<< "$strs"
-	table "$tstr"
+	table Memory "$tstr"
 }
 
 disk_ignore="/(dev|run|var|sys)"
 disk() {
+	tstr=""
+
 	strs=$(df -h \
 		| grep -v Filesystem \
 		| sed -E 's/\s+/ /g')
-
-	tstr=""
 	while read str; do
 		name=$(echo "$str" | cut -d' ' -f6)
 		avail=$(echo "$str" | cut -d' ' -f4)
@@ -92,13 +96,50 @@ disk() {
 
 		tstr="$tstr$name:\t$avail/$total\n"
 	done <<< "$strs"
-	table "$tstr"
+	table Disk "$tstr"
 }
 
 load() {
-	load=$(cat /proc/loadavg \
-		| cut -d' ' -f1)
-	echo "Load: $load"
+	tstr=""
+
+	loads=$(cat /proc/stat | grep "^cpu" | sed -E 's/\s+/ /g')
+	i=0
+	while read load; do
+		name=$(echo "$load" | cut -d' ' -f1)
+		user=$(echo "$load" | cut -d' ' -f2)
+		system=$(echo "$load" | cut -d' ' -f3)
+		total=$(($user + $system))
+		idle=$(echo "$load" | cut -d' ' -f4)
+
+		prev=${load_prev[$i]}
+		echo "load_prev[$i]: $prev"
+
+		if [ -z "$prev" ]; then
+			realtotal=$total
+			realidle=$idle
+		else
+			realtotal=$(($total - $(echo "$prev" | cut -d' ' -f1)))
+			realidle=$(($idle - $(echo "$prev" | cut -d' ' -f2)))
+		fi
+
+		load_prev[$i]="$total $idle"
+		echo "load_prev[$i]: ${load_prev[$i]}"
+
+		if [ "$name" = cpu ]; then
+			name="CPU Total"
+		else
+			id=$(echo "$name" | sed -E 's/[^0-9]+//')
+			name="CPU $id"
+		fi
+
+		l=$(bc -l <<< "($realidle / $realtotal) * 100" \
+			| sed 's/\..*//')
+
+		tstr="$tstr$name:\t$l%\n"
+		i=$(($i + 1))
+	done <<< "$loads"
+
+	table Load "$tstr"
 }
 
 temp() {
@@ -106,24 +147,28 @@ temp() {
 		cpu=$(/opt/vc/bin/vcgencmd measure_temp \
 			| cut -d'=' -f2 \
 			| cut -d"'" -f1)
-		tstr="CPU:\t${cpu}°C"
-	elif which sensors >/dev/null; then
+		tstr="GPU:\t${cpu}°C"
+	fi
+	if which sensors >/dev/null; then
 		sens=$(sensors)
 		if [ "$?" != 0 ]; then
 			tstr="Temp:\tcommand 'sensors' failed."
 		else
-			tstr=$(echo "$sens" \
-				| grep -i "core .*:" \
-				| sed -E 's/\s+/ /g' \
-				| cut -d' ' -f1,3,2 \
-				| sed 's/\+//' \
-				| sed 's/: /\t/')
+			sens=$(echo "$sens" \
+				| grep '^Core' \
+				| sed -E 's/\s+/ /'g)
+			while read s; do
+				id=$(echo "$s" | cut -d' ' -f2)
+				t=$(echo "$s" | cut -d' ' -f3 | sed 's/\+//')
+				tstr="${tstr}Core $id\t$t\n"
+			done <<< "$sens"
 		fi
-	else
+	fi
+	if [ "$tstr" = "" ]; then
 		tstr="Temp:\tNo temperature sources found."
 	fi
 
-	echo "Temp: $temp"
+	table Temp "$tstr"
 }
 
 while :; do
@@ -133,7 +178,8 @@ while :; do
 	tdisk=$(disk)
 	tload=$(load)
 	ttemp=$(temp)
-	clear
-	printf "%s\n\n" "$taddrs" "$tmem" "$tdisk" "$tload" "$ttemp"
+	#clear
+	#printf "%s\n\n" "$taddrs" "$tmem" "$tdisk" "$tload" "$ttemp"
+	printf "%s\n\n" "$tload"
 	sleep 2
 done
