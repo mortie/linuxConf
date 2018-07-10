@@ -48,19 +48,9 @@ mod4 + shift + v
 	xdotool click 2
 
 # norwegian
-ctrl + Tab
-	setxkbmap {no, dvorak} -option "ctrl:swapcaps" -option "altwin:swap_alt_win"
 mod4 + Tab
 	setxkbmap {no, dvorak} -option "ctrl:swapcaps" -option "altwin:swap_alt_win"
 
 # lock screen
 mod4 + l
 	mlock
-
-# bluetooth
-Insert
-	blue jay
-shift + Insert
-	blue magni
-ctrl + Insert
-	blue off

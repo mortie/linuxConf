@@ -5,7 +5,7 @@ scrollback_lines = 50000
 browser = firefox-nightly
 
 [colors]
-foreground = #EEEEEE
+foreground = #FFFFFF
 background = rgba(0, 0, 0, 0.93)
 
 # black

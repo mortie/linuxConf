@@ -20,6 +20,7 @@ Plugin 'rust-lang/rust.vim'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'justinmk/vim-syntax-extra'
+Plugin 'pangloss/vim-javascript'
 
  " Vundle end
 call vundle#end()            " required

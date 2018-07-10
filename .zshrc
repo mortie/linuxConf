@@ -45,6 +45,9 @@ bindkey '^[[3;5~' kill-word
 bindkey '^H' backward-kill-word
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
+# fuck
+which thefuck &>/dev/null && eval $(thefuck --alias)
+
 # TERM being xterm-termite causes issues, let's just set it to xterm
 case "$TERM" in
 	xterm-*) export TERM="xterm";;
