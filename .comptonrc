@@ -7,11 +7,6 @@ paint-on-overlay = true;
 menu-opacity = 1;
 inactive-opacity = 1;
 
-# Fading
-fading = true;
-fade-in-step = 0.1;
-fade-out-step = 0.1;
-
 # Shadows
 shadow = true;
 no-dnd-shadow = true;
