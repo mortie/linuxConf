@@ -67,6 +67,9 @@ if [ -z "$SSH_CLIENT" ]; then
 	PROMPT_HOST="$PROMPT_USER%{${fg_bold[yellow]}%}%m "
 else
 	PROMPT_HOST="%{${fg_bold[green]}%}∞ $PROMPT_USER%{${fg_bold[red]}%}%m "
+	if grep 'zsh 5.1.1' >/dev/null 2>/dev/null <<< "$(zsh --version)"; then
+		PROMPT_HOST="$PROMPT_HOST "
+	fi
 fi
 PROMPT_CWD="%{${fg_bold[cyan]}%}%~ "
 PROMPT_ARROW="%(?:%{$fg_bold[green]%}$ :%{$fg_bold[red]%}$ %s)"
