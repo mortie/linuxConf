@@ -48,9 +48,9 @@ WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 # fuck
 which thefuck &>/dev/null && eval $(thefuck --alias)
 
-# TERM being xterm-termite causes issues, let's just set it to xterm
+# I don't want to have to import weird terminfos to all systems I SSH into
 case "$TERM" in
-	xterm-*) export TERM="xterm";;
+	xterm-termite) export TERM="xterm";;
 esac
 
 # prompt
@@ -66,7 +66,7 @@ fi
 if [ -z "$SSH_CLIENT" ]; then
 	PROMPT_HOST="$PROMPT_USER%{${fg_bold[yellow]}%}%m "
 else
-	PROMPT_HOST="%{${fg_bold[green]}%}"$'%{\xe2\x88%}\x9e'" $PROMPT_USER%{${fg_bold[red]}%}%m "
+	PROMPT_HOST="%{${fg_bold[green]}%}∞ $PROMPT_USER%{${fg_bold[red]}%}%m "
 fi
 PROMPT_CWD="%{${fg_bold[cyan]}%}%~ "
 PROMPT_ARROW="%(?:%{$fg_bold[green]%}$ :%{$fg_bold[red]%}$ %s)"
