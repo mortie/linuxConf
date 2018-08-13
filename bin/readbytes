@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+
+console.log("Hit ctrl+d two times to exit.");
+
+let stdin = process.openStdin();
+stdin.setRawMode(true);
+
+let dcount = 0;
+stdin.on("data", (d) => {
+	for (let i = 0; i < d.length; ++i) {
+		let n = d[i];
+		let str = String.fromCharCode(n);
+		let hex = n.toString(16);
+		if (hex.length == 1) hex = "0" + hex;
+		console.log(hex+" ("+JSON.stringify(str).replace(/"/g, "")+")");
+
+		if (hex == "04") {
+			dcount += 1;
+			if (dcount == 2) {
+				stdin.setRawMode(false);
+				process.exit();
+			}
+		} else {
+			dcount = 0;
+		}
+	}
+});
