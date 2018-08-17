@@ -1,0 +1,6 @@
+#!/bin/bash
+
+tmp="$(mktemp /tmp/msoak.XXXXXXXX)"
+script -qfe --command "$(printf "%q " "$@")" 2>&1 > "$tmp"
+less -r "$tmp"
+rm "$tmp"
