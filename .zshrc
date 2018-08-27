@@ -38,11 +38,13 @@ setopt inc_append_history
 
 # binds
 bindkey -e
-bindkey "\e[3~" delete-char
+bindkey "^[[3~" delete-char
 bindkey "^[[1;5C" forward-word
+bindkey "^[[OC" forward-word
 bindkey "^[[1;5D" backward-word
-bindkey '^[[3;5~' kill-word
-bindkey '^H' backward-kill-word
+bindkey "^[[OD" backward-word
+bindkey "^[[3;5~" kill-word
+bindkey "\x08" backward-kill-word
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 # fuck
@@ -56,12 +58,23 @@ esac
 # prompt
 #
 autoload -U colors && colors
+setopt PROMPT_SUBST
 
 if [ "$USER" = root ]; then
 	PROMPT_USER="%{$reset_color%}%{${fg[red]}%}$USER%{$reset_color%}@"
 else
 	PROMPT_USER=""
 fi
+
+prompt_branch() {
+	if prompt_current_branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"; then
+		if [ "$prompt_current_branch" != master ]; then
+			echo "%{${fg_bold[red]}%}$prompt_current_branch "
+		fi
+	fi
+}
+
+PROMPT_BRANCH='$(prompt_branch)'
 
 if [ -z "$SSH_CLIENT" ]; then
 	PROMPT_HOST="$PROMPT_USER%{${fg_bold[yellow]}%}%m "
@@ -70,4 +83,4 @@ else
 fi
 PROMPT_CWD="%{${fg_bold[cyan]}%}%~ "
 PROMPT_ARROW="%(?:%{$fg_bold[green]%}$ :%{$fg_bold[red]%}$ %s)"
-PS1="$PROMPT_HOST$PROMPT_CWD$PROMPT_ARROW%{$reset_color%}"
+PS1="$PROMPT_HOST$PROMPT_CWD$PROMPT_BRANCH$PROMPT_ARROW%{$reset_color%}"
