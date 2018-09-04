@@ -3,6 +3,6 @@
 tmp="$(mktemp /tmp/msoak.XXXXXXXX)"
 script -qfe --command "$(printf "%q " "$@")" 2>&1 > "$tmp"
 code=$?
-less -Fr "$tmp"
+less -FR "$tmp"
 rm "$tmp"
 exit $code
