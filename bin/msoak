@@ -1,8 +1,10 @@
 #!/bin/bash
 
 tmp="$(mktemp /tmp/msoak.XXXXXXXX)"
-script -qfe --command "$(printf "%q " "$@")" 2>&1 > "$tmp"
-code=$?
-less -FR "$tmp"
+script -qfe --command "$(printf "%q " "$@")" /dev/null 2>&1 | tee "$tmp"
+code="${PIPESTATUS[0]}"
+if [ $(wc -l "$tmp" | cut -d' ' -f1) -gt 30 ]; then
+	less -R "$tmp"
+fi
 rm "$tmp"
 exit $code
