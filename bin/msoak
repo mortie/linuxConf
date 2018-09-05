@@ -2,8 +2,8 @@
 
 # Note that if the child process gets killed (i.e using ctrl+c)
 # or exits abnormally, script from util-linux v2.31 and above will hang.
-# That's fixed by using an older version, or by using a version with this patch:
-# https://github.com/karelzak/util-linux/pull/687
+# That's fixed by using an older version, or by using a build from after
+# this commit: https://github.com/karelzak/util-linux/commit/27afe5016842c22d256ea9f88b598d637ca0df84
 
 tmp="$(mktemp /tmp/msoak.XXXXXXXX)"
 script -qfe --command "$(printf "%q " "$@")" /dev/null 2>&1 | tee "$tmp"
