@@ -17,6 +17,7 @@ hide_edge_borders both
 # hide dem titles
 for_window [class="^.*"] border pixel 3
 for_window [title="^float$"] floating enable
+for_window [title="Bluetooth"] floating enable
 
 # floating sizes
 for_window [title=".*"] resize set width 1000 height 1000
@@ -198,18 +199,19 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-	status_command i3status
-	separator_symbol " | "
-
-	colors {
-		focused_workspace  $border $barbackground $text
-		active_workspace   $border $barbackground $t-in
-		inactive_workspace $border $barbackground $t-in
-		statusline #dddddd
-		separator #eeeeee
-	}
-}
+#bar {
+#	status_command i3status
+#	separator_symbol " | "
+#
+#	colors {
+#		focused_workspace  $border $barbackground $text
+#		active_workspace   $border $barbackground $t-in
+#		inactive_workspace $border $barbackground $t-in
+#		statusline #dddddd
+#		separator #eeeeee
+#	}
+#}
+exec --no-startup-id polybar example
 
 bindsym $mod+space scratchpad show
 for_window [instance="scratchpad"] move scratchpad
