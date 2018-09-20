@@ -45,6 +45,8 @@ bindkey "^[[1;5D" backward-word
 bindkey "^[[OD" backward-word
 bindkey "^[[3;5~" kill-word
 bindkey "\x08" backward-kill-word
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 # fuck
