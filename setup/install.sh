@@ -38,3 +38,5 @@ install vim
 install curl
 install zsh
 install sshfs
+install zsh-syntax-highlighting
+install zsh-autosuggestions

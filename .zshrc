@@ -106,3 +106,13 @@ do
 		highlighted=1
 	fi
 done
+
+# Suggestions
+suggested=0
+for sugpath in /usr{,/local}/share{,/zsh/plugins}/zsh-autosuggestions/zsh-autosuggestions.zsh
+do
+	if [ $suggested = 0 ] && [ -f "$sugpath" ]; then
+		source "$sugpath"
+		suggested=1
+	fi
+done
