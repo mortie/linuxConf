@@ -14,7 +14,13 @@ alias ","="cd"
 
 # Copy the absolute path of a file to the clipboard.
 ccc() {
+	[ -z "$1" ] && 1=.
 	readlink -f "$1" | mclip
+}
+
+# Go to the directory in the clipboard
+ccd() {
+	cd "$(mclip get)"
 }
 
 # Edit a file based on its name.
