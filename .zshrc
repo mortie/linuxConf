@@ -99,7 +99,7 @@ PS1="$PROMPT_HOST$PROMPT_CWD$PROMPT_GIT$PROMPT_ARROW%{$reset_color%}"
 # Highlight
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 highlighted=0
-for hlpath in {/usr/share,/usr/share/zsh/plugins}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+for hlpath in /usr{,/local}/share{,/zsh/plugins}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 do
 	if [ $highlighted = 0 ] && [ -f "$hlpath" ]; then
 		source "$hlpath"
