@@ -18,7 +18,23 @@ function isterm()
 
 declare -a args
 
-if isterm termite; then
+if isterm konsole; then
+	cmd=konsole
+	args+=("--profile")
+	args+=("i3wm")
+	if ! [ -z "$EXEC" ]; then
+		args+=("-e")
+		args+=("sh -c '$EXEC'")
+	fi
+	if ! [ -z "$NAME" ]; then
+		args+=("--name")
+		args+=("$NAME")
+	fi
+	if ! [ -z "$DIR" ]; then
+		args+=("--workdir")
+		args+=("$DIR")
+	fi
+elif isterm termite; then
 	cmd=termite
 	if ! [ -z "$EXEC" ]; then
 		args+=("-e")

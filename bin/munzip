@@ -13,7 +13,7 @@ if [[ "$1" == *.tar.gz ]]; then
 	tar vxzf "$1"
 elif [[ "$1" == *.tar.bz2 ]]; then
 	tar vjxf "$1"
-elif [[ "$1" == *.tar.xz$ ]]; then
+elif [[ "$1" == *.tar.xz ]]; then
 	tar vxJf "$1"
 elif [[ "$1" == *.zip ]]; then
 	unzip "$1"

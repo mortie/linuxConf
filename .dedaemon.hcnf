@@ -43,7 +43,6 @@ process misc {
 		[ nm-applet ]
 		[ owncloud ]
 		[ nextcloud ]
-		[ scratchpad ]
 		[ parcellite ]
 		[ blueman-applet ]
 	] as group

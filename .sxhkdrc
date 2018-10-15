@@ -21,13 +21,13 @@ mod4 + {a, o, e, u}
 mod4 + {q, j, k}
 	mousetree {reset, zoom-cursor, zoom-window}
 mod4 + comma
-	xdotool click 1
+	xdotool click --clearmodifiers 1
 mod4 + shift + comma
-	xdotool {mousedown, mouseup} 1
+	xdotool {mousedown, mouseup} --clearmodifiers 1
 mod4 + apostrophe
-	xdotool click 3
+	xdotool click --clearmodifiers 3
 mod4 + shift + apostrophe
-	xdotool {mousedown, mouseup} 3
+	xdotool {mousedown, mouseup} --clearmodifiers 3
 
 # screenshot
 Print
