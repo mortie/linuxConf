@@ -21,6 +21,7 @@ Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'justinmk/vim-syntax-extra'
 Plugin 'pangloss/vim-javascript'
+Plugin 'w0rp/ale'
 
  " Vundle end
 call vundle#end()            " required
@@ -208,3 +209,6 @@ au Filetype scheme setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 
 " ASM should probably have 8 long tabs
 au Filetype asm setlocal tabstop=8 shiftwidth=8
+
+" ALE
+let b:ale_linters = [ 'cquery' ]

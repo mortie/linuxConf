@@ -69,7 +69,7 @@ tray-padding = 2
 ;tray-background = #0063ff
 
 ;wm-restack = bspwm
-;wm-restack = i3
+wm-restack = i3
 
 ;override-redirect = true
 
@@ -109,7 +109,7 @@ interval = 25
 mount-0 = /
 
 #label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
-label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %free%%
+label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %free%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -266,17 +266,23 @@ format-disconnected =
 type = internal/date
 interval = 5
 
-date =
-date-alt = " %Y-%m-%d"
+#date =
+#date-alt = " %Y-%m-%d"
+#
+#time = %H:%M
+#time-alt = %H:%M:%S
+#
+#format-prefix = 
+#format-prefix-foreground = ${colors.foreground-alt}
+#format-underline = #0a6cf5
+#
+#label = %date% %time%
 
-time = %H:%M
-time-alt = %H:%M:%S
-
+date = " %A %d. of %B, %H:%M, Week %U"
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #0a6cf5
-
-label = %date% %time%
+label = %date%
 
 [module/pulseaudio]
 type = internal/pulseaudio
