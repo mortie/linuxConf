@@ -97,5 +97,11 @@ PROMPT_ARROW="%(?:%{$fg_bold[green]%}$ :%{$fg_bold[red]%}$ %s)"
 PS1="$PROMPT_HOST$PROMPT_CWD$PROMPT_GIT$PROMPT_ARROW%{$reset_color%}"
 
 # Highlight
-hlpath=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-[ -f "$hlpath" ] && source "$hlpath"
+highlighted=0
+for hlpath in {/usr/share,/usr/share/zsh/plugins}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+do
+	if [ $highlighted = 0 ] && [ -f "$hlpath" ]; then
+		source "$hlpath"
+		highlighted=1
+	fi
+done
