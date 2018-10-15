@@ -68,15 +68,24 @@ else
 	PROMPT_USER=""
 fi
 
-prompt_branch() {
+prompt_git() {
 	if prompt_current_branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"; then
+		local space=0
 		if [ "$prompt_current_branch" != master ]; then
-			echo "%{${fg_bold[red]}%}$prompt_current_branch "
+			printf "%s" "%{${fg_bold[red]}%}$prompt_current_branch"
+			space=1
+		fi
+		if ! [ -z "$(git status --porcelain)" ]; then
+			printf "%s" "%{${fg_bold[yellow]}%}*"
+			space=1
+		fi
+		if [ $space = 1 ]; then
+			printf " "
 		fi
 	fi
 }
 
-PROMPT_BRANCH='$(prompt_branch)'
+PROMPT_GIT='$(prompt_git)'
 
 if [ -z "$SSH_CLIENT" ]; then
 	PROMPT_HOST="$PROMPT_USER%{${fg_bold[yellow]}%}%m "
@@ -85,4 +94,8 @@ else
 fi
 PROMPT_CWD="%{${fg_bold[cyan]}%}%~ "
 PROMPT_ARROW="%(?:%{$fg_bold[green]%}$ :%{$fg_bold[red]%}$ %s)"
-PS1="$PROMPT_HOST$PROMPT_CWD$PROMPT_BRANCH$PROMPT_ARROW%{$reset_color%}"
+PS1="$PROMPT_HOST$PROMPT_CWD$PROMPT_GIT$PROMPT_ARROW%{$reset_color%}"
+
+# Highlight
+hlpath=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[ -f "$hlpath" ] && source "$hlpath"
