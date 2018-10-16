@@ -116,3 +116,4 @@ do
 		suggested=1
 	fi
 done
+bindkey "^j" autosuggest-execute
