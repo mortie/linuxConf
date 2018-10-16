@@ -99,7 +99,7 @@ PS1="$PROMPT_HOST$PROMPT_CWD$PROMPT_GIT$PROMPT_ARROW%{$reset_color%}"
 # Highlight
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 highlighted=0
-for hlpath in /usr{,/local}/share{,/zsh/plugins}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+for hlpath in {/usr{,/local}/share{,/zsh/plugins},~/.zsh}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 do
 	if [ $highlighted = 0 ] && [ -f "$hlpath" ]; then
 		source "$hlpath"
@@ -109,11 +109,10 @@ done
 
 # Suggestions
 suggested=0
-for sugpath in /usr{,/local}/share{,/zsh/plugins}/zsh-autosuggestions/zsh-autosuggestions.zsh
+for sugpath in {/usr{,/local}/share{,/zsh/plugins},~/.zsh}/zsh-autosuggestions/zsh-autosuggestions.zsh
 do
 	if [ $suggested = 0 ] && [ -f "$sugpath" ]; then
 		source "$sugpath"
 		suggested=1
 	fi
 done
-bindkey '\x0a' autosuggest-execute
