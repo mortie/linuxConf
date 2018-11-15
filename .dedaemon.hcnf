@@ -30,6 +30,14 @@ input "Razer Razer Naga" {
 	]
 }
 
+input "DELL080D:00 06CB:7A13 Touchpad" {
+	type pointer
+	options [
+		[ "libinput Accel Speed" 0.48 ]
+		[ "libinput Disable While Typing" 0 ]
+	]
+}
+
 wallpaper {
 	path /home/martin/background.jpg
 }

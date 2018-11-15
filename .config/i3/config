@@ -19,9 +19,6 @@ for_window [class="^.*"] border pixel 3
 for_window [title="^float$"] floating enable
 for_window [title="Bluetooth"] floating enable
 
-# floating sizes
-for_window [title=".*"] resize set width 1000 height 1000
-
 #colors
 #solarized theme, weird
 set $win-border #7594F0
@@ -61,7 +58,8 @@ floating_modifier $mod
 font xft:Neep Alt 8
 
 # start a terminal
-bindsym $mod+Return exec mterm '' '' "$(xcwd)"
+#bindsym $mod+Return exec mterm '' '' "$(xcwd)"
+bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
