@@ -50,14 +50,8 @@ process misc {
 }
 
 process compton {
-	run [ compton --config .comptonrc ]
+	run [ compton ]
 	in "$(HOME)"
-}
-
-process sxhkd {
-	run [ sxhkd -c .sxhkdrc ] in "$(HOME)"
-	env { SHELL /bin/sh }
-	delay 1000
 }
 
 process startup {
