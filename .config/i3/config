@@ -225,16 +225,21 @@ exec --no-startup-id sh ~/.wmrc
 
 # Non-WM hotkeys
 
-# backlight
+# XF86
 bindsym XF86MonBrightnessUp exec sudo xbacklight -inc 10
-bindsym shift+XF86MonBrightnessUp exec sudo xbacklight -inc 1
 bindsym XF86MonBrightnessDown exec sudo xbacklight -dec 10
+bindsym shift+XF86MonBrightnessUp exec sudo xbacklight -inc 1
 bindsym shift+XF86MonBrightnessDown exec sudo xbacklight -dec 1
+bindsym XF86AudioRaiseVolume exec maudio volume +5%
+bindsym XF86AudioLowerVolume exec maudio volume -5%
+bindsym shift+XF86AudioRaiseVolume exec maudio volume +1%
+bindsym shift+XF86AudioLowerVolume exec maudio volume -1%
+bindsym XF86AudioMute exec maudio mute toggle
 
 # mousetree
 bindsym $mod+a exec mousetree left
-bindsym $mod+o exec mousetree up
-bindsym $mod+e exec mousetree down
+bindsym $mod+o exec mousetree down
+bindsym $mod+e exec mousetree up
 bindsym $mod+u exec mousetree right
 bindsym $mod+q exec mousetree reset
 bindsym $mod+j exec mousetree zoom-cursor
@@ -246,3 +251,4 @@ bindsym $mod+apostrophe exec xdotool click 2
 
 # misc
 bindsym $mod+d exec touchpad-toggle
+bindsym $mod+l exec mlock
