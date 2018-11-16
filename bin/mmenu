@@ -28,7 +28,7 @@ exists() {
 
 # menu_cmd, defaulting to dmenu
 if [ -z "$1" ]; then
-	menu_cmd="dmenu"
+	menu_cmd="dmenu -fn 'Inconsolata-13'"
 else
 	menu_cmd="$1"
 fi
