@@ -136,25 +136,6 @@ pack() {
 	rm -rf "$TMP"
 }
 
-# Automatically run make with -j if there are no other flags
-_make() {
-	_make_has_flags=0;
-	for arg in "$@"; do
-		if [ "${arg#-}" = "-" ]; then
-			_make_has_flags=1;
-			break;
-		fi
-	done
-
-	if [ $_make_has_flags = 1 ]; then
-		\make "$@"
-	else
-		echo make -j $(($(nproc) * 2)) "$@" >&2
-		\make -j $(($(nproc) * 2)) "$@"
-	fi
-}
-alias make=_make
-
 # If in tmux, pretend the terminal is xterm-256color.
 if [ ! "$TMUX" = "" ]; then
 	export TERM="xterm-256color"

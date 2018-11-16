@@ -1,0 +1,18 @@
+#!/bin/sh
+make_has_flags=0
+for arg in "$@"; do
+	if [ "${arg#-}" = "-" ]; then
+		make_has_args=1
+		break
+	fi
+done
+
+cores=$(($(nproc) * 2))
+
+if [ $make_has_flags = 1 ]; then
+	/usr/bin/make "$@"
+else
+	echo "make -j $cores"
+	/usr/bin/make -j $cores "$@"
+fi
+exit $?
