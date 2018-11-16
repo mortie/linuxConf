@@ -12,7 +12,6 @@ else
 fi
 alias ll="ls -l"
 alias la="ls -a"
-[ -f ~/.shrc ] && source ~/.shrc
 
 # completion
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
@@ -117,3 +116,5 @@ do
 	fi
 done
 bindkey "^j" autosuggest-execute
+
+[ -f ~/.shrc ] && source ~/.shrc
