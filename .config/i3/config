@@ -222,3 +222,9 @@ gaps inner 16
 
 exec --no-startup-id sh -c 'dedaemon stop; dedaemon ~/.dedaemon.hcnf'
 exec --no-startup-id sh ~/.wmrc
+
+# Non-WM hotkeys
+bindsym XF86MonBrightnessUp exec sudo xbacklight -inc 10
+bindsym shift+XF86MonBrightnessUp exec sudo xbacklight -inc 1
+bindsym XF86MonBrightnessDown exec sudo xbacklight -dec 10
+bindsym shift+XF86MonBrightnessDown exec sudo xbacklight -dec 1
