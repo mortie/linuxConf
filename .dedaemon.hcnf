@@ -34,7 +34,7 @@ input "DELL080D:00 06CB:7A13 Touchpad" {
 	type pointer
 	options [
 		[ "libinput Accel Speed" 0.48 ]
-		[ "libinput Disable While Typing" 0 ]
+		[ "libinput Disable While Typing Enabled" 0 ]
 	]
 }
 
@@ -45,7 +45,6 @@ wallpaper {
 process misc {
 	run [
 		[ scratchpad ]
-		[ gnome-keyring-daemon ]
 		[ dunst ]
 		[ redshift-gtk ]
 		[ nm-applet ]
