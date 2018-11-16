@@ -218,7 +218,7 @@ for_window [instance="myt-mpv"] floating enable
 
 # Gaps
 smart_gaps on
-gaps inner 16
+gaps inner 10
 
 exec --no-startup-id sh -c 'dedaemon stop; dedaemon ~/.dedaemon.hcnf'
 exec --no-startup-id sh ~/.wmrc
