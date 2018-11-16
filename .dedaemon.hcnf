@@ -38,6 +38,13 @@ input "DELL080D:00 06CB:7A13 Touchpad" {
 	]
 }
 
+input "MX Anywhere 2S Mouse" {
+	type pointer
+	options [
+		[ "libinput Accel Speed" 0.2 ]
+	]
+}
+
 wallpaper {
 	path /home/martin/background.jpg
 }
