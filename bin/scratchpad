@@ -1,7 +1,9 @@
 #!/bin/bash
-while [ $(ps a | grep bin/scratchpad | wc -l) -le 2 ] && pgrep -x i3 > /dev/null; do
+pat="mterm .* tmux attach -t scratchpad"
+while [ $(ps a | grep "$pat" | wc -l) -lt 2 ] && pgrep -x i3 > /dev/null; do
 	mterm "tmux new -s scratchpad || tmux attach -t scratchpad" "scratchpad"
+	sleep 0.1
 done
 
 echo It turns out there are already scratchpads.
-ps a | grep bin/scratchpad
+ps a | grep "$pat"
