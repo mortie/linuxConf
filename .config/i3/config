@@ -59,7 +59,7 @@ font xft:Neep Alt 8
 
 # start a terminal
 #bindsym $mod+Return exec mterm '' '' "$(xcwd)"
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -224,7 +224,25 @@ exec --no-startup-id sh -c 'dedaemon stop; dedaemon ~/.dedaemon.hcnf'
 exec --no-startup-id sh ~/.wmrc
 
 # Non-WM hotkeys
+
+# backlight
 bindsym XF86MonBrightnessUp exec sudo xbacklight -inc 10
 bindsym shift+XF86MonBrightnessUp exec sudo xbacklight -inc 1
 bindsym XF86MonBrightnessDown exec sudo xbacklight -dec 10
 bindsym shift+XF86MonBrightnessDown exec sudo xbacklight -dec 1
+
+# mousetree
+bindsym $mod+a exec mousetree left
+bindsym $mod+o exec mousetree up
+bindsym $mod+e exec mousetree down
+bindsym $mod+u exec mousetree right
+bindsym $mod+q exec mousetree reset
+bindsym $mod+j exec mousetree zoom-cursor
+bindsym $mod+k exec mousetree zoom-window
+
+# mouse
+bindsym $mod+comma exec xdotool click 1
+bindsym $mod+apostrophe exec xdotool click 2
+
+# misc
+bindsym $mod+d exec touchpad-toggle
