@@ -1,6 +1,8 @@
 #!/bin/sh
 
-for pad in $(touchpad-id); do
+touchpads="$(xinput list | grep -i touchpad | grep -o 'id=[0-9]*' | cut -d'=' -f2)"
+
+for pad in $touchpads; do
 	xinput list-props $pad | grep -P 'Device Enabled \(\d+\):\s+1'
 	if [ $? -eq 0 ]; then
 		xinput disable $pad
