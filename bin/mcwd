@@ -1,0 +1,6 @@
+#!/bin/sh
+if which xcwd 2>/dev/null >/dev/null; then
+	xcwd | sed 's#/cloud/dev#/dev#; s#/cloud/uni#/uni#'
+else
+	echo "Needs xcwd."
+fi

@@ -59,8 +59,7 @@ floating_modifier $mod
 font xft:Neep Alt 8
 
 # start a terminal
-#bindsym $mod+Return exec mterm '' '' "$(xcwd)"
-bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
+bindsym $mod+Return exec mterm '' '' "$(mcwd)"
 
 # kill focused window
 bindsym $mod+Shift+q kill
