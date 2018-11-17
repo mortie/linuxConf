@@ -59,6 +59,7 @@ process misc {
 		[ nextcloud ]
 		[ parcellite ]
 		[ blueman-applet ]
+		[ auto-screen-rotate eDP-1 "Wacom HID 486A Finger" ]
 	] as group
 	in "$(HOME)"
 }
