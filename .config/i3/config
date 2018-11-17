@@ -18,6 +18,7 @@ hide_edge_borders both
 for_window [class="^.*"] border pixel 3
 for_window [title="^float$"] floating enable
 for_window [title="Bluetooth"] floating enable
+for_window [title="florence"] floating enable
 
 #colors
 #solarized theme, weird
