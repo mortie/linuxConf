@@ -7,7 +7,7 @@
 touch ~/.mlocked
 SRC="$(mktemp /tmp/scrot.XXXXXXXX.bmp)"
 DST="$(mktemp /tmp/scrot.XXXXXXXX.png)"
-gnome-screenshot -f "$SRC"
+scrot "$SRC"
 
 mnotifymsg "Lock."
 
