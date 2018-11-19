@@ -1,0 +1,57 @@
+#!/bin/sh
+set -e
+if ! insmod /lib/modules/$(uname -r)/kernel/drivers/hwmon/dell-smm-hwmon.ko.xz force=1; then
+	echo "Couldn't install kernel module, hoping that's not an issue." >&2
+fi
+dell-bios-fan-control 0
+
+cold=50
+hot=65
+
+state=cold
+
+setfan() {
+	fan="$(i8kfan)"
+	echo "$fan"
+	if [ "$fan" != "$*" ]; then
+		dell-bios-fan-control 0
+		echo i8kfan $1 $2
+		i8kfan $1 $2
+	fi
+}
+
+temp() {
+	sensors \
+	| grep 'Package id 0:' \
+	| grep -Po '\d+\.\d' | head -n 1 | cut -d'.' -f1
+}
+
+while :; do
+	t=$(temp)
+
+	h=$hot
+	c=$cold
+	if [ $state = hot ]; then
+		h=$(($h - 5))
+		c=$(($c - 5))
+	elif [ $state = mid ]; then
+		c=$(($c - 5))
+	fi
+
+	if [ $t -le $c ]; then
+		state=cold
+		echo "${t}c $state"
+		setfan 0 0
+	elif [ $t -le $h ]; then
+		state=mid
+		echo "${t}c $state"
+		setfan 1 1
+	else
+		state=hot
+		echo "${t}c $state"
+		setfan 2 2
+	fi
+
+	sleep 1
+done
+
