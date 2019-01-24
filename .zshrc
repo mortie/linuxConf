@@ -46,6 +46,7 @@ bindkey "^[[3;5~" kill-word
 bindkey "\x08" backward-kill-word
 bindkey '^[[A' up-line-or-search
 bindkey '^[[B' down-line-or-search
+bindkey '^C' send-break
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 # fuck
@@ -57,7 +58,7 @@ case "$TERM" in
 esac
 
 # prompt
-#
+
 autoload -U colors && colors
 setopt PROMPT_SUBST
 
@@ -95,7 +96,7 @@ PROMPT_CWD="%{${fg_bold[cyan]}%}%~ "
 PROMPT_ARROW="%(?:%{$fg_bold[green]%}$ :%{$fg_bold[red]%}$ %s)"
 PS1="$PROMPT_HOST$PROMPT_CWD$PROMPT_GIT$PROMPT_ARROW%{$reset_color%}"
 
-# Highlight
+# highlight
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 highlighted=0
 for hlpath in {/usr{,/local}/share{,/zsh/plugins},~/.zsh}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -106,7 +107,7 @@ do
 	fi
 done
 
-# Suggestions
+# suggestions
 suggested=0
 for sugpath in {/usr{,/local}/share{,/zsh/plugins},~/.zsh}/zsh-autosuggestions/zsh-autosuggestions.zsh
 do
