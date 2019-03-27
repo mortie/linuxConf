@@ -21,6 +21,7 @@ Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'justinmk/vim-syntax-extra'
 Plugin 'pangloss/vim-javascript'
+Plugin 'leafgarland/typescript-vim'
 Plugin 'w0rp/ale'
 
  " Vundle end
@@ -62,6 +63,7 @@ set linebreak
 set fileencodings=utf-8
 set encoding=utf-8
 set lazyredraw
+set t_Co=16
 
 " Fix alt
 execute "set <M-t>=\et"
@@ -178,6 +180,7 @@ au BufNewFile,BufRead *.fxml set filetype=xml
 au BufNewFile,BufRead *.html imap htinit <!DOCTYPE html><Enter><html><Enter><head><enter><meta charset="utf-8"><enter><title></title><enter></head><enter><body><enter></body><enter></html><Up><Up><Up><Up><Right><Right><Right><Right><Right><Right><Right><Right>
 au BufNewFile,BufRead *.html imap htag <Esc>vbyi<<Esc>A></<Esc>pi<Right>><Esc>bb<Right>i
 au BufNewFile,BufRead *.c imap cinit #include <stdio.h><Enter><Enter>int main(int argc, char **argv) {<Enter>return 0;<Enter>}<Up><Up><Esc>A<Enter>
+au BufNewFile,BufRead *.cc imap cinit #include <stdio.h><Enter><Enter>int main(int argc, char **argv) {<Enter>return 0;<Enter>}<Up><Up><Esc>A<Enter>
 
 au BufNewFile,BufRead *.json imap tag <Esc>bi"<Esc>A":<Space>
 

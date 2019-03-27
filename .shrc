@@ -11,6 +11,9 @@ alias syu="yay -Syu"
 alias rgrep="grep -r"
 alias blk="lsblk | grep -v '/var/lib/snapd'"
 alias ","="cd"
+alias dd="dd status=progress"
+alias rscp="rsync -rclh --progress"
+alias vim=nvim
 
 # Copy the absolute path of a file to the clipboard.
 ccc() {
