@@ -5,6 +5,7 @@ Plug 'justinmk/vim-syntax-extra'
 call plug#end()
 
 " Config
+filetype plugin indent on
 set tabstop=4
 set shiftwidth=4
 set noexpandtab
@@ -24,8 +25,12 @@ endif
 " Visible tabs
 set list
 set listchars=tab:>—
+
+hi junkwhitespace ctermbg=red
+call matchadd('junkwhitespace', '\s\+$')
+
 hi tabs ctermfg=DarkGray
-match tabs /\t/
+call matchadd('tabs', '\t')
 
 " Bind keys
 noremap h h
@@ -73,8 +78,8 @@ au BufNewFile,BufRead *.md set filetype=markdown
 
 au BufNewFile,BufRead *.hbs set filetype=html
 au BufNewFile,BufRead *.rs set filetype=rust
-
 au BufNewFile,BufRead *.fxml set filetype=xml
+au BufNewFile,BufRead *.s set filetype=asm
 
 au BufNewFile,BufRead *.html imap htinit <!DOCTYPE html><Enter><html><Enter><head><enter><meta charset="utf-8"><enter><title></title><enter></head><enter><body><enter></body><enter></html><Up><Up><Up><Up><Right><Right><Right><Right><Right><Right><Right><Right>
 au BufNewFile,BufRead *.html imap htag <Esc>vbyi<<Esc>A></<Esc>pi<Right>><Esc>bb<Right>i
