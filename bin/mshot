@@ -25,7 +25,11 @@ else
 	fi
 fi
 
-mupload-weblet "$DIR/pic.png" "img/${1}.png"
+if [ "$1" = ":clipboard:" ]; then
+	xclip -selection clipboard -target image/png "$DIR/pic.png"
+else
+	mupload-weblet "$DIR/pic.png" "img/${1}.png"
+fi
 if [ $? -eq 0 ]; then
 	msound camera-shutter
 else

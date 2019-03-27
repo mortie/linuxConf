@@ -18,7 +18,18 @@ function isterm()
 
 declare -a args
 
-if isterm konsole; then
+if isterm st; then
+	cmd=st
+	if ! [ -z "$NAME" ]; then
+		args+=("-n" "$NAME")
+	fi
+	if ! [ -z "$DIR" ]; then
+		args+=("-e" "sh" "-c" "cd '$DIR' && $SHELL")
+	fi
+	if ! [ -z "$EXEC" ]; then
+		args+=("-e" "sh" "-c" "$EXEC")
+	fi
+elif isterm konsole; then
 	cmd=konsole
 	args+=("--profile")
 	args+=("i3wm")
@@ -53,4 +64,5 @@ else
 	exit 1
 fi
 
+echo "$cmd" "${args[@]}"
 "$cmd" "${args[@]}"

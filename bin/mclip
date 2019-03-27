@@ -24,7 +24,7 @@ elif [ "$1" = "get" ]; then
 	if [ "$OS" = "Darwin" ]; then
 		pbpaste
 	else
-		xsel -b
+		xsel -ob
 	fi
 
 else

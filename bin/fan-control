@@ -1,30 +1,116 @@
 #!/bin/sh
 set -e
-if ! insmod /lib/modules/$(uname -r)/kernel/drivers/hwmon/dell-smm-hwmon.ko.xz force=1; then
-	echo "Couldn't install kernel module, hoping that's not an issue." >&2
-fi
-dell-bios-fan-control 0
+
+# This script automatically monitors temperature sensors,
+# and sets fan speeds accordingly.
+# It depends on lm_sensors and i8kfan (from https://aur.archlinux.org/packages/i8kutils/).
+# It does a couple of things better than i8kutils' i8kmon:
+#
+# * i8kmon reads the actual fan speed every couple of seconds, which pauses the
+#   kernel for a bit (https://wiki.archlinux.org/index.php/Fan_speed_control#Dell_laptops),
+#   which causes audio clicks.
+#   This script just reads the fan speed very occasionally, to verify it's still correct.
+# * Despite reading the fan speed so often, i8kmon doesn't seem to actually do
+#   anythig if the fans are running at the wrong speed. On my laptop, even with
+#   dell-bios-fan-control (https://github.com/TomFreudenberg/dell-bios-fan-control),
+#   the fans would sometimes get stuck at a high RPM after resuming from sleep
+#   regardless of temperature; this script will detect that and set the fan
+#   speeds to something sane right after you open the laptop lid.
+#
+# The fans will be off if the temperatures are below $cold degrees C.
+# The fans will be running slowly if the temperatures are between $cold and $hot.
+# The fans will be running quickly if the temperatures are above $hot.
+# $delay: The number of seconds between each temperature check.
+# $temp_sensor: The sensor which will be used.
+# $slowdown_lag: The fans go from off to running slowly as soon as the temperature
+#                exceedes $old, but the temperature has to go down to
+#                $cold-$slowdown_lag before the fans turn off again.
+#                The same applies to going from running quickly to running slowly.
 
 cold=50
 hot=65
+delay=1
+temp_sensor="Package id 0"
+slowdown_lag=5
 
-state=cold
+script_pid=$$
 
+# Install dell-smm-hwmon kernel module. Using 'force=1' because some
+# dell laptops (like the 9575) aren't listed as supported, but still work.
+if ! insmod_output=$(insmod "/lib/modules/$(uname -r)/kernel/drivers/hwmon/dell-smm-hwmon.ko.xz" force=1 2>&1); then
+	echo "$insmod_output"
+	if echo "$insmod_output" | grep ": File exists$" >/dev/null; then
+		echo "The error message 'File exists' usually means the module is already loaded, ignoring."
+	else
+		exit 1
+	fi
+fi
+
+# Clean up once the program exits by killing the acpi listener.
+acpi_listener_pid=
+cleanup() {
+	if ! [ -z "$acpi_listener_pid" ]; then
+		kill $acpi_listener_pid
+	fi
+	wait
+	exit 1
+}
+trap cleanup EXIT
+
+# Set the fan speed with i8kfan.
+lastfan=""
+fancheck=0
+frequentfancheck=0
 setfan() {
-	fan="$(i8kfan)"
-	echo "$fan"
-	if [ "$fan" != "$*" ]; then
-		dell-bios-fan-control 0
-		echo i8kfan $1 $2
-		i8kfan $1 $2
+	# Sometimes, the bios takes control of our fan again, so we
+	# periodically check if the fan is still the desired value.
+	# We check them rarely because the kernel pauses for a bit every time
+	# i8kfan runs, but the acpi listener child process should notify us
+	# most of the times we need to immediately check.
+	if [ $frequentfancheck != 0 ]; then
+		frequentfancheck=$((frequentfancheck - 1))
+		fancheck=32
+		lastfan="$(i8kfan)"
+		echo "Double checked fan status: $lastfan"
+	elif [ $fancheck = 0 ]; then
+		fancheck=32
+		lastfan="$(i8kfan)"
+		echo "Double checked fan status: $lastfan"
+	fi
+	fancheck=$((fancheck - 1))
+
+	if [ "$lastfan" != "$*" ]; then
+		echo i8kfan "$1" "$2"
+		i8kfan "$1" "$2"
+		lastfan="$*"
 	fi
 }
 
+# Immediately check fan speeds when the lid opens.
+onlidopen() {
+	frequentfancheck=3
+}
+trap onlidopen USR1
+
+# Child process: Run acpi_listen, send USR1 when the lid opens.
+acpi_listener() {
+	acpi_listen | grep --line-buffered "button/lid LID open" \
+		| while read -r; do
+			echo "Lid opened, checking fans"
+			kill -USR1 "$script_pid"
+		done
+}
+acpi_listener &
+acpi_listener_pid=$!
+
+# Find the temperature (as a whole number in celsius) of 'Package id 0'
 temp() {
 	sensors \
-	| grep 'Package id 0:' \
+	| grep "$temp_sensor:" \
 	| grep -Po '\d+\.\d' | head -n 1 | cut -d'.' -f1
 }
+
+state=cold
 
 while :; do
 	t=$(temp)
@@ -32,26 +118,24 @@ while :; do
 	h=$hot
 	c=$cold
 	if [ $state = hot ]; then
-		h=$(($h - 5))
-		c=$(($c - 5))
+		h=$((h - slowdown_lag))
+		c=$((c - slowdown_lag))
 	elif [ $state = mid ]; then
-		c=$(($c - 5))
+		c=$((c - slowdown_lag))
 	fi
 
-	if [ $t -le $c ]; then
+	if [ "$t" -le "$c" ]; then
 		state=cold
-		echo "${t}c $state"
 		setfan 0 0
-	elif [ $t -le $h ]; then
+	elif [ "$t" -le "$h" ]; then
 		state=mid
-		echo "${t}c $state"
 		setfan 1 1
 	else
 		state=hot
-		echo "${t}c $state"
 		setfan 2 2
 	fi
 
-	sleep 1
-done
+	echo "${t}c $state"
 
+	sleep $delay
+done

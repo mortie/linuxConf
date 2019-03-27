@@ -4,16 +4,4 @@
 # even if we use gtk3-mushrooms
 export GTK_OVERLAY_SCROLLING=1
 
-if [ "$1" != "" ]; then
-	if [ "$1" = "kde" ]; then
-		cmd="startkde"
-	elif [ "$1" = "gnome" ]; then
-		export GTK_CSD=1 # in case we're using gtk3-mushrooms
-		cmd="gnome-session"
-	else
-		cmd="$1"
-	fi
-	echo "exec $cmd" > ~/.xinitrc
-fi
-
 startx

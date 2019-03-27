@@ -12,13 +12,20 @@ scrot "$SRC"
 mnotifymsg "Lock."
 
 convert "$SRC"   \
-	-scale 5%    \
-	-scale 2000% \
+	-scale 50%    \
+	-shave 7x7 \
+	-bordercolor black \
+	-border 7 \
+	-blur 0x10 \
+	-scale 200% \
+	-border 1 \
 	"$DST"
 
 # composite -gravity center ~/assets/img/lock.png "$TMP" "$TMP"
 
+pkill -USR1 dunst
 i3lock -e -i "$DST" -n
+pkill -USR2 dunst
 
 rm "$SRC" "$DST"
 rm ~/.mlocked

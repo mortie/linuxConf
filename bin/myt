@@ -21,17 +21,6 @@ fi
 # Notify
 mnotifymsg "Playing" "$URL"
 
-# Resize  and move
-WIN=$(xdotool search --sync --classname 'myt-mpv')
-sleep 0.5
-xdotool windowsize "$WIN" 480 270
-sleep 0.1
-xdotool windowmove "$WIN" 100% 100%
-sleep 0.1
-xdotool windowmove --relative -- "$WIN" -480 -270
-sleep 0.1
-xdotool windowmove --relative -- "$WIN" -24 -24
-
 # Don't quit until mpv stops
 while kill -0 "$PID"; do
 	sleep 1
