@@ -1,0 +1,59 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <display> [touchinput]"
+	exit 1
+fi
+
+trap 'kill $(jobs -p)' SIGINT SIGTERM
+
+rotate() {
+	if [ "$3" = "normal" ]; then
+		rotate=normal
+		matrix="0 0 0 0 0 0 0 0 0"
+		show_keyboard=0
+	elif [ "$3" = "left-up" ]; then
+		rotate=left
+		matrix="0 -1 1 1 0 0 0 0 1"
+	elif [ "$3" = "right-up" ]; then
+		rotate=right
+		matrix="0 1 0 -1 0 1 0 0 1"
+	elif [ "$3" = "bottom-up" ]; then
+		rotate=inverted
+		matrix="-1 0 1 0 -1 1 0 0 1"
+	else
+		echo "Ignoring rotation: $3"
+		continue
+	fi
+
+	xrandr --output "$1" --rotate "$rotate"
+	if ! [ -z "$2" ]; then
+		xinput set-prop "$2" --type=float "Coordinate Transformation Matrix" $matrix
+	fi
+}
+
+monitorer() {
+	physrot=normal
+	screenrot=normal
+	rotatorpid=
+
+	while read -r line; do
+		line="${line#??}"
+		physrot="$line"
+		if [ -f ~/.rotation-lock ]; then
+			if [ -n "$rotatorpid" ]; then
+				kill "$rotatorpid"
+			fi
+			(inotifywait -e delete_self ~/.rotation-lock; rotate "$1" "$2" "$physrot") &
+			rotatorpid=$!
+		else
+			rotate "$1" "$2" "$physrot"
+			screenrot="$physrot"
+		fi
+	done
+}
+
+monitor-sensor \
+	| grep --line-buffered "Accelerometer orientation changed" \
+	| grep --line-buffered -o ": .*" \
+	| monitorer "$1" "$2"
