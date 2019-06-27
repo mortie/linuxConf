@@ -6,7 +6,7 @@ browser = firefox-nightly
 
 [colors]
 foreground = #FFFFFF
-background = rgba(0, 0, 0, 0.93)
+background = rgba(0, 0, 0, 0.9)
 
 # black
 color0  = #000000

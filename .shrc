@@ -140,9 +140,7 @@ pack() {
 }
 
 # If in tmux, pretend the terminal is xterm-256color.
-if [ ! "$TMUX" = "" ]; then
-	export TERM="xterm-256color"
-fi
+export TERM="xterm-256color"
 
 if [ -f ~/.shrc-local ]; then
 	. ~/.shrc-local

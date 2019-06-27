@@ -76,6 +76,8 @@ bindsym $mod+h focus left
 bindsym $mod+t focus up 
 bindsym $mod+n focus down 
 bindsym $mod+s focus right
+bindsym $mod+m focus parent
+bindsym $mod+b focus child
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -209,7 +211,7 @@ bindsym $mod+r mode "resize"
 #		separator #eeeeee
 #	}
 #}
-exec --no-startup-id beanbar
+exec --no-startup-id beanb
 
 bindsym $mod+space scratchpad show
 for_window [instance="scratchpad"] move scratchpad
@@ -251,10 +253,10 @@ bindsym $mod+apostrophe exec --no-startup-id xdotool click 2
 
 # misc
 bindsym $mod+d exec --no-startup-id touchpad-toggle
-bindsym $mod+l exec --no-startup-id mlock
+bindsym $mod+l exec --no-startup-id facelock
 bindsym $mod+Tab exec --no-startup-id mtoggle \
-	"setxkbmap no -option ctrl:swapcaps -option altwin:swap_alt_win" \
-	"setxkbmap dvorak -option ctrl:swapcaps -option altwin:swap_alt_win"
+	"setxkbmap no" \
+	"setxkbmap dvorak"
 
 bindsym Ctrl+Print exec --no-startup-id mshot scr-#TIME
 bindsym Ctrl+Shift+Print exec --no-startup-id mshot scr-#TIME select

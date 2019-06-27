@@ -1,7 +1,8 @@
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'terryma/vim-multiple-cursors'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'justinmk/vim-syntax-extra'
+"Plug 'justinmk/vim-syntax-extra'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 " Config
@@ -16,6 +17,7 @@ set so=5
 set noswapfile
 set ignorecase
 set smartcase
+set inccommand=nosplit
 if has('clipboard')
 	set clipboard=unnamedplus
 	nnoremap d "_d

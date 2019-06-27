@@ -7,8 +7,9 @@ class RotationLock extends ModComponent {
 	}
 
 	componentDidMount() {
-		this.proc = new IPCProc(IPC_EXEC_SH, `
+		this.proc = this.ipcProc(IPC_EXEC_SH, `
 			f=~/.rotation-lock
+			[ -f $f ] && echo "locked"
 			while read -r; do
 				if [ -f $f ]; then
 					rm -f $f
@@ -18,8 +19,7 @@ class RotationLock extends ModComponent {
 					echo "locked"
 				fi
 			done
-			`, msg => this.setState({ locked: msg == "locked" }));
-		this.proc.send()
+			`, msg => { console.log(msg); this.setState({ locked: msg == "locked" }) });
 	}
 
 	toggle() {
@@ -27,6 +27,7 @@ class RotationLock extends ModComponent {
 	}
 
 	render(props, state) {
+		console.log("render", state.locked);
 		let className = "clickable ";
 		className += state.locked ? "locked " : "unlocked ";
 		return this.el({ className, onClick: this.toggle.bind(this) }, "Rotation");
@@ -61,6 +62,7 @@ init(
 		h(Drawer, null,
 			h(Launcher, { text: "Bluetooth", cmd: "blueman-manager" }),
 			h(Launcher, { text: "Audio", cmd: "pavucontrol" }),
+			h(Launcher, { text: "OnBoard", cmd: "onboard" }),
 			h(RotationLock),
 		),
 	),
