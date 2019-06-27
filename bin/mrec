@@ -10,6 +10,7 @@ W=1920
 H=1080
 X=0
 Y=0
+RATE=30
 ENCODER=libx264
 if [ -f ~/.mrecrc ]; then
 	source ~/.mrecrc;
@@ -55,9 +56,10 @@ else #start recording
 	sleep 0.2
 	echo "$1" > ~/.mrec/name
 
-	ffmpeg -f x11grab -r 30 -s "${W}x${H}" -i "$DISPLAY" -threads 0 \
+	ffmpeg -f x11grab -r "$RATE" -s "${W}x${H}" -i "$DISPLAY+$X,$Y" -threads 0 \
 		-vcodec "$ENCODER" -pix_fmt yuv422p \
 		~/.mrec/rec.mp4 2>&1 > ~/.mrec/log &
+	exit 0
 	echo $! > ~/.mrec/pid
 
 	if [ "$2" = "noup" ]; then

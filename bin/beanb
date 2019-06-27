@@ -1,0 +1,3 @@
+#!/bin/sh
+LD_LIBRARY_PATH=~/src/libxcb-1.13.1/src/.libs:~/src/libX11-1.6.7/src/.libs:~/src/glibc-2.29/build:~/src/glib/build/glib \
+	beanbar "$@" > ~/.beanbar.log 2>&1

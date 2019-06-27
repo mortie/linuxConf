@@ -1,0 +1,14 @@
+#!/bin/sh
+
+cmd1="$1"
+cmd2="$2"
+
+id="$(printf "%s:%s" "$cmd1" "$cmd2" | sha1sum | cut -d' ' -f1 )"
+
+if [ -e "/tmp/$id" ]; then
+	sh -c "$cmd2"
+	rm "/tmp/$id"
+else
+	sh -c "$cmd1"
+	touch "/tmp/$id"
+fi

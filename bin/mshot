@@ -19,9 +19,9 @@ if [ "$OS" = "Darwin" ]; then
 	screencapture "$DIR/pic.png"
 else
 	if [ "$2" = "select" ]; then
-		gnome-screenshot -a -f "$DIR/pic.png"
+		grim -g "$(slurp)" "$DIR/pic.png"
 	else
-		gnome-screenshot -f "$DIR/pic.png"
+		grim "$DIR/pic.png"
 	fi
 fi
 

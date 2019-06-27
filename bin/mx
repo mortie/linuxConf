@@ -4,4 +4,10 @@
 # even if we use gtk3-mushrooms
 export GTK_OVERLAY_SCROLLING=1
 
+echo "GPU? [y/N]"
+read -r gpu
+if [ "$gpu" = y ]; then
+	export DRI_PRIME=1
+fi
+
 startx

@@ -1,0 +1,6 @@
+#!/bin/sh
+mlock &
+pid=$!
+sleep 0.2
+cd ~/scripts/facematcher
+./lock.py "$pid"

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+tmpf="$(mktemp /tmp/cide.XXXXXX.c)"
+while :; do
+	$EDITOR "$tmpf"
+	gcc -o "$tmpf.bin" "$tmpf"
+	"$tmpf.bin"
+	read
+done

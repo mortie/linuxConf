@@ -1,0 +1,3 @@
+#!/bin/sh
+sudo dell-bios-fan-control 0
+sudo i8kfan 0 0

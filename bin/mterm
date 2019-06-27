@@ -18,7 +18,23 @@ function isterm()
 
 declare -a args
 
-if isterm st; then
+if isterm termite; then
+	cmd=termite
+	args+=("--title")
+	args+=("Termite")
+	if ! [ -z "$EXEC" ]; then
+		args+=("-e")
+		args+=("sh -c '$EXEC'")
+	fi
+	if ! [ -z "$NAME" ]; then
+		args+=("--name")
+		args+=("$NAME")
+	fi
+	if ! [ -z "$DIR" ]; then
+		args+=("-d")
+		args+=("$DIR")
+	fi
+elif isterm st; then
 	cmd=st
 	if ! [ -z "$NAME" ]; then
 		args+=("-n" "$NAME")
@@ -43,20 +59,6 @@ elif isterm konsole; then
 	fi
 	if ! [ -z "$DIR" ]; then
 		args+=("--workdir")
-		args+=("$DIR")
-	fi
-elif isterm termite; then
-	cmd=termite
-	if ! [ -z "$EXEC" ]; then
-		args+=("-e")
-		args+=("sh -c '$EXEC'")
-	fi
-	if ! [ -z "$NAME" ]; then
-		args+=("--name")
-		args+=("$NAME")
-	fi
-	if ! [ -z "$DIR" ]; then
-		args+=("-d")
 		args+=("$DIR")
 	fi
 else

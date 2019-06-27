@@ -1,0 +1,2 @@
+#!/bin/sh
+DRI_PRIME=0 compton

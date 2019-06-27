@@ -5,27 +5,32 @@
 ###################################
 
 touch ~/.mlocked
-SRC="$(mktemp /tmp/scrot.XXXXXXXX.bmp)"
-DST="$(mktemp /tmp/scrot.XXXXXXXX.png)"
-scrot "$SRC"
 
-mnotifymsg "Lock."
+if pkill -0 compton; then
+	compton=1
+else
+	compton=0
+fi
 
-convert "$SRC"   \
-	-scale 50%    \
-	-shave 7x7 \
-	-bordercolor black \
-	-border 7 \
-	-blur 0x10 \
-	-scale 200% \
-	-border 1 \
-	"$DST"
-
-# composite -gravity center ~/assets/img/lock.png "$TMP" "$TMP"
+onexit() {
+	rm -f ~/.mlocked "$SRC" "$DST"
+	pkill i3lock
+	pkill swaylock
+	pkill -USR2 dunst
+	if [ "$compton" = 1 ] && ! pkill -0 compton; then
+		nohup comp &
+	fi
+}
+trap onexit EXIT
 
 pkill -USR1 dunst
-i3lock -e -i "$DST" -n
-pkill -USR2 dunst
-
-rm "$SRC" "$DST"
-rm ~/.mlocked
+#i3lock-fancy-rapid 7 5 -e -n \
+#	--clock \
+#	--indicator \
+#	--timecolor=ffffffff \
+#	--datecolor=ffffffff \
+#	--ringcolor=000000ff \
+#	--linecolor=00000000 \
+#	--separatorcolor=000000ff \
+#	--insidecolor=00000099
+swaylock -e -S --effect-scale 0.5 --effect-blur 7x5 --effect-scale 2
