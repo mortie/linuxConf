@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Automatically show an on-screen keyboard when enabling tablet mode.
+# The script depends on the acpi_listen program from the acpid package,
+# and the onboard program from the onboard package.
+
+listener() {
+	pid=
+	while read -r line; do
+		if [ "$line" = 00000001 ]; then
+			setxkbmap no -option ctrl:swapcaps -option altwin:swap_alt_win
+			onboard &
+			pid=$!
+		else
+			setxkbmap dvorak -option ctrl:swapcaps -option altwin:swap_alt_win
+			kill $pid
+		fi
+	done
+}
+
+acpi_listen \
+	| grep --line-buffered "video/tabletmode" \
+	| stdbuf -oL cut -d' ' -f4 | listener

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -x
+
+set4k() {
+	if xrandr | grep "$1 connected"; then
+		xrandr --addmode "$1" 3840x2160_60
+		xrandr --output "$1" --mode 3840x2160_60
+	fi
+}
+
+xinput map-to-output "Wacom HID 486A Finger" eDP1
+#xrandr --newmode "3840x2160_60" 445.008 3840 3982 4027 4064 2160 2170 2180 2190 +hsync +vsync
+xrandr --newmode "3840x2160_60" 533.250  3840 3888 3920 4000  2160 2163 2168 2222 -hsync -vsync
+#set4k DP1
+#set4k DP1-1
+#set4k DP1-2
+#set4k DP1-3
+#set4k DP2
+#set4k DP3
