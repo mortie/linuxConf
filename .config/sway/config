@@ -1,0 +1,250 @@
+set $mod Mod4
+
+# hide dem borders
+hide_edge_borders --i3 smart_no_gaps
+default_border pixel
+
+# hide dem titles
+for_window [class="^.*"] border pixel 3
+for_window [title="^float$"] floating enable
+for_window [title="Bluetooth"] floating enable
+for_window [title="florence"] floating enable
+
+#colors
+#solarized theme, weird
+set $win-border #7594F0
+set $background #202020
+set $back-inact #1C1C1C
+set $back-urgen #B85335
+set $border #1C1C1C
+set $bor-in #1C1C1C
+set $bor-ur #1C1C1C
+set $text #FFB946
+set $t-in #888888
+set $t-ur #CF6A4C
+set $barbackground #000000
+
+# class                 border  background  text  indicator   child_border
+client.focused          $border $win-border $text $win-border $win-border
+client.focused_inactive $bor-in $background $t-in $background $background
+client.unfocused        $bor-in $background $t-in $background $background
+client.urgent           $bor-ur $back-urgen $t-ur $back-urgen $back-urgen
+
+# font for window titles. ISO 10646 = Unicode
+#apt-get install xfonts-terminus
+#apt-get install xfonts-jmk
+font xft:Neep Alt 8
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below. ISO 10646 = Unicode
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# The font above is very space-efficient, that is, it looks good, sharp and
+# clear in small sizes. However, if you need a lot of unicode glyphs or
+# right-to-left text rendering, you should instead use pango for rendering and
+# chose a FreeType font, such as:
+# font pango:DejaVu Sans Mono 10
+font xft:Neep Alt 8
+
+# start a terminal
+#bindsym $mod+Return exec --no-startup-id mterm '' '' "$(mcwd)"
+bindsym $mod+Return exec --no-startup-id mterm
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start mmenu (a program launcher based on dmenu)
+bindsym $mod+period exec --no-startup-id mmenu 'bemenu --hb #4444aa --hf #ffffff --tf #ffffff --tb #4444aa'
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+t focus up
+bindsym $mod+n focus down
+bindsym $mod+s focus right
+bindsym $mod+m focus parent
+bindsym $mod+b focus child
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+t move up
+bindsym $mod+Shift+n move down
+bindsym $mod+Shift+s move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# move workspace
+bindsym $mod+Control+h move workspace to output left
+bindsym $mod+Control+t move workspace to output up
+bindsym $mod+Control+n move workspace to output down
+bindsym $mod+Control+s move workspace to output right
+
+bindsym $mod+Control+1 rename workspace to 1
+bindsym $mod+Control+2 rename workspace to 2
+bindsym $mod+Control+3 rename workspace to 3
+bindsym $mod+Control+4 rename workspace to 4
+bindsym $mod+Control+5 rename workspace to 5
+bindsym $mod+Control+6 rename workspace to 6
+bindsym $mod+Control+7 rename workspace to 7
+bindsym $mod+Control+8 rename workspace to 8
+bindsym $mod+Control+9 rename workspace to 9
+bindsym $mod+Control+0 rename workspace to 10
+
+# split in horizontal orientation
+bindsym $mod+c split h
+
+# split in vertical orientation
+bindsym $mod+i split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+v layout stacking
+bindsym $mod+w layout tabbed
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# focus the parent container
+#bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+bindsym $mod+bracketright workspace next
+bindsym $mod+bracketleft workspace prev
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+bindsym $mod+Shift+bracketright move container to workspace next
+bindsym $mod+Shift+bracketleft move container to workspace prev
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r reload
+# exit i3 (logs you out of your X session)
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+	# These bindings trigger as soon as you enter the resize mode
+
+	# Pressing left will shrink the window’s width.
+	# Pressing right will grow the window’s width.
+	# Pressing up will shrink the window’s height.
+	# Pressing down will grow the window’s height.
+	bindsym h resize shrink width 10 px or 10 ppt
+	bindsym n resize grow height 10 px or 10 ppt
+	bindsym t resize shrink height 10 px or 10 ppt
+	bindsym s resize grow width 10 px or 10 ppt
+
+	# same bindings, but for the arrow keys
+	bindsym Left resize shrink width 10 px or 10 ppt
+	bindsym Down resize grow height 10 px or 10 ppt
+	bindsym Up resize shrink height 10 px or 10 ppt
+	bindsym Right resize grow width 10 px or 10 ppt
+
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+bindsym $mod+space scratchpad show
+for_window [instance="scratchpad"] move scratchpad
+for_window [app_id="scratchpad"] move scratchpad
+for_window [class="Pinta"] floating enable
+for_window [instance="myt-mpv"] floating enable
+
+# Gaps
+smart_gaps on
+gaps inner 10
+
+output eDP-1 {
+	scale 2
+}
+
+output "Samsung Electric Company U28E850 HTPJ700441" {
+	scale 1.6
+}
+
+output * {
+	bg /home/martin/background.jpg fill
+}
+
+input * {
+	xkb_layout "dvorak"
+	xkb_options "altwin:swap_alt_win,ctrl:swapcaps,compose:102"
+	repeat_rate 60
+	repeat_delay 200
+	tap enabled
+}
+
+input "1739:31251:DELL080D:00_06CB:7A13_Touchpad" {
+	pointer_accel 0.2
+	dwt disabld
+}
+
+input "1133:45082:MX_Anywhere_2S_Mouse" {
+	accel_profile flat
+	pointer_accel 0.2
+}
+
+# XF86
+bindsym XF86MonBrightnessUp exec --no-startup-id sudo xbacklight -inc 11
+bindsym XF86MonBrightnessDown exec --no-startup-id sudo xbacklight -dec 10
+bindsym shift+XF86MonBrightnessUp exec --no-startup-id sudo xbacklight -inc 1
+bindsym shift+XF86MonBrightnessDown exec --no-startup-id sudo xbacklight -dec 1
+bindsym XF86AudioRaiseVolume exec --no-startup-id maudio volume +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id maudio volume -5%
+bindsym shift+XF86AudioRaiseVolume exec --no-startup-id maudio volume +1%
+bindsym shift+XF86AudioLowerVolume exec --no-startup-id maudio volume -1%
+bindsym XF86AudioMute exec --no-startup-id maudio mute toggle
+
+# misc
+bindsym $mod+l exec --no-startup-id facelock
+
+# Startup programs
+exec --no-startup-id scratchpad
+exec --no-startup-id mako
+exec --no-startup-id clipman
+exec --no-startup-id beanbar
