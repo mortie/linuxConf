@@ -26,7 +26,7 @@ else
 fi
 
 if [ "$1" = ":clipboard:" ]; then
-	xclip -selection clipboard -target image/png "$DIR/pic.png"
+	wl-copy <"$DIR/pic.png"
 else
 	mupload-weblet "$DIR/pic.png" "img/${1}.png"
 fi

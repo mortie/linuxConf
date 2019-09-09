@@ -10,21 +10,21 @@ if [ "$1" = "paste" ]; then
 	if [ "$OS" = "Darwin" ]; then
 		pbpaste
 	else
-		xsel -ob
+		wl-paste
 	fi
 
 elif [ "$1" = "type" ]; then
 	if [ "$OS" = "Darwin" ]; then
 		echo "Unavailable on Darwin."
 	else
-		xdotool type -- $(mclip get)
+		ydotool type -- $(mclip get)
 	fi
 
 elif [ "$1" = "get" ]; then
 	if [ "$OS" = "Darwin" ]; then
 		pbpaste
 	else
-		xsel -ob
+		wl-paste | cat
 	fi
 
 else
@@ -33,6 +33,6 @@ else
 	if [ "$OS" = "Darwin" ]; then
 		printf "%s" "$content" | pbcopy
 	else
-		printf "%s" "$content" | xsel -ib
+		printf "%s" "$content" | wl-copy
 	fi
 fi

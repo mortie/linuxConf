@@ -9,6 +9,7 @@ for_window [class="^.*"] border pixel 3
 for_window [title="^float$"] floating enable
 for_window [title="Bluetooth"] floating enable
 for_window [title="florence"] floating enable
+for_window [instance="myt-mpv"] resize set 640 480
 
 #colors
 #solarized theme, weird
@@ -56,7 +57,9 @@ bindsym $mod+Return exec --no-startup-id mterm
 bindsym $mod+Shift+q kill
 
 # start mmenu (a program launcher based on dmenu)
-bindsym $mod+period exec --no-startup-id mmenu 'bemenu --hb #4444aa --hf #ffffff --tf #ffffff --tb #4444aa'
+#bindsym $mod+period exec --no-startup-id mmenu 'bemenu --hb #4444aa --hf #ffffff --tf #ffffff --tb #4444aa'
+bindsym $mod+period exec --no-startup-id mauncher-launcher
+bindsym $mod+comma exec --no-startup-id mauncher-launcher -c
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -212,16 +215,17 @@ output * {
 }
 
 input * {
-	xkb_layout "dvorak"
-	xkb_options "altwin:swap_alt_win,ctrl:swapcaps,compose:102"
+	xkb_layout "dvorak,no"
+	xkb_options "altwin:swap_alt_win,ctrl:swapcaps,compose:102,grp:alt_shift_toggle"
 	repeat_rate 60
 	repeat_delay 200
 	tap enabled
 }
 
-input "1739:31251:DELL080D:00_06CB:7A13_Touchpad" {
+input "1739:31251:DLL080D:01_06CB:7A13_Touchpad" {
 	pointer_accel 0.2
 	dwt disabld
+	natural_scroll enabled
 }
 
 input "1133:45082:MX_Anywhere_2S_Mouse" {
@@ -243,8 +247,16 @@ bindsym XF86AudioMute exec --no-startup-id maudio mute toggle
 # misc
 bindsym $mod+l exec --no-startup-id facelock
 
+# screenshot
+bindsym Ctrl+Print exec --no-startup-id mshot scr-#TIME
+bindsym Ctrl+Shift+Print exec --no-startup-id mshot scr-#TIME select
+bindsym Print exec --no-startup-id mshot :clipboard:
+bindsym Shift+Print exec --no-startup-id mshot :clipboard: select
+
 # Startup programs
 exec --no-startup-id scratchpad
 exec --no-startup-id mako
 exec --no-startup-id clipman
 exec --no-startup-id beanbar
+exec --no-startup-id nextcloud
+exec --no-startup-id /home/martin/scripts/auto-screen-rotate eDP-1 1386:18538:Wacom_HID_486A_Finger

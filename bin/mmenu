@@ -53,7 +53,7 @@ run() {
 	# If we get an argument, we're in calculator mode, and the argument is the
 	# result of the previous expression.
 	if [ "$1" = "" ]; then
-		cmd=$($options_cmd | $menu_cmd -p "run:")
+		cmd=$($options_cmd | $menu_cmd)
 	else
 		cmd=$(echo "$" | $menu_cmd -p "$1:")
 		if [ "$cmd" = "$" ]; then

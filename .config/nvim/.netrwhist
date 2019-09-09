@@ -1,9 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/home/martin/job/ev-video-call/go/cmd'
-let g:netrw_dirhist_2='/home/martin/job/ev-video-call/go/cmd/ev-video-call'
-let g:netrw_dirhist_3='/home/martin/job/hwcoding'
-let g:netrw_dirhist_4='/home/martin/job/ev-video-call/libvideocall/src'
-let g:netrw_dirhist_5='/home/martin/cloud/dev/crap/c++legible/node_modules'
-let g:netrw_dirhist_6='/home/martin/tmp/tmp/smake'
-let g:netrw_dirhist_7='/home/martin/nixConf/setup'

@@ -12,7 +12,7 @@ elif [ ! -f "$1" ]; then
 	exit 1
 fi
 
-TIME=$(echo $(date +%F)-$(($(date "+(%H*60+%M)*60+%S"))))
+TIME=$(echo $(date +%FT%T))
 NAME=$(sed "s/#TIME/$TIME/" <<< "$2")
 URL="https://s.mort.coffee/d/$NAME"
 

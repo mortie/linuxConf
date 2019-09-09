@@ -9,26 +9,21 @@ trap 'kill $(jobs -p)' SIGINT SIGTERM
 
 rotate() {
 	if [ "$3" = "normal" ]; then
-		rotate=normal
-		matrix="0 0 0 0 0 0 0 0 0"
+		swaymsg output "$1" transform 0
 		show_keyboard=0
 	elif [ "$3" = "left-up" ]; then
-		rotate=left
-		matrix="0 -1 1 1 0 0 0 0 1"
+		swaymsg output "$1" transform 270
 	elif [ "$3" = "right-up" ]; then
-		rotate=right
-		matrix="0 1 0 -1 0 1 0 0 1"
+		swaymsg output "$1" transform 90
 	elif [ "$3" = "bottom-up" ]; then
-		rotate=inverted
-		matrix="-1 0 1 0 -1 1 0 0 1"
+		swaymsg output "$1" transform 180
 	else
 		echo "Ignoring rotation: $3"
 		continue
 	fi
 
-	xrandr --output "$1" --rotate "$rotate"
 	if ! [ -z "$2" ]; then
-		xinput set-prop "$2" --type=float "Coordinate Transformation Matrix" $matrix
+		swaymsg input "$2" map_to_output "$1"
 	fi
 }
 

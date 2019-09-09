@@ -33,4 +33,16 @@ pkill -USR1 dunst
 #	--linecolor=00000000 \
 #	--separatorcolor=000000ff \
 #	--insidecolor=00000099
-swaylock -e -S --effect-scale 0.5 --effect-blur 7x5 --effect-scale 2
+swaylock -e -S \
+	--clock \
+	--indicator \
+	--indicator-radius 100 \
+	--indicator-thickness 7 \
+	--effect-scale 0.5 \
+	--effect-blur 7x5 \
+	--effect-scale 2 \
+	--ring-color bb00cc \
+	--key-hl-color 880033 \
+	--line-color 00000000 \
+	--inside-color 00000088 \
+	--separator-color 00000000

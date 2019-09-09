@@ -18,6 +18,7 @@ set noswapfile
 set ignorecase
 set smartcase
 set inccommand=nosplit
+set cinoptions+=:0
 if has('clipboard')
 	set clipboard=unnamedplus
 	nnoremap d "_d
@@ -93,3 +94,4 @@ au BufNewFile,BufRead *.json imap tag <Esc>bi"<Esc>A":<Space>
 au BufNewFile,BufRead *.h imap hguard <Esc>A_H<Esc>^gU$y$i#ifndef <Esc>A<Return>#define <Esc>pA<Return><Esc>GA<Return>#endif
 
 au BufNewFile,BufRead *.vue set filetype=html
+au BufNewFile,BufRead *.svelte set filetype=html

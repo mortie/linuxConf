@@ -1,4 +1,5 @@
 css(THEME_DARK);
+css(`body { width: 50%; }`);
 
 class RotationLock extends ModComponent {
 	constructor() {

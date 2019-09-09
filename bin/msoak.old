@@ -6,7 +6,7 @@
 # this commit: https://github.com/karelzak/util-linux/commit/27afe5016842c22d256ea9f88b598d637ca0df84
 
 tmp="$(mktemp /tmp/msoak.XXXXXXXX)"
-script -qfe --command "$(printf "%q " "$@")" /dev/null 2>&1 | tee "$tmp"
+script -qfe --command "$(printf "%q " "$@")" /dev/null 2>&1 | c++legible | tee "$tmp"
 code="${PIPESTATUS[0]}"
 if [ $(wc -l "$tmp" | cut -d' ' -f1) -gt 30 ]; then
 	less -R "$tmp"
